@@ -10,11 +10,11 @@
     <% let attr = schema.attributes[index] %>
       <div class="col-lg-12">
         <div class="form-group">
-          <label>
+          <label class='mb-0'>
             <%= attr.label %>
             <% if (attr.required) { %><span class='text-danger'>*</span><% } %>
           </label>
-          <small class="form-text text-muted"><%= attr.help %></small>
+          <small class="form-text text-muted mb-2"><%= attr.help %></small>
         <% if (attr.datatype === 'BOOL') { %>
           <input type="checkbox" class="form-control" v-model="model.<%=attr.identifier%>">
         <% } else if (attr.datatype === 'TEXT') { %>
@@ -35,7 +35,7 @@
       <div class="row">
         <div class="col-lg-12 text-right">
 
-          <button class="btn btn-outline-light mr-2">
+          <button class="btn btn-outline-dark mr-2">
             <i class="fa fa-fw fa-times mr-1"></i>
             Cancel
           </button>

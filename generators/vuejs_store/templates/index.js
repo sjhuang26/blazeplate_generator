@@ -1,4 +1,4 @@
-import createPersistedState from 'vuex-persistedstate'
+// import createPersistedState from 'vuex-persistedstate'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import auth from './auth'
@@ -19,6 +19,6 @@ export default new Vuex.Store({
     user,
     notification,
     <%= storeModules %>
-  },
-  plugins: [createPersistedState()]
+  }
+  // plugins: [createPersistedState()]
 })

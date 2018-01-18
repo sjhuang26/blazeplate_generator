@@ -19,12 +19,8 @@ export default {
   },
   props: ['id'],
   created () {
-    this.fetch()
-  },
-  methods: {
-    fetch () {
-      return store.dispatch('<%= schema.identifier %>/fetchModel', this.id)
-    }
+    store.dispatch('<%= schema.identifier %>/fetchCollection')
+    store.commit('<%= schema.identifier %>/current', { id: this.id })
   },
   computed: {
     model () {

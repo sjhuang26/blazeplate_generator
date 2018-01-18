@@ -18,23 +18,19 @@
     </div>
 
   	<div class="row">
+
+      <!-- List View -->
   		<div class="col-lg-12">
+  			<ListView :collection="collection"></ListView>
+  		</div>
 
         <!-- Fetching -->
-        <p class='lead' v-if="fetching">
+      <div class="col-lg-12 text-center" v-if="fetching">
+        <p class='lead'>
           <i class="fa fa-2x fa-spin fa-spinner"></i>
         </p>
+      </div>
 
-        <!-- EmptyView -->
-        <!-- TODO - abstract into ListView -->
-        <p class='lead' v-if="!collection[0]">
-          EMPTY
-        </p>
-
-        <!-- ListView -->
-  			<ListView :collection="collection"></ListView>
-
-  		</div>
   	</div>
   </div>
 </template>

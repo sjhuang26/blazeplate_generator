@@ -9,7 +9,9 @@ const actions = {
 
   create: ({ commit }, attributes) => Factory.create({ commit }, attributes),
 
-  update: ({ commit }, attributes) => Factory.update({ commit }, attributes)
+  update: ({ commit }, attributes) => Factory.update({ commit }, attributes),
+
+  destroy: ({ commit }, attributes) => Factory.destroy({ commit }, attributes)
 }
 
 // // // //

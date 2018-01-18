@@ -1,5 +1,5 @@
 <template>
-  <transition-group name="list" tag='div' class="container">
+  <transition-group name="list" tag='div' class="container notification-container">
     <div class="row" v-for="each in collection" v-bind:key="each.id">
       <NotificationChild :item="each"/>
     </div>
@@ -28,12 +28,17 @@ export default {
 
 <!-- QUESTION - SCOPED? -->
 <style lang='sass'>
-   // @import '../../../sass/app.sass'
+  // @import '../../../sass/app.sass'
 
-   .list-enter-active, .list-leave-active
-     transition: opacity .5s
+  .container.notification-container
+    position: absolute
+    bottom: 0
+    right: 0
 
-   .list-enter, .list-leave-to
+  .list-enter-active, .list-leave-active
+    transition: opacity .5s
+
+  .list-enter, .list-leave-to
      opacity: 0
 
 </style>

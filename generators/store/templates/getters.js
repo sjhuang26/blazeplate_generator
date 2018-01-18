@@ -1,3 +1,4 @@
+import _ from 'lodash'
 
 // <%= schema.label %> Module Getters
 const getters = {
@@ -5,7 +6,7 @@ const getters = {
     return state.collection
   },
   current: state => {
-    return state.current
+    return _.find(state.collection, { _id: state.current })
   },
   fetching: state => {
     return state.fetching

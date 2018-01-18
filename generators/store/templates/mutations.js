@@ -7,8 +7,8 @@ const mutations = {
   sync (state, collection) {
     state.collection = collection
   },
-  current (state, attributes) {
-    state.current = attributes
+  current (state, { id }) {
+    state.current = id
   }
 }
 

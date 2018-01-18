@@ -15,6 +15,19 @@
 
     <!-- Table Body -->
     <tbody>
+
+      <!-- Empty Table Row -->
+      <tr class='tr-warning' v-if="!collection[0]">
+        <% for (index in schema.attributes) { %>
+        <% if (index === '0') { %>
+        <td>Empty</td>
+        <% } else { %>
+        <td></td>
+        <% } %>
+        <% } %>
+        <td></td>
+      </tr>
+
       <tr v-for="m in collection" :key="m._id">
       <% for (index in schema.attributes) { %>
       <% let attr = schema.attributes[index] %>
