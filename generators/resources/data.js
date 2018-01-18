@@ -3,124 +3,38 @@ module.exports = {
   identifier: 'app_name',
   schemas: [
     {
-      label: 'Contact',
-      identifier: 'contact',
-      _id: 'schema_29321443037762',
+      _id: 'schema_18032774474121',
       attributes: [
         {
-          order: 1,
-          label: 'Name',
-          help: 'Name of the individual',
-          required: true,
+          _id: 'attr_49758826419052',
+          col_span: 6,
           datatype: 'TEXT',
           datatypeOptions: {},
+          help: 'Application Name',
           identifier: 'name',
-          unique: true,
-          _id: 'attr_1'
-        },
-        {
-          order: 2,
-          label: 'Location',
-          help: 'Location of the individual',
-          required: false,
-          datatype: 'TEXT',
-          datatypeOptions: {},
-          identifier: 'location',
-          _id: 'attr_2'
-        },
-        {
-          order: 3,
-          label: 'Phone Number',
-          help: 'Phone number of the individual',
-          required: false,
-          datatype: 'NUMBER',
-          datatypeOptions: {},
-          identifier: 'phone',
-          _id: 'attr_3'
-        }
-      ],
-      label_plural: 'Contact',
-      plural_identifier: 'contacts'
-    },
-    {
-      label: 'Invoice',
-      identifier: 'invoice',
-      _id: 'schema_22881179555990',
-      attributes: [
-        {
-          order: 0,
-          label: 'Invoice ID',
-          help: 'Unique Invoice ID',
-          required: true,
-          datatype: 'TEXT',
-          datatypeOptions: {},
-          identifier: 'invoice_id',
-          unique: true,
-          _id: 'attr_5'
-        },
-        {
-          order: 2,
-          label: 'Amount',
-          help: 'The amount of USD for the invoice',
-          required: true,
-          datatype: 'NUMBER',
-          datatypeOptions: {},
-          identifier: 'amount',
-          _id: 'attr_2'
-        },
-        {
-          order: 3,
-          label: 'Payment Received',
-          help: 'Indicates whether or not payment has been received.',
-          required: false,
-          datatype: 'BOOL',
-          datatypeOptions: {},
-          identifier: 'payment_received',
-          _id: 'attr_3'
-        },
-        {
-          order: 4,
-          label: 'Date',
-          help: 'Date the invoice was sent out.',
-          required: true,
-          datatype: 'DATE',
-          datatypeOptions: {},
-          identifier: 'date',
-          _id: 'attr_4'
-        }
-      ],
-      label_plural: 'Invoices',
-      plural_identifier: 'invoices'
-    },
-    {
-      label: 'Job',
-      identifier: 'job',
-      _id: 'schema_85414304137721',
-      attributes: [
-        {
+          label: 'Name',
           order: 1,
-          label: 'Job ID',
-          help: 'Unique ID',
           required: true,
-          datatype: 'TEXT',
-          datatypeOptions: {},
-          identifier: 'job_id',
-          unique: true,
-          _id: 'attr_1'
+          unique: false
         },
         {
-          order: 4,
-          label: 'Status',
-          help: 'Status of the Job',
-          required: false,
+          _id: 'attr_6655303650558',
+          col_span: 6,
           datatype: 'TEXT',
           datatypeOptions: {},
-          identifier: 'status',
-          _id: 'attr_4'
+          help: 'ID of the Google Sheet used to build the application.',
+          identifier: 'google_sheets_id',
+          label: 'Google Sheets ID',
+          order: 2,
+          required: false,
+          unique: false
         }
       ],
-      label_plural: 'Jobs',
-      plural_identifier: 'jobs'
+      identifier: 'google_sheet',
+      identifier_plural: 'google_sheet',
+      label: 'Google Sheet',
+      label_plural: 'Google Sheets',
+      unqiue_id_prefix: 'GS_'
     }
   ]
 }

@@ -20,7 +20,7 @@
       <% let attr = schema.attributes[index] %>
         <% if (attr.unique) { %>
         <td>
-          <a :href=" '#/<%= schema.plural_identifier %>/' + m._id ">
+          <a :href=" '#/<%= schema.identifier_plural %>/' + m._id ">
             {{ m.<%=attr.identifier%> }}
           </a>
         </td>
@@ -37,7 +37,7 @@
       <% } %>
         <!-- Edit <%= schema.label %>-->
         <td>
-          <a class="btn btn-sm btn-outline-warning" :href=" '#/<%= schema.plural_identifier %>/' + m._id + '/edit' ">
+          <a class="btn btn-sm btn-outline-warning" :href=" '#/<%= schema.identifier_plural %>/' + m._id + '/edit' ">
             <i class="fa fa-fw fa-pencil"></i>
           </a>
         </td>

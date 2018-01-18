@@ -3,19 +3,19 @@ const controller = require('./<%= schema.identifier %>.controller');
 
 // // // //
 
-// GET /<%= schema.plural_identifier %>
+// GET /<%= schema.identifier_plural %>
 router.get('/', controller.list);
 
-// POST /<%= schema.plural_identifier %>
+// POST /<%= schema.identifier_plural %>
 router.post('/', controller.create);
 
-// GET /<%= schema.plural_identifier %>/:id
+// GET /<%= schema.identifier_plural %>/:id
 router.get('/:id', controller.show);
 
-// PUT /<%= schema.plural_identifier %>/:id
+// PUT /<%= schema.identifier_plural %>/:id
 router.put('/:id', controller.update);
 
-// DELETE /<%= schema.plural_identifier %>/:id
+// DELETE /<%= schema.identifier_plural %>/:id
 router.delete('/:id', controller.delete);
 
 // // // //

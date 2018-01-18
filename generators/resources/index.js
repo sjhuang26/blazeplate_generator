@@ -23,16 +23,15 @@ let generateNew = false
 let generateDockerCompose = false
 
 // Set flags:
-
-// generateStore = true
+generateStore = true
 // generateRouter = true
 // generateList = true
 // generateShow = true
 // generateEdit = true
 // generateNew = true
-generateVue = true
+// generateVue = true
 
-generateExpress = true
+// generateExpress = true
 // generateDockerCompose = true
 // generateExpressResources = true
 
@@ -304,7 +303,7 @@ module.exports = class extends Generator {
     }
 
     // // Logs instructions to the user
-    // console.log(`\n\n Done! \n Add the following lines to /src/store/index.js: \n\n \t import ${schema.plural_identifier} from './${schema.plural_identifier}'\n\n and add the '${schema.plural_identifier}' variable to the Vuex store's 'modules' object. \n\n`)
+    // console.log(`\n\n Done! \n Add the following lines to /src/store/index.js: \n\n \t import ${schema.identifier_plural} from './${schema.identifier_plural}'\n\n and add the '${schema.identifier_plural}' variable to the Vuex store's 'modules' object. \n\n`)
 
     // // Logs instructions
     // let import_snippet = `import { ${schema.label}ListRoute, ${schema.label}ShowRoute, ${schema.label}NewRoute, ${schema.label}EditRoute } from './${schema.label}'`
@@ -320,4 +319,3 @@ module.exports = class extends Generator {
   }
 
 };
-
