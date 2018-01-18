@@ -1,7 +1,8 @@
 // Generator index file
 var Generator = require('yeoman-generator');
 var classify = require('underscore.string/classify');
-const ApplicationConfig = require('./data')
+// const ApplicationConfig = require('./data')
+const ApplicationConfig = require('./data.old.js')
 
 // // // //
 // Appliation Flags
@@ -24,16 +25,16 @@ let generateDockerCompose = false
 
 // Set flags:
 generateStore = true
-// generateRouter = true
-// generateList = true
-// generateShow = true
-// generateEdit = true
-// generateNew = true
-// generateVue = true
+generateRouter = true
+generateList = true
+generateShow = true
+generateEdit = true
+generateNew = true
+generateVue = true
 
-// generateExpress = true
-// generateDockerCompose = true
-// generateExpressResources = true
+generateExpress = true
+generateDockerCompose = true
+generateExpressResources = true
 
 // // // //
 
@@ -64,7 +65,8 @@ module.exports = class extends Generator {
   writing() {
 
     // Destination helpers & constants
-    let destinationRoot = './' + ApplicationConfig.identifier + '_build/'
+    // let destinationRoot = './' + ApplicationConfig.identifier + '_build/'
+    let destinationRoot = './dist/' + ApplicationConfig.identifier + '/'
     let vueSrc = destinationRoot + 'vuejs_client/src/'
 
     // // // //

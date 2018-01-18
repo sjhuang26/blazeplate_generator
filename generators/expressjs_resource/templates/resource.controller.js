@@ -1,4 +1,4 @@
-const <%= schema.label %> = require('./<%= schema.identifier %>.model')
+const <%= schema.label.split(' ').join('') %> = require('./<%= schema.identifier %>.model')
 
 // // // //
 
@@ -53,7 +53,7 @@ module.exports.list = (req, res, next) => {
 
     // Build paginated query
     let payload = buildQuery({
-        schema:     <%= schema.label %>,
+        schema:     <%= schema.label.split(' ').join('') %>,
         paginate:   true,
         page:       req.query.page,
         per_page:   req.query.per_page
@@ -73,7 +73,7 @@ module.exports.list = (req, res, next) => {
 
 // POST /<%= schema.identifier_plural %>
 module.exports.create = (req, res, next) => {
-    return new <%= schema.label %>(req.body).save().then(function(response) {
+    return new <%= schema.label.split(' ').join('') %>(req.body).save().then(function(response) {
         return res.status(200).send(response).end();
     }).catch(next);
 };
@@ -82,7 +82,7 @@ module.exports.create = (req, res, next) => {
 
 // GET /<%= schema.identifier_plural %>/:id
 module.exports.show = (req, res, next) => {
-    return <%= schema.label %>.findById(req.params.id).then(function(response) {
+    return <%= schema.label.split(' ').join('') %>.findById(req.params.id).then(function(response) {
         return res.status(200).send(response).end();
     }).catch(next);
 };
@@ -91,7 +91,7 @@ module.exports.show = (req, res, next) => {
 
 // PUT /<%= schema.identifier_plural %>/:id
 module.exports.update = (req, res, next) => {
-    return <%= schema.label %>.findByIdAndUpdate(req.params.id, {$set: req.body}, { new: true }).then(function(response) {
+    return <%= schema.label.split(' ').join('') %>.findByIdAndUpdate(req.params.id, {$set: req.body}, { new: true }).then(function(response) {
         return res.status(200).send(response).end();
     }).catch(next);
 };
@@ -100,7 +100,7 @@ module.exports.update = (req, res, next) => {
 
 // DELETE /<%= schema.identifier_plural %>/:id
 module.exports.delete = (req, res, next) => {
-    return <%= schema.label %>.remove({_id: req.params.id }).then(function(response) {
+    return <%= schema.label.split(' ').join('') %>.remove({_id: req.params.id }).then(function(response) {
         return res.status(200).send(response).end();
     }).catch(next);
 };

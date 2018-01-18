@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 // // // //
 
-const <%= schema.label %> = new Schema({
+const <%= schema.label.split(' ').join('') %> = new Schema({
     <% for (index in schema.attributes) { %>
     <% let attr = schema.attributes[index] %>
     <% if (attr.datatype === 'BOOL') { %>
@@ -33,4 +33,4 @@ const <%= schema.label %> = new Schema({
 
 // // // //
 
-module.exports = mongoose.model('<%= schema.label %>', <%= schema.label %>)
+module.exports = mongoose.model('<%= schema.label.split(' ').join('') %>', <%= schema.label.split(' ').join('') %>)

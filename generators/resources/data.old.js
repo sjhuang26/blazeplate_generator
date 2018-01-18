@@ -14,6 +14,7 @@ module.exports = {
           required: true,
           datatype: 'TEXT',
           datatypeOptions: {},
+          col_span: 6,
           identifier: 'name',
           unique: true,
           _id: 'attr_1'
@@ -25,6 +26,7 @@ module.exports = {
           required: false,
           datatype: 'TEXT',
           datatypeOptions: {},
+          col_span: 6,
           identifier: 'location',
           _id: 'attr_2'
         },
@@ -35,6 +37,7 @@ module.exports = {
           required: false,
           datatype: 'NUMBER',
           datatypeOptions: {},
+          col_span: 6,
           identifier: 'phone',
           _id: 'attr_3'
         }
@@ -54,6 +57,7 @@ module.exports = {
           required: true,
           datatype: 'TEXT',
           datatypeOptions: {},
+          col_span: 6,
           identifier: 'invoice_id',
           unique: true,
           _id: 'attr_5'
@@ -65,6 +69,7 @@ module.exports = {
           required: true,
           datatype: 'NUMBER',
           datatypeOptions: {},
+          col_span: 6,
           identifier: 'amount',
           _id: 'attr_2'
         },
@@ -75,6 +80,7 @@ module.exports = {
           required: false,
           datatype: 'BOOL',
           datatypeOptions: {},
+          col_span: 6,
           identifier: 'payment_received',
           _id: 'attr_3'
         },
@@ -85,6 +91,7 @@ module.exports = {
           required: true,
           datatype: 'DATE',
           datatypeOptions: {},
+          col_span: 6,
           identifier: 'date',
           _id: 'attr_4'
         }
@@ -104,6 +111,7 @@ module.exports = {
           required: true,
           datatype: 'TEXT',
           datatypeOptions: {},
+          col_span: 6,
           identifier: 'job_id',
           unique: true,
           _id: 'attr_1'
@@ -115,6 +123,7 @@ module.exports = {
           required: false,
           datatype: 'TEXT',
           datatypeOptions: {},
+          col_span: 6,
           identifier: 'status',
           _id: 'attr_4'
         }
