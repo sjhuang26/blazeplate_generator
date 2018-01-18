@@ -17,31 +17,23 @@ module.exports = class extends Generator {
     let destinationRoot = './dist/' + ApplicationConfig.identifier + '/'
     let vueSrc = destinationRoot + 'vuejs_client/src/'
 
-    let routeImports = []
-    let routeModules = []
+    let headerLinks = []
 
-    function buildImport (s) {
-      routeImports.push(`import { ${ s.label }ListRoute, ${ s.label }ShowRoute, ${ s.label }NewRoute, ${ s.label }EditRoute } from './${ s.identifier }'`)
-    }
-
-    function buildModule (s) {
-      routeModules.push(`${ s.label }ListRoute`)
-      routeModules.push(`${ s.label }NewRoute`)
-      routeModules.push(`${ s.label }EditRoute`)
-      routeModules.push(`${ s.label }ShowRoute`)
+    function buildHeaderLink (s) {
+      headerLinks.push({ text: s.label_plural, href: '#/' + s.identifier_plural })
     }
 
     // client/src/store/index.js
-    // TODO - move into separate generator class definition
-    // _.each(ApplicationConfig.schemas, (s) => {
-    //   buildImport(s)
-    //   buildModule(s)
-    // })
+    _.each(ApplicationConfig.schemas, (s) => {
+      buildHeaderLink(s)
+    })
+
+    console.log(headerLinks)
 
     this.fs.copyTpl(
       this.templatePath('app_navbar.vue'),
       this.destinationPath(vueSrc + 'containers/app_navbar/components/layout.vue'),
-      { appSchema: ApplicationConfig }
+      { appSchema: ApplicationConfig, headerLinks: headerLinks }
     );
 
   }

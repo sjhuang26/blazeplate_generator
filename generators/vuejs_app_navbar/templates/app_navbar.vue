@@ -12,15 +12,11 @@
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
 
-        <!-- <li class="nav-item" v-for="s in allSchemas" :key="s._id"> -->
-          <!-- <a class="nav-link" :href="'#/schemas/' + s._id ">{{s.label_plural}}</a> -->
-        <!-- </li> -->
-
-        <!-- <li class="nav-item"> -->
-          <!-- <a class="nav-link" href="#/schemas/new"> -->
-            <!-- <i class="fa fa-fw fa-plus" v-b-tooltip.hover.right title="New Schema"></i> -->
-          <!-- </a> -->
-        <!-- </li> -->
+        <% for (i in headerLinks) { %>
+        <li class="nav-item">
+          <a class="nav-link" href="<%= headerLinks[i].href %>"><%= headerLinks[i].text %></a>
+        </li>
+        <% } %>
 
 	    </ul>
 
