@@ -3,6 +3,7 @@ var Generator = require('yeoman-generator');
 var classify = require('underscore.string/classify');
 // const ApplicationConfig = require('./data')
 const ApplicationConfig = require('./data.old.js')
+const _ = require('lodash')
 
 // // // //
 // Appliation Flags
@@ -92,11 +93,25 @@ module.exports = class extends Generator {
         this.destinationPath(destinationRoot + 'vuejs_client/')
       );
 
-      // client/src/store/index.jd
+      // client/.*
+      this.fs.copy(
+        this.templatePath('../../vuejs_app/templates/.*'),
+        this.destinationPath(destinationRoot + 'vuejs_client/')
+      );
+
+      // client/src/store/index.js
+      // TODO - move into separate generator class definition
+      let storeModules = []
+      _.each(ApplicationConfig.schemas, (s) => {
+        storeModules.push(s.identifier)
+      })
+      // for (index in appSchema.schemas) { %>
+      // appSchema.schemas[index].identifier %><% if (index !== appSchema.schemas.length) { %>,<% }%>
+
       this.fs.copyTpl(
         this.templatePath('../../vuejs_store/templates/index.js'),
         this.destinationPath(vueSrc + '/store/index.js'),
-        { appSchema: ApplicationConfig }
+        { appSchema: ApplicationConfig, storeModules: storeModules.join(",\n    ")  }
       );
 
     }

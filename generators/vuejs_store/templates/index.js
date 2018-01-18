@@ -18,9 +18,7 @@ export default new Vuex.Store({
     auth,
     user,
     notification,
-    <% for (index in appSchema.schemas) { %>
-    <%= appSchema.schemas[index].identifier %><% if (index !== appSchema.schemas.length) { %>,<% }%>
-    <% } %>
+    <%= storeModules %>
   },
   plugins: [createPersistedState()]
 })
