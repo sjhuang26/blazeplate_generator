@@ -5,6 +5,7 @@ import Router from 'vue-router'
 import { MainHomeRoute } from './main'
 import { AuthLoginRoute, AuthRegisterRoute } from './auth'
 import { UserListRoute, UserShowRoute } from './user'
+<%- routeImports %>
 
 // Vue Router setup
 Vue.use(Router)
@@ -16,6 +17,7 @@ export default new Router({
     AuthLoginRoute,
     AuthRegisterRoute,
     UserListRoute,
-    UserShowRoute
+    UserShowRoute,
+    <%= routeModules %>
   ]
 })

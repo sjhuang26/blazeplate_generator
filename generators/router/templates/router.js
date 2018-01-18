@@ -25,10 +25,3 @@ export const <%= schema.label %>EditRoute = {
   component: <%= schema.label %>Edit,
   props: true
 }
-
-// Add to src/routers/index.js:
-// import { <%= schema.label %>ListRoute, <%= schema.label %>ShowRoute, <%= schema.label %>NewRoute, <%= schema.label %>EditRoute } from './<%= schema.identifier %>'
-// <%= schema.label %>ListRoute,
-// <%= schema.label %>NewRoute,
-// <%= schema.label %>ShowRoute,
-// <%= schema.label %>EditRoute

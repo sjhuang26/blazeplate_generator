@@ -42,12 +42,10 @@ generateExpressResources = true
 module.exports = class extends Generator {
 
   // TODO - compose this of SMALLER Vue/Express specific generators
-  // initializing(){
-  //   // this.composeWith(require.resolve('../list_container'), { parent: this });
-  //   // this.composeWith(require.resolve('../show_container'), { parent: this });
-  //   // this.composeWith(require.resolve('../new_container'), { parent: this });
-  //   // this.composeWith(require.resolve('../edit_container'), { parent: this });
-  // }
+  // TODO - is there a way to conditionally run a generator?
+  initializing(){
+    this.composeWith(require.resolve('../vuejs_app_router'));
+  }
 
   prompting() {
     // return this.prompt([
@@ -318,20 +316,6 @@ module.exports = class extends Generator {
       }
 
     }
-
-    // // Logs instructions to the user
-    // console.log(`\n\n Done! \n Add the following lines to /src/store/index.js: \n\n \t import ${schema.identifier_plural} from './${schema.identifier_plural}'\n\n and add the '${schema.identifier_plural}' variable to the Vuex store's 'modules' object. \n\n`)
-
-    // // Logs instructions
-    // let import_snippet = `import { ${schema.label}ListRoute, ${schema.label}ShowRoute, ${schema.label}NewRoute, ${schema.label}EditRoute } from './${schema.label}'`
-    // let route_snippet = `
-    //   ${schema.label}ListRoute,
-    //   ${schema.label}ShowRoute,
-    //   ${schema.label}NewRoute,
-    //   ${schema.label}EditRoute,
-    // `
-    // // console.log(`Done! \n\nPut the following in src/routers/index.dj \n\n ${import_snippet} \n\n ${route_snippet} \n\n`)
-    // console.log('DONE WITH GENERATION')
 
   }
 
