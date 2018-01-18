@@ -11,7 +11,7 @@ const actions = {
 
   update: ({ commit }, attributes) => Factory.update({ commit }, attributes),
 
-  destroy: ({ commit }, attributes) => Factory.destroy({ commit }, attributes)
+  destroy: ({ commit }, id) => Factory.destroy({ commit }, id)
 }
 
 // // // //

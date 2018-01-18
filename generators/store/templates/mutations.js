@@ -1,3 +1,4 @@
+import _ from 'lodash'
 
 // <%= schema.label %> Module mutations
 const mutations = {
@@ -9,6 +10,9 @@ const mutations = {
   },
   current (state, { id }) {
     state.current = id
+  },
+  remove (state, id) {
+    state.collection = _.filter(state.collection, (each) => { return each._id !== id })
   }
 }
 

@@ -49,10 +49,15 @@
         <% } %>
       <% } %>
         <!-- Edit <%= schema.label %>-->
-        <td>
+        <td class='text-right'>
           <a class="btn btn-sm btn-outline-warning" :href=" '#/<%= schema.identifier_plural %>/' + m._id + '/edit' ">
             <i class="fa fa-fw fa-pencil"></i>
           </a>
+
+          <!-- Destroy -->
+          <button class="btn btn-sm btn-outline-danger" @click="confirmDestroy(m._id)">
+            <i class="fa fa-fw fa-trash"></i>
+          </button>
         </td>
       </tr>
     </tbody>
@@ -64,8 +69,16 @@
 <!-- // // // //  -->
 
 <script>
+import store from '@/store'
+
 export default {
-  props: ['collection']
+  props: ['collection'],
+  methods: {
+    confirmDestroy (id) {
+      store.commit('<%= schema.identifier %>/remove', id)
+      return store.dispatch('<%= schema.identifier %>/destroy', id)
+    }
+  }
 }
 </script>
 
