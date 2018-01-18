@@ -111,7 +111,7 @@ module.exports = class extends Generator {
       this.fs.copyTpl(
         this.templatePath('../../vuejs_store/templates/index.js'),
         this.destinationPath(vueSrc + '/store/index.js'),
-        { appSchema: ApplicationConfig, storeModules: storeModules.join(",\n    ")  }
+        { appSchema: ApplicationConfig, storeModules: storeModules.join(",\n    ")  } // TODO - constantize indentation size?
       );
 
     }
