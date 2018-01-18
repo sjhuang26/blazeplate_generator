@@ -23,7 +23,7 @@ export default {
   // Top-Level page Meta
   metaInfo: {
     title: 'Loading...', // set a title
-    titleTemplate: 'HotSheets - %s', // title is now "HotSheets - Loading..."
+    titleTemplate: 'Blazeplate - %s', // title is now "Blazeplate - Loading..."
     htmlAttrs: {
       lang: 'en'
     }

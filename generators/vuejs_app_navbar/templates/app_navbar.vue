@@ -2,8 +2,7 @@
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
     <a class="navbar-brand" href="#/">
-      <!-- <img class='logo mr-3' src="/static/icon_white.svg"> -->
-      <strong>Hot</strong>Sheets
+      <strong><%=appSchema.label %></strong>
     </a>
 
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,28 +12,28 @@
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
 
-        <li class="nav-item" v-for="s in allSchemas" :key="s._id">
-          <a class="nav-link" :href="'#/schemas/' + s._id ">{{s.label_plural}}</a>
-        </li>
+        <!-- <li class="nav-item" v-for="s in allSchemas" :key="s._id"> -->
+          <!-- <a class="nav-link" :href="'#/schemas/' + s._id ">{{s.label_plural}}</a> -->
+        <!-- </li> -->
 
-        <li class="nav-item">
-          <a class="nav-link" href="#/schemas/new">
-            <i class="fa fa-fw fa-plus" v-b-tooltip.hover.right title="New Schema"></i>
-          </a>
-        </li>
+        <!-- <li class="nav-item"> -->
+          <!-- <a class="nav-link" href="#/schemas/new"> -->
+            <!-- <i class="fa fa-fw fa-plus" v-b-tooltip.hover.right title="New Schema"></i> -->
+          <!-- </a> -->
+        <!-- </li> -->
 
 	    </ul>
 
 	    <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#/schemas">Admin</a>
-        </li>
-<!-- 	      <li class="nav-item">
-	        <a class="nav-link" href="#/auth/register">Register</a>
-	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="#/auth/login">Login</a>
-	      </li> -->
+        <!-- <li class="nav-item"> -->
+          <!-- <a class="nav-link" href="#/schemas">Admin</a> -->
+        <!-- </li> -->
+	      <!-- <li class="nav-item"> -->
+	        <!-- <a class="nav-link" href="#/auth/register">Register</a> -->
+	      <!-- </li> -->
+	      <!-- <li class="nav-item"> -->
+	        <!-- <a class="nav-link" href="#/auth/login">Login</a> -->
+	      <!-- </li> -->
 	    </ul>
 	  </div>
 	</nav>

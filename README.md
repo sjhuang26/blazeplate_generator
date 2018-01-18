@@ -1,2 +1,2 @@
-# hotsheets_generator
-Hotsheets + Yoeman
+# blazeplate_generator
+Blazeplate + Yoeman

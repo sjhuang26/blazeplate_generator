@@ -45,6 +45,7 @@ module.exports = class extends Generator {
   // TODO - is there a way to conditionally run a generator?
   initializing(){
     this.composeWith(require.resolve('../vuejs_app_router'));
+    this.composeWith(require.resolve('../vuejs_app_navbar'));
   }
 
   prompting() {

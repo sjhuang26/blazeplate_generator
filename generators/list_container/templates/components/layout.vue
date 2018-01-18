@@ -1,17 +1,24 @@
 
 <template>
   <div class="container">
+
+    <div class="row">
+      <div class="col-lg-8">
+        <h2>
+          <%= schema.label_plural %>
+        </h2>
+      </div>
+
+      <div class="col-lg-4 text-right">
+        <a class='btn btn-outline-success' href="#/<%= schema.identifier_plural %>/new">
+          <i class="fa fa-fw fa-plus mr-2"></i>
+          New <%= schema.label %>
+        </a>
+      </div>
+    </div>
+
   	<div class="row">
   		<div class="col-lg-12">
-
-        <!-- Header -->
-  			<h2><%= schema.label %> List</h2>
-  			<hr>
-
-        <!-- New Button -->
-  			<ul class="list-group mt-2 mb-4 text-center">
-  				<a class="list-group-item" href="#/<%= schema.identifier_plural %>/new">NEW</a>
-  			</ul>
 
         <!-- Fetching -->
         <p class='lead' v-if="fetching">
