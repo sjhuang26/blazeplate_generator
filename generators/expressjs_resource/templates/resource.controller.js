@@ -44,7 +44,7 @@ const buildQuery = (opts) => {
 
 // // // //
 
-// GET /<%= schema.plural_identifier %>
+// GET /<%= schema.identifier_plural %>
 // TODO - pagination (middleware?)
 module.exports.list = (req, res, next) => {
     // return Device.find({}).then(function(response) {
@@ -71,7 +71,7 @@ module.exports.list = (req, res, next) => {
 
 // // // //
 
-// POST /<%= schema.plural_identifier %>
+// POST /<%= schema.identifier_plural %>
 module.exports.create = (req, res, next) => {
     return new <%= schema.label %>(req.body).save().then(function(response) {
         return res.status(200).send(response).end();
@@ -80,7 +80,7 @@ module.exports.create = (req, res, next) => {
 
 // // // //
 
-// GET /<%= schema.plural_identifier %>/:id
+// GET /<%= schema.identifier_plural %>/:id
 module.exports.show = (req, res, next) => {
     return <%= schema.label %>.findById(req.params.id).then(function(response) {
         return res.status(200).send(response).end();
@@ -89,7 +89,7 @@ module.exports.show = (req, res, next) => {
 
 // // // //
 
-// PUT /<%= schema.plural_identifier %>/:id
+// PUT /<%= schema.identifier_plural %>/:id
 module.exports.update = (req, res, next) => {
     return <%= schema.label %>.findByIdAndUpdate(req.params.id, {$set: req.body}, { new: true }).then(function(response) {
         return res.status(200).send(response).end();
@@ -98,7 +98,7 @@ module.exports.update = (req, res, next) => {
 
 // // // //
 
-// DELETE /<%= schema.plural_identifier %>/:id
+// DELETE /<%= schema.identifier_plural %>/:id
 module.exports.delete = (req, res, next) => {
     return <%= schema.label %>.remove({_id: req.params.id }).then(function(response) {
         return res.status(200).send(response).end();
