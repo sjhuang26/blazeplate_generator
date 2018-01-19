@@ -5,13 +5,23 @@
 
       <div class="row my-2">
         <div class="col-lg-12 text-center">
-          <p class="welcome-text">WELCOME</p>
+          <!-- <p class="welcome-text">WELCOME</p> -->
+          <p class="welcome-text">Built with</p>
         </div>
       </div>
 
-      <div class="row my-2">
+      <div class="row my-4">
         <div class="col-lg-12 text-center">
-          <p class="lead"><a href="https://github.com/blazeplate" target="_blank">Blazeplate</a> is an open-source tool for generating boilerplate code.</p>
+          <img src="/static/logo.png">
+        </div>
+      </div>
+
+      <div class="row my-4">
+        <div class="col-lg-12 text-center">
+          <a class="btn btn-lg btn-outline-dark" href="https://github.com/blazeplate" target="_blank">
+            <i class="fa fa-book mr-1"></i>
+            Documentation
+          </a>
         </div>
       </div>
 
