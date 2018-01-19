@@ -96,10 +96,12 @@ class AbstractFactory {
       method: 'delete'
     })
     .then((response) => {
-      // TODO - REMOVE ITEM FROM COLLECTION
-
       // Shows DESTROY_SUCCESS message
       store.commit('notification/add', { message: this.messages.DESTROY_SUCCESS, context: 'success', dismissible: true })
+
+      // TODO - REMOVE ITEM FROM COLLECTION
+      // Removes the item from the collection
+      // store.commit('<%= schema.identifier %>/remove', id)
 
       // Redirects to REDIRECT_SUCCESS
       // TODO - What is the best way to manage redirection in VueJS?

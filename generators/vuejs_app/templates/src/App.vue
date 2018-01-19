@@ -23,7 +23,7 @@ export default {
   // Top-Level page Meta
   metaInfo: {
     title: 'Loading...', // set a title
-    titleTemplate: 'HotSheets - %s', // title is now "HotSheets - Loading..."
+    titleTemplate: 'Blazeplate - %s', // title is now "Blazeplate - Loading..."
     htmlAttrs: {
       lang: 'en'
     }
@@ -41,8 +41,9 @@ export default {
   body
     height: 100%
 
-  .container-fluid
-    height: 100%
+  .container-fluid, .container
+    // height: 100%
+    padding-top: 4.5rem
 
   #app
     height: 100%

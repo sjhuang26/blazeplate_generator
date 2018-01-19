@@ -31,7 +31,7 @@ module.exports = {
         }
       ],
       identifier: 'google_sheet',
-      identifier_plural: 'google_sheet',
+      identifier_plural: 'google_sheets',
       label: 'Google Sheet',
       label_plural: 'Google Sheets',
       unqiue_id_prefix: 'GS_'

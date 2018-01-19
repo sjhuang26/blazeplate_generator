@@ -3,21 +3,21 @@ const Schema = mongoose.Schema
 
 // // // //
 
-const <%= schema.label %> = new Schema({
+const <%= schema.label.split(' ').join('') %> = new Schema({
     <% for (index in schema.attributes) { %>
     <% let attr = schema.attributes[index] %>
     <% if (attr.datatype === 'BOOL') { %>
-    <%= attr.identifier %>:{
+    <%= attr.identifier %>: {
         type: Boolean
-      },
+    },
     <% } else if (attr.datatype === 'NUMBER') { %>
-    <%= attr.identifier %>:{
+    <%= attr.identifier %>: {
         type: Number
-      },
+    },
     <% } else { %>
-    <%= attr.identifier %>:{
+    <%= attr.identifier %>: {
         type: String
-      },
+    },
     <% } %>
     <% } %>
 },
@@ -33,4 +33,4 @@ const <%= schema.label %> = new Schema({
 
 // // // //
 
-module.exports = mongoose.model('<%= schema.label %>', <%= schema.label %>)
+module.exports = mongoose.model('<%= schema.label.split(' ').join('') %>', <%= schema.label.split(' ').join('') %>)

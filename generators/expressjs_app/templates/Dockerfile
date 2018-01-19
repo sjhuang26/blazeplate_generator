@@ -1,3 +1,4 @@
+
 # Create image based on the official Node image from the dockerhub
 FROM node:latest
 
@@ -11,14 +12,11 @@ WORKDIR /usr/src/app
 COPY package.json /usr/src/app
 
 # Get all the code needed to run the app
-COPY app.js /usr/src/app
-COPY dist /usr/src/app/public
+COPY server /usr/src/app/server
+# COPY app.js /usr/src/app
 
 # Install dependecies
 RUN npm install
-
-# Build the client application
-RUN npm build
 
 
 # Serve the app

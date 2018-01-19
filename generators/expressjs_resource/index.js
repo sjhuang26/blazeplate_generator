@@ -6,27 +6,6 @@ var classify = require('underscore.string/classify');
 
 module.exports = class extends Generator {
 
-  prompting() {
-    return this.prompt([
-      {
-        type    : 'input',
-        name    : 'name',
-        message : 'Your resource name (i.e. user, blog_post, device_version, etc.)',
-        default : 'post' // Default to current folder name
-      },
-      {
-        type    : 'input',
-        name    : 'route',
-        message : 'Your resource API route (i.e. users, blog_posts, device_versions, etc.)',
-        default : 'posts' // Default to current folder name
-      }
-    ]).then((answers) => {
-      this.name = answers.name.toLowerCase()
-      this.route = answers.route.toLowerCase()
-      this.title = classify(this.name)
-    });
-  }
-
   // writing to file
   paths() {
     this.destinationRoot();

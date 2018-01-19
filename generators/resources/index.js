@@ -1,7 +1,9 @@
 // Generator index file
 var Generator = require('yeoman-generator');
 var classify = require('underscore.string/classify');
-const ApplicationConfig = require('./data')
+// const ApplicationConfig = require('./data')
+const ApplicationConfig = require('./data.old.js')
+const _ = require('lodash')
 
 // // // //
 // Appliation Flags
@@ -24,28 +26,27 @@ let generateDockerCompose = false
 
 // Set flags:
 generateStore = true
-// generateRouter = true
-// generateList = true
-// generateShow = true
-// generateEdit = true
-// generateNew = true
-// generateVue = true
+generateRouter = true
+generateList = true
+generateShow = true
+generateEdit = true
+generateNew = true
+generateVue = true
 
-// generateExpress = true
-// generateDockerCompose = true
-// generateExpressResources = true
+generateExpress = true
+generateDockerCompose = true
+generateExpressResources = true
 
 // // // //
 
 module.exports = class extends Generator {
 
   // TODO - compose this of SMALLER Vue/Express specific generators
-  // initializing(){
-  //   // this.composeWith(require.resolve('../list_container'), { parent: this });
-  //   // this.composeWith(require.resolve('../show_container'), { parent: this });
-  //   // this.composeWith(require.resolve('../new_container'), { parent: this });
-  //   // this.composeWith(require.resolve('../edit_container'), { parent: this });
-  // }
+  // TODO - is there a way to conditionally run a generator?
+  initializing(){
+    this.composeWith(require.resolve('../vuejs_app_router'));
+    this.composeWith(require.resolve('../vuejs_app_navbar'));
+  }
 
   prompting() {
     // return this.prompt([
@@ -64,7 +65,8 @@ module.exports = class extends Generator {
   writing() {
 
     // Destination helpers & constants
-    let destinationRoot = './' + ApplicationConfig.identifier + '_build/'
+    // let destinationRoot = './' + ApplicationConfig.identifier + '_build/'
+    let destinationRoot = './dist/' + ApplicationConfig.identifier + '/'
     let vueSrc = destinationRoot + 'vuejs_client/src/'
 
     // // // //
@@ -90,11 +92,25 @@ module.exports = class extends Generator {
         this.destinationPath(destinationRoot + 'vuejs_client/')
       );
 
-      // client/src/store/index.jd
+      // client/.*
+      this.fs.copy(
+        this.templatePath('../../vuejs_app/templates/.*'),
+        this.destinationPath(destinationRoot + 'vuejs_client/')
+      );
+
+      // client/src/store/index.js
+      // TODO - move into separate generator class definition
+      let storeModules = []
+      _.each(ApplicationConfig.schemas, (s) => {
+        storeModules.push(s.identifier)
+      })
+      // for (index in appSchema.schemas) { %>
+      // appSchema.schemas[index].identifier %><% if (index !== appSchema.schemas.length) { %>,<% }%>
+
       this.fs.copyTpl(
-        this.templatePath('../../vuejs_store/templates/index.js'),
+        this.templatePath('../../vuejs_app_store/templates/index.js'),
         this.destinationPath(vueSrc + '/store/index.js'),
-        { appSchema: ApplicationConfig }
+        { appSchema: ApplicationConfig, storeModules: storeModules.join(",\n    ")  } // TODO - constantize indentation size?
       );
 
     }
@@ -139,21 +155,21 @@ module.exports = class extends Generator {
       if (generateList) {
         // client/src/containers/resource_list/index.vue
         this.fs.copyTpl(
-          this.templatePath('../../list_container/templates/index.vue'),
+          this.templatePath('../../vuejs_list_container/templates/index.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_list/index.vue'),
           { schema: schema }
         );
 
         // client/src/containers/resource_list/layout.vue
         this.fs.copyTpl(
-          this.templatePath('../../list_container/templates/components/layout.vue'),
+          this.templatePath('../../vuejs_list_container/templates/components/layout.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_list/components/layout.vue'),
           { schema: schema }
         );
 
         // client/src/containers/resource_list/components/list.vue
         this.fs.copyTpl(
-          this.templatePath('../../list_container/templates/components/list.vue'),
+          this.templatePath('../../vuejs_list_container/templates/components/list.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_list/components/list.vue'),
           { schema: schema  }
         );
@@ -164,14 +180,14 @@ module.exports = class extends Generator {
       if (generateShow) {
         // client/src/containers/resource_show/index.vue
         this.fs.copyTpl(
-          this.templatePath('../../show_container/templates/index.vue'),
+          this.templatePath('../../vuejs_show_container/templates/index.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_show/index.vue'),
           { schema: schema  }
         );
 
         // client/src/containers/resource_show/layout.vue
         this.fs.copyTpl(
-          this.templatePath('../../show_container/templates/components/layout.vue'),
+          this.templatePath('../../vuejs_show_container/templates/components/layout.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_show/components/layout.vue'),
           { schema: schema  }
         );
@@ -182,33 +198,33 @@ module.exports = class extends Generator {
       if (generateEdit) {
         // client/src/containers/resource_edit/index.vue
         this.fs.copyTpl(
-          this.templatePath('../../edit_container/templates/index.vue'),
+          this.templatePath('../../vuejs_edit_container/templates/index.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_edit/index.vue'),
           { schema: schema }
         );
 
         // client/src/containers/resource_edit/layout.vue
         this.fs.copyTpl(
-          this.templatePath('../../edit_container/templates/components/layout.vue'),
+          this.templatePath('../../vuejs_edit_container/templates/components/layout.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_edit/components/layout.vue'),
           { schema: schema }
         );
       }
 
       // // // //
-      // VUE -> NEW_CONTAINER
+      // VUE -> vuejs_new_container
       if (generateNew) {
 
         // client/src/containers/resource_new/index.vue
         this.fs.copyTpl(
-          this.templatePath('../../new_container/templates/index.vue'),
+          this.templatePath('../../vuejs_new_container/templates/index.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_new/index.vue'),
           { schema: schema }
         );
 
         // client/src/containers/resource_new/layout.vue
         this.fs.copyTpl(
-          this.templatePath('../../new_container/templates/components/layout.vue'),
+          this.templatePath('../../vuejs_new_container/templates/components/layout.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_new/components/layout.vue'),
           { schema: schema }
         );
@@ -219,7 +235,7 @@ module.exports = class extends Generator {
       if (generateRouter) {
         // client/src/routers/resource.js
         this.fs.copyTpl(
-          this.templatePath('../../router/templates/router.js'),
+          this.templatePath('../../vuejs_router/templates/router.js'),
           this.destinationPath(vueSrc + 'routers/' + schema.identifier + '.js'),
           { schema: schema }
         );
@@ -230,42 +246,42 @@ module.exports = class extends Generator {
       if (generateStore) {
         // client/src/store/resource/actions.js
         this.fs.copyTpl(
-          this.templatePath('../../store/templates/actions.js'),
+          this.templatePath('../../vuejs_store/templates/actions.js'),
           this.destinationPath(vueSrc + 'store/' + schema.identifier + '/actions.js'),
           { schema: schema }
         );
 
         // client/src/store/resource/factory.js
         this.fs.copyTpl(
-          this.templatePath('../../store/templates/factory.js'),
+          this.templatePath('../../vuejs_store/templates/factory.js'),
           this.destinationPath(vueSrc + 'store/' + schema.identifier + '/factory.js'),
           { schema: schema }
         );
 
         // client/src/store/resource/getters.js
         this.fs.copyTpl(
-          this.templatePath('../../store/templates/getters.js'),
+          this.templatePath('../../vuejs_store/templates/getters.js'),
           this.destinationPath(vueSrc + 'store/' + schema.identifier + '/getters.js'),
           { schema: schema }
         );
 
         // client/src/store/resource/index.js
         this.fs.copyTpl(
-          this.templatePath('../../store/templates/index.js'),
+          this.templatePath('../../vuejs_store/templates/index.js'),
           this.destinationPath(vueSrc + 'store/' + schema.identifier + '/index.js'),
           { schema: schema }
         );
 
         // client/src/store/resource/mutations.js
         this.fs.copyTpl(
-          this.templatePath('../../store/templates/mutations.js'),
+          this.templatePath('../../vuejs_store/templates/mutations.js'),
           this.destinationPath(vueSrc + 'store/' + schema.identifier + '/mutations.js'),
           { schema: schema }
         );
 
         // client/src/store/resource/state.js
         this.fs.copyTpl(
-          this.templatePath('../../store/templates/state.js'),
+          this.templatePath('../../vuejs_store/templates/state.js'),
           this.destinationPath(vueSrc + 'store/' + schema.identifier + '/state.js'),
           { schema: schema }
         );
@@ -301,20 +317,6 @@ module.exports = class extends Generator {
       }
 
     }
-
-    // // Logs instructions to the user
-    // console.log(`\n\n Done! \n Add the following lines to /src/store/index.js: \n\n \t import ${schema.identifier_plural} from './${schema.identifier_plural}'\n\n and add the '${schema.identifier_plural}' variable to the Vuex store's 'modules' object. \n\n`)
-
-    // // Logs instructions
-    // let import_snippet = `import { ${schema.label}ListRoute, ${schema.label}ShowRoute, ${schema.label}NewRoute, ${schema.label}EditRoute } from './${schema.label}'`
-    // let route_snippet = `
-    //   ${schema.label}ListRoute,
-    //   ${schema.label}ShowRoute,
-    //   ${schema.label}NewRoute,
-    //   ${schema.label}EditRoute,
-    // `
-    // // console.log(`Done! \n\nPut the following in src/routers/index.dj \n\n ${import_snippet} \n\n ${route_snippet} \n\n`)
-    // console.log('DONE WITH GENERATION')
 
   }
 
