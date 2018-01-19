@@ -108,7 +108,7 @@ module.exports = class extends Generator {
       // appSchema.schemas[index].identifier %><% if (index !== appSchema.schemas.length) { %>,<% }%>
 
       this.fs.copyTpl(
-        this.templatePath('../../vuejs_store/templates/index.js'),
+        this.templatePath('../../vuejs_app_store/templates/index.js'),
         this.destinationPath(vueSrc + '/store/index.js'),
         { appSchema: ApplicationConfig, storeModules: storeModules.join(",\n    ")  } // TODO - constantize indentation size?
       );
@@ -155,21 +155,21 @@ module.exports = class extends Generator {
       if (generateList) {
         // client/src/containers/resource_list/index.vue
         this.fs.copyTpl(
-          this.templatePath('../../list_container/templates/index.vue'),
+          this.templatePath('../../vuejs_list_container/templates/index.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_list/index.vue'),
           { schema: schema }
         );
 
         // client/src/containers/resource_list/layout.vue
         this.fs.copyTpl(
-          this.templatePath('../../list_container/templates/components/layout.vue'),
+          this.templatePath('../../vuejs_list_container/templates/components/layout.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_list/components/layout.vue'),
           { schema: schema }
         );
 
         // client/src/containers/resource_list/components/list.vue
         this.fs.copyTpl(
-          this.templatePath('../../list_container/templates/components/list.vue'),
+          this.templatePath('../../vuejs_list_container/templates/components/list.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_list/components/list.vue'),
           { schema: schema  }
         );
@@ -180,14 +180,14 @@ module.exports = class extends Generator {
       if (generateShow) {
         // client/src/containers/resource_show/index.vue
         this.fs.copyTpl(
-          this.templatePath('../../show_container/templates/index.vue'),
+          this.templatePath('../../vuejs_show_container/templates/index.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_show/index.vue'),
           { schema: schema  }
         );
 
         // client/src/containers/resource_show/layout.vue
         this.fs.copyTpl(
-          this.templatePath('../../show_container/templates/components/layout.vue'),
+          this.templatePath('../../vuejs_show_container/templates/components/layout.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_show/components/layout.vue'),
           { schema: schema  }
         );
@@ -198,33 +198,33 @@ module.exports = class extends Generator {
       if (generateEdit) {
         // client/src/containers/resource_edit/index.vue
         this.fs.copyTpl(
-          this.templatePath('../../edit_container/templates/index.vue'),
+          this.templatePath('../../vuejs_edit_container/templates/index.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_edit/index.vue'),
           { schema: schema }
         );
 
         // client/src/containers/resource_edit/layout.vue
         this.fs.copyTpl(
-          this.templatePath('../../edit_container/templates/components/layout.vue'),
+          this.templatePath('../../vuejs_edit_container/templates/components/layout.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_edit/components/layout.vue'),
           { schema: schema }
         );
       }
 
       // // // //
-      // VUE -> NEW_CONTAINER
+      // VUE -> vuejs_new_container
       if (generateNew) {
 
         // client/src/containers/resource_new/index.vue
         this.fs.copyTpl(
-          this.templatePath('../../new_container/templates/index.vue'),
+          this.templatePath('../../vuejs_new_container/templates/index.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_new/index.vue'),
           { schema: schema }
         );
 
         // client/src/containers/resource_new/layout.vue
         this.fs.copyTpl(
-          this.templatePath('../../new_container/templates/components/layout.vue'),
+          this.templatePath('../../vuejs_new_container/templates/components/layout.vue'),
           this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_new/components/layout.vue'),
           { schema: schema }
         );
@@ -235,7 +235,7 @@ module.exports = class extends Generator {
       if (generateRouter) {
         // client/src/routers/resource.js
         this.fs.copyTpl(
-          this.templatePath('../../router/templates/router.js'),
+          this.templatePath('../../vuejs_router/templates/router.js'),
           this.destinationPath(vueSrc + 'routers/' + schema.identifier + '.js'),
           { schema: schema }
         );
@@ -246,42 +246,42 @@ module.exports = class extends Generator {
       if (generateStore) {
         // client/src/store/resource/actions.js
         this.fs.copyTpl(
-          this.templatePath('../../store/templates/actions.js'),
+          this.templatePath('../../vuejs_store/templates/actions.js'),
           this.destinationPath(vueSrc + 'store/' + schema.identifier + '/actions.js'),
           { schema: schema }
         );
 
         // client/src/store/resource/factory.js
         this.fs.copyTpl(
-          this.templatePath('../../store/templates/factory.js'),
+          this.templatePath('../../vuejs_store/templates/factory.js'),
           this.destinationPath(vueSrc + 'store/' + schema.identifier + '/factory.js'),
           { schema: schema }
         );
 
         // client/src/store/resource/getters.js
         this.fs.copyTpl(
-          this.templatePath('../../store/templates/getters.js'),
+          this.templatePath('../../vuejs_store/templates/getters.js'),
           this.destinationPath(vueSrc + 'store/' + schema.identifier + '/getters.js'),
           { schema: schema }
         );
 
         // client/src/store/resource/index.js
         this.fs.copyTpl(
-          this.templatePath('../../store/templates/index.js'),
+          this.templatePath('../../vuejs_store/templates/index.js'),
           this.destinationPath(vueSrc + 'store/' + schema.identifier + '/index.js'),
           { schema: schema }
         );
 
         // client/src/store/resource/mutations.js
         this.fs.copyTpl(
-          this.templatePath('../../store/templates/mutations.js'),
+          this.templatePath('../../vuejs_store/templates/mutations.js'),
           this.destinationPath(vueSrc + 'store/' + schema.identifier + '/mutations.js'),
           { schema: schema }
         );
 
         // client/src/store/resource/state.js
         this.fs.copyTpl(
-          this.templatePath('../../store/templates/state.js'),
+          this.templatePath('../../vuejs_store/templates/state.js'),
           this.destinationPath(vueSrc + 'store/' + schema.identifier + '/state.js'),
           { schema: schema }
         );

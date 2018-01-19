@@ -1,24 +1,15 @@
-// import createPersistedState from 'vuex-persistedstate'
-import Vue from 'vue'
-import Vuex from 'vuex'
-import auth from './auth'
-import user from './user'
-import notification from './notification'
-<% for (index in appSchema.schemas) { %>
-import <%= appSchema.schemas[index].identifier %> from './<%= appSchema.schemas[index].identifier %>'
-<% } %>
-// Vuex Initialization
-// TODO - should this be done elsewhere?
-Vue.use(Vuex)
+import actions from './actions'
+import state from './state'
+import getters from './getters'
+import mutations from './mutations'
 
-// A Vuex instance is created by combining the state, mutations, actions,
-// and getters.
-export default new Vuex.Store({
-  modules: {
-    auth,
-    user,
-    notification,
-    <%= storeModules %>
-  }
-  // plugins: [createPersistedState()]
-})
+export default {
+  namespaced: true,
+  state: state,
+  mutations: mutations,
+  actions: actions,
+  getters: getters
+}
+
+// Add this to /src/store/index:
+// import <%= schema.identifier %> from './<%= schema.identifier %>'
