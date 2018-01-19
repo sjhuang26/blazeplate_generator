@@ -2,6 +2,13 @@ const User = require('./user.model')
 
 // // // //
 
+// GET /users/profile
+exports.profile = (req, res) => {
+    res.json({ username: 'aeksco', email: 'aeksco@gmail.com' })
+}
+
+// // // //
+
 // GET /users
 exports.list = (req, res) => {
     // refuse if not an admin

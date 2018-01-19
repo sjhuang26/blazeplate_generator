@@ -1,5 +1,5 @@
 
-// Project Module State
+// Auth Module State
 const state = {
   fetching: false,
   token: null,

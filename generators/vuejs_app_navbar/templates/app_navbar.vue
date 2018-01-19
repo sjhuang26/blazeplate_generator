@@ -1,5 +1,5 @@
 <template>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+	<nav class="navbar navbar-expand-lg fixed-top">
 
     <a class="navbar-brand" href="#/">
       <strong><%=appSchema.label %></strong>
@@ -21,29 +21,36 @@
 	    </ul>
 
 	    <ul class="navbar-nav ml-auto">
-        <!-- <li class="nav-item"> -->
-          <!-- <a class="nav-link" href="#/schemas">Admin</a> -->
-        <!-- </li> -->
-	      <!-- <li class="nav-item"> -->
-	        <!-- <a class="nav-link" href="#/auth/register">Register</a> -->
-	      <!-- </li> -->
-	      <!-- <li class="nav-item"> -->
-	        <!-- <a class="nav-link" href="#/auth/login">Login</a> -->
-	      <!-- </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="#/schemas">Admin</a>
+        </li>
+	      <li class="nav-item" v-if="!currentUser">
+	        <a class="nav-link" href="#/auth/register">Register</a>
+	      </li>
+	      <li class="nav-item" v-if="!currentUser">
+	        <a class="nav-link" href="#/auth/login">Login</a>
+	      </li>
+        <li class="nav-item" v-if="currentUser">
+          <a class="nav-link" href="#/user/profile">{{currentUser.username}}</a>
+        </li>
 	    </ul>
 	  </div>
 	</nav>
 </template>
 
 <script>
-import store from '@/store'
-
 // TODO - this should be split into a series of smaller components
 export default {
   name: 'Navbar',
   computed: {
     allSchemas () {
-      return store.getters['schema/collection']
+      return this.$store.getters['schema/collection']
+    },
+    currentUser () {
+      return this.$store.getters['auth/user']
+    },
+    isAuthenticated () {
+      return this.$store.getters['auth/isAuthenticated']
     }
   }
 }
@@ -54,7 +61,6 @@ export default {
   .navbar-brand
     letter-spacing: .25rem !important
     font-family: sans-serif
-    text-transform: uppercase
     font-weight: 100
     letter-spacing: 0.1rem
 

@@ -32,10 +32,11 @@ const actions = {
   register: ({ commit }, data) => {
     // State.fetching = true
     commit('fetching', true)
-
+    console.log(data)
     // Fetches Collection from the server
-    AuthFactory.register({ commit }, data)
+    AuthFactory.register(data)
     .then((response) => {
+      console.log(response)
       // State.fetching = false
       commit('fetching', false)
 
