@@ -9,15 +9,15 @@ const <%= schema.label.split(' ').join('') %> = new Schema({
     <% if (attr.datatype === 'BOOL') { %>
     <%= attr.identifier %>: {
         type: Boolean
-      },
+    },
     <% } else if (attr.datatype === 'NUMBER') { %>
     <%= attr.identifier %>: {
         type: Number
-      },
+    },
     <% } else { %>
     <%= attr.identifier %>: {
         type: String
-      },
+    },
     <% } %>
     <% } %>
 },

@@ -33,6 +33,24 @@
             </div>
           </div>
 
+          <table class="table table-striped">
+
+            <!-- Table Header -->
+            <tbody>
+            <% for (index in schema.attributes) { %>
+              <tr>
+                <td>
+                  <%= schema.attributes[index].label %>
+                </td>
+                <td>
+                  {{model.<%= schema.attributes[index].identifier %>}}
+                </td>
+              </tr>
+            <% } %>
+            </tbody>
+
+          </table>
+
         </div>
       </div>
     </div>
