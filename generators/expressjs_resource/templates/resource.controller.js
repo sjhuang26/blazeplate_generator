@@ -61,11 +61,15 @@ module.exports.list = (req, res, next) => {
 
     // Returns paginated query
     return payload.query.lean().exec().then( (response) => {
+
+        // res.setHeader('Cache-Control', 'max-age=15')
+
         return res.status(200).send({
             page:       payload.page,
             per_page:   payload.per_page,
             items:      response })
         .end();
+
     }).catch(next);
 };
 
