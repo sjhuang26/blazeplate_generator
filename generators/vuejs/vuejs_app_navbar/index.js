@@ -1,8 +1,6 @@
-// Generator index file
-var Generator = require('yeoman-generator');
-var classify = require('underscore.string/classify');
-let ApplicationConfig;
 const _ = require('lodash')
+const Generator = require('yeoman-generator')
+const classify = require('underscore.string/classify')
 
 // // // //
 
@@ -12,8 +10,8 @@ module.exports = class extends Generator {
   // TODO - remove hard-coded resource schema
   writing() {
 
-    ApplicationConfig = this.options.build.app
-    let destinationRoot = this.options.build.dest.destinationRoot
+    let app = this.options.build.app
+    let destinationRoot = this.options.build.dest.root
     let vueSrc = this.options.build.dest.vueSrc
 
     let headerLinks = []
@@ -23,16 +21,15 @@ module.exports = class extends Generator {
     }
 
     // client/src/store/index.js
-    _.each(ApplicationConfig.schemas, (s) => {
+    _.each(app.schemas, (s) => {
       buildHeaderLink(s)
     })
 
-    // console.log(headerLinks)
 
     this.fs.copyTpl(
       this.templatePath('app_navbar.vue'),
       this.destinationPath(vueSrc + 'containers/app_navbar/components/layout.vue'),
-      { appSchema: ApplicationConfig, headerLinks: headerLinks }
+      { appSchema: app, headerLinks: headerLinks }
     );
 
   }

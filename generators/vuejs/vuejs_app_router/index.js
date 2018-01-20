@@ -1,8 +1,6 @@
-// Generator index file
-var Generator = require('yeoman-generator');
-var classify = require('underscore.string/classify');
-let ApplicationConfig;
 const _ = require('lodash')
+const Generator = require('yeoman-generator')
+const classify = require('underscore.string/classify')
 
 // // // //
 
@@ -12,10 +10,10 @@ module.exports = class extends Generator {
   // TODO - remove hard-coded resource schema
   writing() {
 
-    ApplicationConfig = this.options.build.app
+    let app = this.options.build.app
 
     // Destination helpers & constants
-    let destinationRoot = this.options.build.dest.destinationRoot
+    let destinationRoot = this.options.build.dest.root
     let vueSrc = this.options.build.dest.vueSrc
 
     let routeImports = []
@@ -34,7 +32,7 @@ module.exports = class extends Generator {
 
     // client/src/store/index.js
     // TODO - move into separate generator class definition
-    _.each(ApplicationConfig.schemas, (s) => {
+    _.each(app.schemas, (s) => {
       buildImport(s)
       buildModule(s)
     })
@@ -42,7 +40,7 @@ module.exports = class extends Generator {
     this.fs.copyTpl(
       this.templatePath('router.js'),
       this.destinationPath(vueSrc + 'routers/index.js'),
-      { appSchema: ApplicationConfig, routeImports: routeImports.join("\n"), routeModules: routeModules.join(",\n    ")  } // TODO - constantize indentation size?
+      { appSchema: app, routeImports: routeImports.join("\n"), routeModules: routeModules.join(",\n    ")  } // TODO - constantize indentation size?
     );
 
   }

@@ -1,5 +1,4 @@
-// Generator index file
-var Generator = require('yeoman-generator');
+const Generator = require('yeoman-generator')
 
 // // // //
 
@@ -12,7 +11,7 @@ module.exports = class extends Generator {
     let ApplicationConfig = this.options.build.app
 
     // Destination helpers & constants
-    let destinationRoot = this.options.build.dest.destinationRoot
+    let destinationRoot = this.options.build.dest.root
 
     // Iterates over each schema in the ApplicationConfig.schemas array
     for (var i = ApplicationConfig.schemas.length - 1; i >= 0; i--) {

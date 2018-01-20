@@ -1,8 +1,7 @@
-// Generator index file
-var Generator = require('yeoman-generator');
-var classify = require('underscore.string/classify');
 const _ = require('lodash')
 const fs = require('fs')
+const Generator = require('yeoman-generator')
+const classify = require('underscore.string/classify')
 
 // TOOD - deprecate ApplicationConfig
 let ApplicationConfig;
@@ -59,8 +58,9 @@ module.exports = class extends Generator {
 
 
     // Destination helpers & constants
-    build.dest.destinationRoot = './generated_apps/' + build.app.identifier + '/'
-    build.dest.vueSrc = build.dest.destinationRoot + 'vuejs_client/src/'
+    build.dest.root = './generated_apps/' + build.app.identifier + '/'
+    build.dest.vueRoot = build.dest.root + 'vuejs_client/'
+    build.dest.vueSrc = build.dest.vueRoot + 'src/'
 
     // TODO - deprecate `ApplicationConfig`
     this.options.build = build
@@ -74,8 +74,10 @@ module.exports = class extends Generator {
   initializing(){
 
     // Client - VueJS
+    this.composeWith(require.resolve('../vuejs/vuejs_app'), { build: this.options.build });
+    this.composeWith(require.resolve('../vuejs/vuejs_app_store'), { build: this.options.build });
     this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build: this.options.build });
-    this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build: this.options.build });
+    this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build: this.options.build });
 
     // Server - ExpressJS
     this.composeWith(require.resolve('../expressjs/expressjs_resource'), { build: this.options.build });
@@ -87,7 +89,7 @@ module.exports = class extends Generator {
     return
 
     // TODO - remove these
-    let destinationRoot = this.options.build.dest.destinationRoot
+    let destinationRoot = this.options.build.dest.root
     let vueSrc = this.options.build.dest.vueSrc
 
     // // // //
@@ -99,39 +101,6 @@ module.exports = class extends Generator {
         this.templatePath('../../docker_compose/templates/docker-compose.yml'),
         this.destinationPath(destinationRoot + 'docker-compose.yml'),
         {}
-      );
-
-    }
-
-    // // // //
-    // VUE.JS APPLICATION
-    if (generateVue) {
-
-      // client/**/*
-      this.fs.copy(
-        this.templatePath('../../vuejs/vuejs_app/templates/'),
-        this.destinationPath(destinationRoot + 'vuejs_client/')
-      );
-
-      // client/.*
-      this.fs.copy(
-        this.templatePath('../../vuejs/vuejs_app/templates/.*'),
-        this.destinationPath(destinationRoot + 'vuejs_client/')
-      );
-
-      // client/src/store/index.js
-      // TODO - move into separate generator class definition
-      let storeModules = []
-      _.each(ApplicationConfig.schemas, (s) => {
-        storeModules.push(s.identifier)
-      })
-      // for (index in appSchema.schemas) { %>
-      // appSchema.schemas[index].identifier %><% if (index !== appSchema.schemas.length) { %>,<% }%>
-
-      this.fs.copyTpl(
-        this.templatePath('../../vuejs/vuejs_app_store/templates/index.js'),
-        this.destinationPath(vueSrc + '/store/index.js'),
-        { appSchema: ApplicationConfig, storeModules: storeModules.join(",\n    ")  } // TODO - constantize indentation size?
       );
 
     }
