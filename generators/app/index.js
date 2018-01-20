@@ -72,13 +72,19 @@ module.exports = class extends Generator {
   // TODO - compose this of SMALLER Vue/Express specific generators
   // TODO - is there a way to conditionally run a generator?
   initializing(){
+
+    // Client - VueJS
     this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build: this.options.build });
-    this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build: this.options.build });
+    this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build: this.options.build });
+
+    // Server - ExpressJS
+    this.composeWith(require.resolve('../expressjs/expressjs_resource'), { build: this.options.build });
   }
 
   // writing to file
   // TODO - remove hard-coded resource schema
   writing() {
+    return
 
     // TODO - remove these
     let destinationRoot = this.options.build.dest.destinationRoot
@@ -300,35 +306,6 @@ module.exports = class extends Generator {
           this.destinationPath(vueSrc + 'store/' + schema.identifier + '/state.js'),
           { schema: schema }
         );
-      }
-
-      // // // //
-      // EXPRESS.JS RESOURCES
-
-      // EXPRESS -> Model, Controller, API Router
-      if (generateExpressResources) {
-
-        // server/api/resource/resource.model.js
-        this.fs.copyTpl(
-          this.templatePath('../../expressjs/expressjs_resource/templates/resource.model.js'),
-          this.destinationPath(destinationRoot + 'expressjs/server/api/' + schema.identifier + '/' + schema.identifier + '.model.js'),
-          { schema: schema }
-        );
-
-        // server/api/resource/resource.controller.js
-        this.fs.copyTpl(
-          this.templatePath('../../expressjs/expressjs_resource/templates/resource.controller.js'),
-          this.destinationPath(destinationRoot + 'expressjs/server/api/' + schema.identifier + '/' + schema.identifier + '.controller.js'),
-          { schema: schema }
-        );
-
-        // server/api/resource/index.js
-        this.fs.copyTpl(
-          this.templatePath('../../expressjs/expressjs_resource/templates/index.js'),
-          this.destinationPath(destinationRoot + 'expressjs/server/api/' + schema.identifier + '/index.js'),
-          { schema: schema }
-        );
-
       }
 
     }
