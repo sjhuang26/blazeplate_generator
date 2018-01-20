@@ -12,12 +12,11 @@ module.exports = class extends Generator {
   // TODO - remove hard-coded resource schema
   writing() {
 
-    ApplicationConfig = this.options.app
+    ApplicationConfig = this.options.build.app
 
     // Destination helpers & constants
-    // let destinationRoot = './' + ApplicationConfig.identifier + '_build/'
-    let destinationRoot = './generated_apps/' + ApplicationConfig.identifier + '/'
-    let vueSrc = destinationRoot + 'vuejs_client/src/'
+    let destinationRoot = this.options.build.dest.destinationRoot
+    let vueSrc = this.options.build.dest.vueSrc
 
     let routeImports = []
     let routeModules = []

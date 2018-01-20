@@ -48,29 +48,41 @@ module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
 
+    // Global build configuration
+    let build = {
+      dest: {}
+    }
+
     // TODO - Yoeman argument/option best practices
     let rawConfig = fs.readFileSync(opts['appconfig'])
-    this.options.app = JSON.parse(rawConfig)
+    build.app = JSON.parse(rawConfig)
+
+
+    // Destination helpers & constants
+    build.dest.destinationRoot = './generated_apps/' + build.app.identifier + '/'
+    build.dest.vueSrc = build.dest.destinationRoot + 'vuejs_client/src/'
 
     // TODO - deprecate `ApplicationConfig`
-    ApplicationConfig = this.options.app
+    this.options.build = build
+    console.log(build)
+    ApplicationConfig = this.options.build.app
+
   }
 
   // TODO - compose this of SMALLER Vue/Express specific generators
   // TODO - is there a way to conditionally run a generator?
   initializing(){
-    this.composeWith(require.resolve('../vuejs_app_router'), { app: this.options.app });
-    this.composeWith(require.resolve('../vuejs_app_navbar'), { app: this.options.app });
+    this.composeWith(require.resolve('../vuejs_app_router'), { build: this.options.build });
+    this.composeWith(require.resolve('../vuejs_app_navbar'), { build: this.options.build });
   }
 
   // writing to file
   // TODO - remove hard-coded resource schema
   writing() {
 
-    // Destination helpers & constants
-    // let destinationRoot = './' + ApplicationConfig.identifier + '_build/'
-    let destinationRoot = './generated_apps/' + ApplicationConfig.identifier + '/'
-    let vueSrc = destinationRoot + 'vuejs_client/src/'
+    // TODO - remove these
+    let destinationRoot = this.options.build.dest.destinationRoot
+    let vueSrc = this.options.build.dest.vueSrc
 
     // // // //
     // DOCKER-COMPOSE FILE
