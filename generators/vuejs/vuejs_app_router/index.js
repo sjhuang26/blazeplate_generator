@@ -14,7 +14,7 @@ module.exports = class extends Generator {
 
     // Destination helpers & constants
     let destinationRoot = this.options.build.dest.root
-    let vueSrc = this.options.build.dest.vueSrc
+    let vueSrc = this.options.build.dest.vue.src
 
     let routeImports = []
     let routeModules = []

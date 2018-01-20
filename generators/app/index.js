@@ -49,18 +49,31 @@ module.exports = class extends Generator {
 
     // Global build configuration
     let build = {
-      dest: {}
+      dest: {
+        root: null,
+        vue: {},
+        expressjs: {}
+      }
     }
 
     // TODO - Yoeman argument/option best practices
     let rawConfig = fs.readFileSync(opts['appconfig'])
     build.app = JSON.parse(rawConfig)
 
-
+    // // // //
     // Destination helpers & constants
+
     build.dest.root = './generated_apps/' + build.app.identifier + '/'
-    build.dest.vueRoot = build.dest.root + 'vuejs_client/'
-    build.dest.vueSrc = build.dest.vueRoot + 'src/'
+
+    // VueJS
+    build.dest.vue.root = build.dest.root + 'vuejs_client/'
+    build.dest.vue.src = build.dest.vue.root + 'src/'
+
+    // ExpressJS
+    build.dest.expressjs.root = build.dest.root + 'expressjs/'
+
+    //
+    // // // //
 
     // TODO - deprecate `ApplicationConfig`
     this.options.build = build
@@ -80,6 +93,8 @@ module.exports = class extends Generator {
     this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build: this.options.build });
 
     // Server - ExpressJS
+    this.composeWith(require.resolve('../expressjs/expressjs_app'), { build: this.options.build });
+    this.composeWith(require.resolve('../expressjs/expressjs_routes'), { build: this.options.build });
     this.composeWith(require.resolve('../expressjs/expressjs_resource'), { build: this.options.build });
   }
 
@@ -90,7 +105,7 @@ module.exports = class extends Generator {
 
     // TODO - remove these
     let destinationRoot = this.options.build.dest.root
-    let vueSrc = this.options.build.dest.vueSrc
+    let vueSrc = this.options.build.dest.vue.src
 
     // // // //
     // DOCKER-COMPOSE FILE
@@ -102,32 +117,6 @@ module.exports = class extends Generator {
         this.destinationPath(destinationRoot + 'docker-compose.yml'),
         {}
       );
-
-    }
-
-    // // // //
-    // EXPRESS.JS APPLICATION
-    if (generateExpress) {
-
-      // server/**/*
-      this.fs.copy(
-        this.templatePath('../../expressjs/expressjs_app/templates/'),
-        this.destinationPath(destinationRoot + 'expressjs/')
-      );
-
-      // server/routes.js
-      this.fs.copyTpl(
-        this.templatePath('../../expressjs/expressjs_routes/templates/routes.js'),
-        this.destinationPath(destinationRoot + 'expressjs/server/routes.js'),
-        { appSchema: ApplicationConfig }
-      );
-
-      // server/README.md
-      // this.fs.copyTpl(
-      //   this.templatePath('../../expressjs/expressjs_resource/templates/index.js'),
-      //   this.destinationPath('./generated/server/api/' + schema.identifier + '/index.js'),
-      //   { appSchema: ApplicationConfig }
-      // );
 
     }
 

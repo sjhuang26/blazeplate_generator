@@ -7,19 +7,18 @@ module.exports = class extends Generator {
   // writing to file
   writing() {
 
-    // client/**/*
+    // server/**/*
     this.fs.copy(
       this.templatePath('./'),
-      this.destinationPath(this.options.build.dest.vue.root)
+      this.destinationPath(this.options.build.dest.expressjs.root)
     );
 
-    // client/.* (dotfiles)
+    // server/.* (dotfiles)
     this.fs.copy(
       this.templatePath('./.*'),
-      this.destinationPath(this.options.build.dest.vue.root)
+      this.destinationPath(this.options.build.dest.expressjs.root)
     );
 
   }
 
-};
-
+}
