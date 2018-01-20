@@ -12,7 +12,7 @@
 
       <div class="row my-4">
         <div class="col-lg-12 text-center">
-          <img src="/static/logo.png">
+          <img src="./assets/logo.png">
         </div>
       </div>
 

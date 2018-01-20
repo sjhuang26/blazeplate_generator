@@ -6,35 +6,38 @@ var classify = require('underscore.string/classify');
 
 module.exports = class extends Generator {
 
-  // writing to file
-  paths() {
-    this.destinationRoot();
-    this.destinationPath('index.js')
-  }
-
-  // writing to file
   writing() {
 
-    // client/src/containers/resource_list/index.vue
-    this.fs.copyTpl(
-      this.templatePath('index.vue'),
-      this.destinationPath('../src/containers/' + this.name + '_list/index.vue'),
-      { resource_name: this.name, resource_title: this.title, resource_route: this.route }
-    );
+    let vueSrc = this.options.build.dest.vue.src
 
-    // client/src/containers/resource_list/layout.vue
-    this.fs.copyTpl(
-      this.templatePath('components/layout.vue'),
-      this.destinationPath('../src/containers/' + this.name + '_list/components/layout.vue'),
-      { resource_name: this.name, resource_title: this.title, resource_route: this.route }
-    );
+    // Iterates over each schema in the this.options.build.app.schemas array
+    for (var i = this.options.build.app.schemas.length - 1; i >= 0; i--) {
 
-    // client/src/containers/resource_list/components/list.vue
-    this.fs.copyTpl(
-      this.templatePath('components/list.vue'),
-      this.destinationPath('../src/containers/' + this.name + '_list/components/list.vue'),
-      { resource_name: this.name, resource_title: this.title, resource_route: this.route }
-    );
+      // Isolates the individual schema
+      let schema = this.options.build.app.schemas[i]
+
+      // client/src/containers/resource_list/index.vue
+      this.fs.copyTpl(
+        this.templatePath('index.vue'),
+        this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_list/index.vue'),
+        { schema: schema }
+      );
+
+      // client/src/containers/resource_list/layout.vue
+      this.fs.copyTpl(
+        this.templatePath('components/layout.vue'),
+        this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_list/components/layout.vue'),
+        { schema: schema }
+      );
+
+      // client/src/containers/resource_list/components/list.vue
+      this.fs.copyTpl(
+        this.templatePath('components/list.vue'),
+        this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_list/components/list.vue'),
+        { schema: schema  }
+      );
+
+    } // END LOOP
 
   }
 

@@ -9,22 +9,21 @@ module.exports = class extends Generator {
   // writing to file
   writing() {
 
-    // client/src/store/resource/actions.js
-    this.fs.copyTpl(
-      this.templatePath('router.js'),
-      this.destinationPath('../src/routers/' + this.name + '.js'),
-      { resource_name: this.name, resource_title: this.title, resource_route: this.route }
-    );
+    // Iterates over each schema in the this.options.build.app.schemas array
+    for (var i = this.options.build.app.schemas.length - 1; i >= 0; i--) {
 
-    // Logs instructions
-    let import_snippet = `import { ${this.title}ListRoute, ${this.title}ShowRoute, ${this.title}NewRoute, ${this.title}EditRoute } from './${this.name}'`
-    let route_snippet = `
-      ${this.title}ListRoute,
-      ${this.title}ShowRoute,
-      ${this.title}NewRoute,
-      ${this.title}EditRoute,
-    `
+      // Isolates the individual schema
+      let schema = this.options.build.app.schemas[i]
+
+      // client/src/routers/resource.js
+      this.fs.copyTpl(
+        this.templatePath('router.js'),
+        this.destinationPath(this.options.build.dest.vue.src + 'routers/' + schema.identifier + '.js'),
+        { schema: schema }
+      )
+
+    } // END LOOP
 
   }
 
-};
+}
