@@ -37,7 +37,7 @@ module.exports = class extends Generator {
     );
 
     // Logs instructions to the user
-    console.log(`\n\n Done! \n Add the following line to /server/routes.js \n (under 'Bootstrap API routes'): \n\n \t router.use('/${this.route}', require('./api/${this.name}')) \n\n`)
+    // console.log(`\n\n Done! \n Add the following line to /server/routes.js \n (under 'Bootstrap API routes'): \n\n \t router.use('/${this.route}', require('./api/${this.name}')) \n\n`)
 
   }
 

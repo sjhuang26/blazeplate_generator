@@ -24,8 +24,6 @@ module.exports = class extends Generator {
       ${this.title}NewRoute,
       ${this.title}EditRoute,
     `
-    console.log(`Done! \n\nPut the following in src/routers/index.dj \n\n ${import_snippet} \n\n ${route_snippet} \n\n`)
-
 
   }
 

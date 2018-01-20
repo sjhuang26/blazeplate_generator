@@ -28,7 +28,7 @@ module.exports = class extends Generator {
       buildHeaderLink(s)
     })
 
-    console.log(headerLinks)
+    // console.log(headerLinks)
 
     this.fs.copyTpl(
       this.templatePath('app_navbar.vue'),

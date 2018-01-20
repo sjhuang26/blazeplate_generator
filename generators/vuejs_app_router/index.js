@@ -21,7 +21,6 @@ module.exports = class extends Generator {
     let routeModules = []
 
     function buildImport (s) {
-      console.log(`import { ${ s.label }ListRoute, ${ s.label }ShowRoute, ${ s.label }NewRoute, ${ s.label }EditRoute } from './${ s.identifier }'`)
       routeImports.push(`import { ${ s.label }ListRoute, ${ s.label }ShowRoute, ${ s.label }NewRoute, ${ s.label }EditRoute } from './${ s.identifier }'`)
     }
 
@@ -38,8 +37,6 @@ module.exports = class extends Generator {
       buildImport(s)
       buildModule(s)
     })
-
-    console.log(routeImports.join('\n'))
 
     this.fs.copyTpl(
       this.templatePath('router.js'),

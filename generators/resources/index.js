@@ -41,6 +41,22 @@ generateExpressResources = true
 
 module.exports = class extends Generator {
 
+  // constructor
+  // Sets required input parameters
+  constructor(args, opts) {
+    super(args, opts);
+
+    // console.log(args);
+    console.log(opts);
+
+    // This makes `appconfig` a required argument.
+    // this.argument('appconfig', { type: String, required: true });
+
+    // And you can then access it later; e.g.
+    // this.log(this.options.appconfig);
+    // console.log(this.options.appconfig);
+  }
+
   // TODO - compose this of SMALLER Vue/Express specific generators
   // TODO - is there a way to conditionally run a generator?
   initializing(){
