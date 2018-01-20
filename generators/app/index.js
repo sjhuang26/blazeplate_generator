@@ -3,41 +3,6 @@ const fs = require('fs')
 const Generator = require('yeoman-generator')
 const classify = require('underscore.string/classify')
 
-// TOOD - deprecate ApplicationConfig
-let ApplicationConfig;
-
-// // // //
-// Appliation Flags
-
-// Node/Express.js Server Application
-let generateExpress = false
-let generateExpressResources = false
-
-// Vue.js Client Application
-let generateVue = false
-let generateStore = false
-let generateRouter = false
-let generateList = false
-let generateShow = false
-let generateEdit = false
-let generateNew = false
-
-// Infrastructure
-let generateDockerCompose = false
-
-// Set flags:
-generateStore = true
-generateRouter = true
-generateList = true
-generateShow = true
-generateEdit = true
-generateNew = true
-generateVue = true
-
-generateExpress = true
-generateDockerCompose = true
-generateExpressResources = true
-
 // // // //
 
 module.exports = class extends Generator {
@@ -66,19 +31,18 @@ module.exports = class extends Generator {
     build.dest.root = './generated_apps/' + build.app.identifier + '/'
 
     // VueJS
-    build.dest.vue.root = build.dest.root + 'vuejs_client/'
+    build.dest.vue.root = build.dest.root + 'web_client/'
     build.dest.vue.src = build.dest.vue.root + 'src/'
 
     // ExpressJS
-    build.dest.expressjs.root = build.dest.root + 'expressjs/'
+    build.dest.expressjs.root = build.dest.root + 'web_api/'
 
     //
     // // // //
 
-    // TODO - deprecate `ApplicationConfig`
+    // Sets this.options.build
     this.options.build = build
-    console.log(build)
-    ApplicationConfig = this.options.build.app
+    console.log(build) // DEBUG
 
   }
 
