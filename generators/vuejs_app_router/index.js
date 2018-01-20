@@ -1,7 +1,6 @@
 // Generator index file
 var Generator = require('yeoman-generator');
 var classify = require('underscore.string/classify');
-// const ApplicationConfig = require('../resources/data.old.js')
 let ApplicationConfig;
 const _ = require('lodash')
 

@@ -63,18 +63,6 @@ module.exports = class extends Generator {
     this.composeWith(require.resolve('../vuejs_app_navbar'), { app: this.options.app });
   }
 
-  prompting() {
-    // return this.prompt([
-    //   // {
-    //   //   type    : 'input',
-    //   //   name    : 'name',
-    //   //   message : 'Your resource name (i.e. user, blog_post, device_version, etc.)',
-    //   //   default : 'blog_post' // Default to current folder name
-    //   // }
-    // ]).then((answers) => {
-    // });
-  }
-
   // writing to file
   // TODO - remove hard-coded resource schema
   writing() {
