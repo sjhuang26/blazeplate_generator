@@ -1,7 +1,8 @@
 // Generator index file
 var Generator = require('yeoman-generator');
 var classify = require('underscore.string/classify');
-const ApplicationConfig = require('../resources/data.old.js')
+// const ApplicationConfig = require('../resources/data.old.js')
+let ApplicationConfig;
 const _ = require('lodash')
 
 // // // //
@@ -11,6 +12,8 @@ module.exports = class extends Generator {
   // writing to file
   // TODO - remove hard-coded resource schema
   writing() {
+
+    ApplicationConfig = this.options.app
 
     // Destination helpers & constants
     // let destinationRoot = './' + ApplicationConfig.identifier + '_build/'

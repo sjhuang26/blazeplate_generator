@@ -1,9 +1,11 @@
 // Generator index file
 var Generator = require('yeoman-generator');
 var classify = require('underscore.string/classify');
-// const ApplicationConfig = require('./data')
-const ApplicationConfig = require('./data.old.js')
 const _ = require('lodash')
+const fs = require('fs')
+
+// TOOD - deprecate ApplicationConfig
+let ApplicationConfig;
 
 // // // //
 // Appliation Flags
@@ -46,22 +48,19 @@ module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
 
-    // console.log(args);
-    console.log(opts);
+    // TODO - Yoeman argument/option best practices
+    let rawConfig = fs.readFileSync(opts['appconfig'])
+    this.options.app = JSON.parse(rawConfig)
 
-    // This makes `appconfig` a required argument.
-    // this.argument('appconfig', { type: String, required: true });
-
-    // And you can then access it later; e.g.
-    // this.log(this.options.appconfig);
-    // console.log(this.options.appconfig);
+    // TODO - deprecate `ApplicationConfig`
+    ApplicationConfig = this.options.app
   }
 
   // TODO - compose this of SMALLER Vue/Express specific generators
   // TODO - is there a way to conditionally run a generator?
   initializing(){
-    this.composeWith(require.resolve('../vuejs_app_router'));
-    this.composeWith(require.resolve('../vuejs_app_navbar'));
+    this.composeWith(require.resolve('../vuejs_app_router'), { app: this.options.app });
+    this.composeWith(require.resolve('../vuejs_app_navbar'), { app: this.options.app });
   }
 
   prompting() {
