@@ -14,7 +14,7 @@ module.exports = class extends Generator {
 
     // Destination helpers & constants
     // let destinationRoot = './' + ApplicationConfig.identifier + '_build/'
-    let destinationRoot = './dist/' + ApplicationConfig.identifier + '/'
+    let destinationRoot = './generated_apps/' + ApplicationConfig.identifier + '/'
     let vueSrc = destinationRoot + 'vuejs_client/src/'
 
     let routeImports = []
