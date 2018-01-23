@@ -8,6 +8,10 @@ test/unit/coverage
 test/e2e/reports
 selenium-debug.log
 
+# Generated Apps & Zips
+generated_apps/**/*
+!generated_apps/.gitkeep
+
 # Editor directories and files
 .idea
 .vscode

@@ -1,105 +1,75 @@
-// index.js
+const _ = require('lodash')
+const fs = require('fs')
+const Generator = require('yeoman-generator')
+const classify = require('underscore.string/classify')
 
-// Generator index file
-var Generator = require('yeoman-generator');
-
-// module.exports = class extends Generator {};
+// // // //
 
 module.exports = class extends Generator {
 
+  // constructor
+  // Sets required input parameters
+  constructor(args, opts) {
+    super(args, opts);
+
+    // Global build configuration
+    let build = {
+      dest: {
+        root: null,
+        vue: {},
+        expressjs: {}
+      }
+    }
+
+    // TODO - Yoeman argument/option best practices
+    let rawConfig = fs.readFileSync(opts['appconfig'])
+    build.app = JSON.parse(rawConfig)
+
+    // // // //
+    // Destination helpers & constants
+
+    build.dest.root = './generated_apps/' + build.app.identifier + '/'
+
+    // VueJS
+    build.dest.vue.root = build.dest.root + 'web_client/'
+    build.dest.vue.src = build.dest.vue.root + 'src/'
+
+    // ExpressJS
+    build.dest.expressjs.root = build.dest.root + 'web_api/'
+
+    //
+    // // // //
+
+    // Sets this.options.build
+    this.options.build = build
+    console.log(build) // DEBUG
+
+  }
+
+  // TODO - compose this of SMALLER Vue/Express specific generators
+  // TODO - is there a way to conditionally run a generator?
   initializing(){
-    this.composeWith(require.resolve('../api'));
+
+    // Client - VueJS
+    this.composeWith(require.resolve('../vuejs/vuejs_app'), { build: this.options.build });
+    this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build: this.options.build });
+    this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build: this.options.build });
+    this.composeWith(require.resolve('../vuejs/vuejs_app_store'), { build: this.options.build });
+    this.composeWith(require.resolve('../vuejs/vuejs_edit_container'), { build: this.options.build });
+    this.composeWith(require.resolve('../vuejs/vuejs_list_container'), { build: this.options.build });
+    this.composeWith(require.resolve('../vuejs/vuejs_new_container'), { build: this.options.build });
+    this.composeWith(require.resolve('../vuejs/vuejs_router'), { build: this.options.build });
+    this.composeWith(require.resolve('../vuejs/vuejs_show_container'), { build: this.options.build });
+    this.composeWith(require.resolve('../vuejs/vuejs_store'), { build: this.options.build });
+
+    // Server - ExpressJS
+    this.composeWith(require.resolve('../expressjs/expressjs_app'), { build: this.options.build });
+    this.composeWith(require.resolve('../expressjs/expressjs_routes'), { build: this.options.build });
+    this.composeWith(require.resolve('../expressjs/expressjs_resource'), { build: this.options.build });
+
+    // Infrastructure
+    this.composeWith(require.resolve('../docker_compose'), { build: this.options.build });
+
   }
-
-  prompting() {
-    return this.prompt([{
-      type    : 'input',
-      name    : 'name',
-      message : 'Your project name',
-      default : this.appname // Default to current folder name
-    }, {
-      type    : 'confirm',
-      name    : 'cool',
-      message : 'Would you like to enable the Cool feature?',
-      store	  : true // Remember this next time the user uses it
-    }]).then((answers) => {
-      this.log('app name', answers.name);
-      this.log('cool feature', answers.cool);
-      this.name = answers.name
-      this.cool = answers.cool
-    });
-  }
-
-  method1() {
-    this.log('method 1 just ran');
-    this.log(this.name)
-  }
-
-  method2() {
-    this.log('method 2 just ran');
-    this.log(this.cool)
-  }
-
-  _private_method() {
-    this.log('private hey');
-  }
-
-
-  priorityName() {
-  	this.log('high priority!')
-  }
-
-  // writing to file
-  paths() {
-    this.destinationRoot();
-
-    this.destinationPath('index.js')
-  }
-
-  // writing to file
-  writing() {
-
-    // index.html
-    // this.fs.copyTpl(
-    //   this.templatePath('index.html'),
-    //   this.destinationPath('public/index.html'),
-    //   { title: 'Templating with Yeoman' }
-    // );
-
-    // resource.model.js
-    this.fs.copyTpl(
-      this.templatePath('resource.model.js'),
-      this.destinationPath('server/api/' + this.name.toLowerCase() + '/' + this.name.toLowerCase() + '.model.js'),
-      { resource_name: this.name }
-    );
-
-    // resource.controller.js
-    this.fs.copyTpl(
-      this.templatePath('resource.controller.js'),
-      this.destinationPath('server/api/' + this.name.toLowerCase() + '/' + this.name.toLowerCase() + '.controller.js'),
-      { resource_name: this.name }
-    );
-
-    // /api/index.js
-    this.fs.copyTpl(
-      this.templatePath('index.js'),
-      this.destinationPath('server/api/' + this.name.toLowerCase() + '/index.js'),
-      { resource_name: this.name }
-    );
-
-    // router.js
-    // this.fs.copyTpl(
-    //   this.templatePath('router.js'),
-    //   this.destinationPath('public/router.js'),
-    //   { module_name: 'Journey' }
-    // );
-  }
-
-  // OR
-  // priorityName: {
-  //   method() {},
-  //   method2() {}
-  // }
 
 };
-
