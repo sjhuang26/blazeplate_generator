@@ -20,7 +20,7 @@ services:
       - "6379:6379"
 
   express:
-    build: './expressjs'
+    build: './web_api'
     ports:
       - "4000:4000"
     links:
