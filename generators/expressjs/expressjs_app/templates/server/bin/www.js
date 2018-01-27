@@ -1,25 +1,29 @@
-const mongoose = require('mongoose')
+require('dotenv').config()
 const app = require('../app')
-const config = require('../config')
-const port = process.env.PORT || 4000
+const mongoose = require('mongoose')
 
 // // // //
 
 // Connect to MongoDB
-mongoose.connect(config.mongodbUri)
-mongoose.Promise = global.Promise
+mongoose.connect(process.env.MONGO_DB_URI)
+mongoose.Promise = global.Promise // TODO - is this necessary?
 
+// Instantiates new Mongoose connection
 const db = mongoose.connection
 
+// Handles Mongoose connection error
 db.on('error', console.error)
 
-db.once('open', ()=>{
+// Open Mongoose connection
+db.once('open', () =>{
 
-    console.log('Connected to MongoDB')
+    // TODO - use Morgan for logging
+    console.info('Connected to MongoDB')
 
-    app.listen(port, () => {
-        console.log(`Express is running on port ${port}`)
+    // Starts Express App
+    app.listen(process.env.PORT, () => {
+        // TODO - use Morgan for logging
+        console.info(`Express is running on port ${process.env.PORT}`)
     })
 
-});
-
+})
