@@ -1,0 +1,44 @@
+{
+  "label":"AppName",
+  "identifier":"app_name",
+  "schemas":[
+    {
+      "_id": "schema_24184449592407",
+      "label": "Project",
+      "label_plural": "Projects",
+      "identifier": "project",
+      "identifier_plural": "projects",
+      "attributes": [
+        {
+          "order": 1,
+          "label": "Label",
+          "help": "The name of your project",
+          "required": true,
+          "unique": false,
+          "col_span": "6",
+          "datatype": "TEXT",
+          "datatypeOptions": {},
+          "identifier": "label",
+          "_id": "attr_43030252509917"
+        },
+        {
+          "order": 2,
+          "label": "Identifier",
+          "help": "The lowercase-only version of the Label ",
+          "required": true,
+          "unique": false,
+          "col_span": 6,
+          "datatype": "TEXT",
+          "datatypeOptions": {},
+          "identifier": "identifier",
+          "_id": "attr_70043431491708"
+        }
+      ],
+      "display": {
+        "icon": "fa-square-o",
+        "navbar_link": true
+      },
+      "unqiue_id_prefix": "PR_"
+    }
+  ]
+}
