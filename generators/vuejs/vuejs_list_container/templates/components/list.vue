@@ -50,6 +50,10 @@
       <% } %>
         <!-- Edit <%= schema.label %>-->
         <td class='text-right'>
+          <a class="btn btn-sm btn-outline-primary" :href=" '#/<%= schema.identifier_plural %>/' + m._id">
+            <i class="fa fa-fw fa-eye"></i>
+          </a>
+
           <a class="btn btn-sm btn-outline-warning" :href=" '#/<%= schema.identifier_plural %>/' + m._id + '/edit' ">
             <i class="fa fa-fw fa-pencil"></i>
           </a>

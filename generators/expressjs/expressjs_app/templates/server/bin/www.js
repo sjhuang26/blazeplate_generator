@@ -1,25 +1,39 @@
-const mongoose = require('mongoose')
+require('dotenv').config()
 const app = require('../app')
-const config = require('../config')
-const port = process.env.PORT || 4000
+const RedisClient = require('../lib/redis')
+const mongoose = require('mongoose')
 
 // // // //
 
-// Connect to MongoDB
-mongoose.connect(config.mongodbUri)
+// TODO - is this needed?
 mongoose.Promise = global.Promise
 
-const db = mongoose.connection
+// Connects to Redis...
+RedisClient.on('connect', () => {
 
-db.on('error', console.error)
+    // Redis connection message
+    console.info('Connected to Redis...');
 
-db.once('open', ()=>{
+    // Connect to MongoDB
+    mongoose.connect(process.env.MONGO_DB_URI)
 
-    console.log('Connected to MongoDB')
+    // Instantiates new Mongoose connection
+    const db = mongoose.connection
 
-    app.listen(port, () => {
-        console.log(`Express is running on port ${port}`)
+    // Handles Mongoose connection error
+    db.on('error', console.error)
+
+    // Open Mongoose connection
+    db.once('open', () => {
+
+        // TODO - use Morgan for logging
+        console.info('Connected to MongoDB...')
+
+        // Starts Express App
+        app.listen(process.env.PORT, () => {
+            // TODO - use Morgan for logging
+            console.info(`Express is running on port ${process.env.PORT}`)
+        })
     })
 
-});
-
+})
