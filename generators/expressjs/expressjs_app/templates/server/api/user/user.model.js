@@ -63,7 +63,7 @@ User.methods.verify = function (password) {
 
 // assignAdmin
 // Assigns admin priviledges to a user
-User.methods.assignAdmin = () => {
+User.methods.assignAdmin = function () {
     // Assigns true to `admin` attribute
     this.admin = true
 

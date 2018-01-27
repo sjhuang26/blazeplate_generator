@@ -115,7 +115,7 @@ exports.login = (req, res) => {
 
         // Assembles response_payload
         const response_payload = {
-            id: user_id,
+            _id: user_id,
             username: user.username,
             admin: user.admin,
             roles: user.roles,

@@ -6,7 +6,6 @@ const User = require('./user.model')
 exports.profile = (req, res) => {
     return User.findOne({ username: req.user.username }, '-password -__v').exec()
     .then( (user) => { res.json(user) })
-    // res.json(req.user)
 }
 
 // // // //
