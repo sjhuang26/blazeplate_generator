@@ -24,7 +24,7 @@ exports.register = (req, res) => {
     }
 
     // Respond to the client
-    const respond = (isAdmin) => {
+    const respond = (user) => {
         res.json({
             message: 'Registered Successfully.'
         })
@@ -62,7 +62,7 @@ exports.login = (req, res) => {
         if(!user){
 
             // Invalid password
-            throw new Error('login failed')
+            throw new Error('Login failed - user does not exist.')
             return
         }
 
@@ -70,7 +70,7 @@ exports.login = (req, res) => {
         if (!user.verify(password)) {
 
             // Invalid password
-            throw new Error('login failed')
+            throw new Error('Login failed - invalid password.')
             return
         }
 
@@ -79,7 +79,7 @@ exports.login = (req, res) => {
             id: user._id.toString(),
             admin: user.admin,
             username: user.username,
-            iat: Date.now()
+            iat: Date.now() // Issued At
         }
 
         // JWT Options
@@ -101,6 +101,7 @@ exports.login = (req, res) => {
                 resolve({ token, user })
             }
 
+            // Signs & encrypts the JWT - generates the web token
             jwt.sign(jwt_paylod, process.env.JWT_SECRET, jwt_options, jwtCallback)
 
         })
@@ -128,7 +129,7 @@ exports.login = (req, res) => {
         return RedisClient.set(user_id, token, (err, reply) => {
 
             // TODO - abstract HEADER
-            const CONTENT_TYPE_JSON = { 'Content-Type': 'application/json' }
+            const CONTENT_TYPE_JSON = { 'Content-Type': 'application/json' };
 
             // 500 Internal Server Error
             // Error writing to Redis
@@ -162,13 +163,19 @@ exports.login = (req, res) => {
 
 // // // //
 // POST /api/auth/logout
-// TODO - just apply standard AUTH middleware (requiresLogin)
 exports.logout = (req, res) => {
-    console.log('LOGOUT HERE')
-    console.log(req.user)
-    console.log(req.user)
     RedisClient.del(req.user.id)
-
-    // RedisClient.key(req.user.id).clear()
     return res.json({ logout: true })
+}
+
+// // // //
+
+// POST /api/auth/reset_password
+exports.reset_password = (req, res) => {
+    console.log('TODO - reset password logic')
+    // Password reset workflow (option A):
+    // 1 - Fetch User -> User.findByUsername(req.user.username)
+    // 2 - Generate RandomPassword
+    // 3 - Email RandomPassword to User.email
+    // 4 - Assign User.password = RandomPassword
 }

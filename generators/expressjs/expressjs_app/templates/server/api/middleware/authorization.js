@@ -11,7 +11,7 @@ module.exports = function (req, res, next) {
   let token = req.headers.authorization;
 
   // Reject requests without token
-  if (!token){
+  if (!token) {
 
     // Returns 'missing token' message
     res.writeHead(401, { 'Content-Type': 'application/json' });
@@ -21,7 +21,7 @@ module.exports = function (req, res, next) {
   }
 
   // Reject tokens with incorrect format
-  else if (token.indexOf('JWT ') != 0){
+  else if (token.indexOf('JWT ') != 0) {
 
     // Returns 'invalid token' message
     res.writeHead(401, { 'Content-Type': 'application/json' });
@@ -37,7 +37,7 @@ module.exports = function (req, res, next) {
     token = token.split('JWT ')[1];
 
     // Ensure validity of token
-    jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
+    jwt.verify(token, process.env.JWT_SECRET, function (err, decoded) {
 
       // Verification error
       if (err) {
@@ -51,10 +51,10 @@ module.exports = function (req, res, next) {
       const user_id = decoded.id;
       const username = decoded.username;
       const admin = decoded.admin;
-      const issuedAt = decoded.iat;
+      const issuedAt = decoded.iat; // NOTE - unused
 
       // Ensure presnece of token in Redis
-      RedisClient.get(user_id, function(err, reply){
+      RedisClient.get(user_id, function(err, reply) {
 
         // Invalid or missing token error
         if (err || typeof(reply) != 'string') {
