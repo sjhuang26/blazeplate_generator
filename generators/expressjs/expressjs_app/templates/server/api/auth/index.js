@@ -13,6 +13,9 @@ router.post('/login', controller.login)
 // POST /logout
 router.post('/logout', authorization, controller.logout)
 
+// POST /reset_password
+router.post('/reset_password', authorization, controller.reset_password)
+
 // // // //
 
 module.exports = router

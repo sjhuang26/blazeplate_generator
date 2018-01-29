@@ -2,7 +2,7 @@ const User = require('./user.model')
 
 // // // //
 
-// GET /users/profile
+// GET /api/users/profile
 exports.profile = (req, res) => {
     return User.findOne({ username: req.user.username }, '-password -__v').exec()
     .then( (user) => { res.json(user) })
@@ -12,7 +12,7 @@ exports.profile = (req, res) => {
 
 // GET /users
 exports.list = (req, res) => {
-    return User.find({}, '-password').exec()
+    return User.find({}, '-password -__v').exec()
     .then( (users) => {
         res.json({ items: users })
     })
