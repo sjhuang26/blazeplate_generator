@@ -37,10 +37,10 @@ const actions = {
     commit('logging_in', true)
 
     // Assembles request payload
-    let { email, password, name, github } = state.register_user
+    let { email, password, name, username } = state.register_user
 
     // Sends registration data to server
-    $POST(REGISTER_ROUTE, { body: { email, password, name, github } })
+    $POST(REGISTER_ROUTE, { body: { email, password, name, username } })
     .then((json) => {
       commit('clear_register_user')
       commit('logging_in', false)
@@ -71,10 +71,10 @@ const actions = {
     commit('logging_in', true)
 
     // Assembles request payload
-    let { email, password } = state.login_user
+    let { username, password } = state.login_user
 
     // Sends login data to server
-    $POST(LOGIN_ROUTE, { body: { email, password } })
+    $POST(LOGIN_ROUTE, { body: { username, password } })
     .then((json) => {
       // Changes loading state
       commit('logging_in', false)

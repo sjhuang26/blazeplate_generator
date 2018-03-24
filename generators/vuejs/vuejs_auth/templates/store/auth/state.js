@@ -6,6 +6,7 @@ const state = {
   logging_in: false,
   current_user: {},
   login_user: {
+    username: 'boofar',
     email: 'foo@bar.com',
     password: 'abc123',
     errors: {}
@@ -13,9 +14,7 @@ const state = {
   register_user: {
     name: 'Name Namerson',
     email: 'foo@bar.com',
-    github: {
-      login: 'boofar'
-    },
+    username: 'boofar',
     password: 'abc123',
     passwordverify: 'abc123',
     errors: {}

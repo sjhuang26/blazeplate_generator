@@ -11,7 +11,7 @@
 
                               <FormInput v-model="register_user.name" name='name' label='Name' placeholder='Name'/>
                               <FormInput v-model="register_user.email" name='email' label='Email' placeholder='Email'/>
-                              <FormInput v-model="register_user.github.login" name='github'  label='GitHub Username' placeholder='GitHub Username'/>
+                              <FormInput v-model="register_user.username" name='username'  label='GitHub Username' placeholder='GitHub Username'/>
                               <FormInput v-model="register_user.password" name='password' label='Password' placeholder='Password' type='password'/>
                               <FormInput v-model="register_user.passwordverify" name='passwordverify' label='Confirm Password' placeholder='Confirm Password' type='password'/>
 

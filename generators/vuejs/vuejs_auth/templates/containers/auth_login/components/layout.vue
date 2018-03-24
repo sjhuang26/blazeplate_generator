@@ -7,7 +7,7 @@
           <fieldset>
 
               <div class="form-group">
-                <input class="form-control" placeholder="E-mail" v-model="login_user.email" type="text">
+                <input class="form-control" placeholder="E-mail" v-model="login_user.username" type="text">
               </div>
 
               <div class="form-group">
