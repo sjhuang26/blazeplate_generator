@@ -9,6 +9,9 @@ const mutations = {
   },
   current (state, attributes) {
     state.current = attributes
+  },
+  collection (state, collection) {
+    state.collection = collection
   }
 }
 

@@ -24,7 +24,7 @@ class AbstractFactory {
       commit('fetching', false)
 
       // Sets state.collection
-      commit('sync', json)
+      commit('collection', json)
     }) // TODO - CATCH statement
   }
 

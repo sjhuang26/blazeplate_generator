@@ -1,9 +1,9 @@
 
 <template>
   <div class='row'>
-    <div v-for="m in collection" class='col-lg-2 mt-2'>
+    <div v-for="m in collection" class='col-lg-12 mt-2'>
       <div class="card card-body bg-light">
-        <a v-bind:href="'#/users/' + m._id">{{m.name}}</a>
+        <a v-bind:href="'#/users/' + m._id">{{m.email}}</a>
       </div>
     </div>
   </div>
