@@ -21,6 +21,12 @@ module.exports = class extends Generator {
       { appSchema: app, storeModules: storeModules.join(",\n    ")  } // TODO - constantize indentation size?
     );
 
+    this.fs.copyTpl(
+      this.templatePath('./lib'),
+      this.destinationPath(this.options.build.dest.vue.src + 'store/lib'),
+      { } // TODO - constantize indentation size?
+    );
+
   }
 
 };
