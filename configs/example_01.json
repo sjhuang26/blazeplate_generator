@@ -36,6 +36,21 @@
         },
         {
           "order":3,
+          "label":"Invoices",
+          "help":"Invoices belonging to a single contact",
+          "required":false,
+          "datatype":"HAS_MANY",
+          "datatypeOptions":{
+            "schema_id": "invoice_ids",
+            "schema_label": "Invoice",
+            "schema_label_plural": "Invoices"
+          },
+          "col_span":6,
+          "identifier":"invoice_ids",
+          "_id":"attr_6"
+        },
+        {
+          "order":4,
           "label":"Phone Number",
           "help":"Phone number of the individual",
           "required":false,
@@ -108,6 +123,20 @@
           "col_span":6,
           "identifier":"date",
           "_id":"attr_4"
+        },
+        {
+          "order":5,
+          "label":"Contact",
+          "help":"The Contact to whom this Invoice was sent",
+          "required":false,
+          "datatype":"BELONGS_TO",
+          "datatypeOptions":{
+            "schema_id": "schema_29321443037762",
+            "schema_label": "Contact"
+          },
+          "col_span":6,
+          "identifier":"contact_id",
+          "_id":"attr_5"
         }
       ],
       "label_plural":"Invoices",

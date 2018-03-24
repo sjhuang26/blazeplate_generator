@@ -50,17 +50,20 @@ module.exports = class extends Generator {
   // TODO - is there a way to conditionally run a generator?
   initializing(){
 
+    // TODO - format build before generation to minimize
+    let build = this.options.build
+
     // Client - VueJS
-    this.composeWith(require.resolve('../vuejs/vuejs_app'), { build: this.options.build });
-    this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build: this.options.build });
-    this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build: this.options.build });
-    this.composeWith(require.resolve('../vuejs/vuejs_app_store'), { build: this.options.build });
-    this.composeWith(require.resolve('../vuejs/vuejs_edit_container'), { build: this.options.build });
-    this.composeWith(require.resolve('../vuejs/vuejs_list_container'), { build: this.options.build });
-    this.composeWith(require.resolve('../vuejs/vuejs_new_container'), { build: this.options.build });
-    this.composeWith(require.resolve('../vuejs/vuejs_router'), { build: this.options.build });
-    this.composeWith(require.resolve('../vuejs/vuejs_show_container'), { build: this.options.build });
-    this.composeWith(require.resolve('../vuejs/vuejs_store'), { build: this.options.build });
+    this.composeWith(require.resolve('../vuejs/vuejs_app'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_app_store'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_edit_container'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_list_container'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_new_container'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_router'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_show_container'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_store'), { build });
 
     // Server - ExpressJS
     this.composeWith(require.resolve('../expressjs/expressjs_app'), { build: this.options.build });

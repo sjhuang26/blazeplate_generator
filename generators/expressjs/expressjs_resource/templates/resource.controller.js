@@ -2,109 +2,104 @@ const <%= schema.label.split(' ').join('') %> = require('./<%= schema.identifier
 
 // // // //
 
-// Query / Sort / Paginate
-const buildQuery = (opts) => {
-
-    // Defines return payload object
-    let payload = {};
-
-    // Defines Mongoose query
-    query = opts.schema.find(opts.query || {});
-
-    // Sort
-    if (opts.sort) {
-        query.sort(opts.sort);
-    }
-
-    // Pagination
-    if (opts.paginate) {
-
-        // Default pagination options
-        let page = Number(opts.page) || 0;
-        let per_page = Number(opts.per_page) || 10;
-        let skip = per_page * page;
-
-        // Applies pagination options to query
-        query.limit(per_page);
-        query.skip(skip);
-
-        // Assigns pagination parameters to payload
-        payload.page = page;
-        payload.per_page = per_page;
-
-    }
-
-    // Assigns query to payload
-    payload.query = query;
-
-    // Returns payload
-    return payload;
-
-}
-
-// // // //
-
-// GET /<%= schema.identifier_plural %>
-// TODO - pagination (middleware?)
+/**
+* @api {get} /api/<%= schema.identifier_plural %> Index
+* @APIname Index
+* @APIgroup <%= schema.label.split(' ').join('') %> Controller
+* @apidescription Gets list of current <%= schema.label_plural %>
+* @apiSuccess {json} Collection of <%= schema.label_plural %>
+* @apiError (Error) 500 Internal server error
+*/
+// TODO - query middleware (optional)
+// TODO - pagination middleware (optional)
 module.exports.list = (req, res, next) => {
-    // return Device.find({}).then(function(response) {
-    //     return res.status(200).send(response).end();
-    // }).catch(next);
-
-    // Build paginated query
-    let payload = buildQuery({
-        schema:     <%= schema.label.split(' ').join('') %>,
-        paginate:   true,
-        page:       req.query.page,
-        per_page:   req.query.per_page
-    });
-
-    // Returns paginated query
-    return payload.query.lean().exec().then( (response) => {
-
-        // res.setHeader('Cache-Control', 'max-age=15')
-
-        return res.status(200).send({
-            page:       payload.page,
-            per_page:   payload.per_page,
-            items:      response })
+    return <%= schema.label.split(' ').join('') %>.find({})
+    .then((response) => {
+        return res
+        .status(200)
+        .send(response)
         .end();
-
-    }).catch(next);
+    })
+    .catch(next);
 };
 
-// // // //
 
-// POST /<%= schema.identifier_plural %>
+/**
+* @api {POST} /api/<%= schema.identifier_plural %> Create
+* @APIname Create
+* @APIgroup <%= schema.label.split(' ').join('') %> Controller
+* @apidescription Creates a new <%= schema.label %>
+* @apiSuccess {json} The newly created <%= schema.label %>
+* @apiError (Error) 500 Internal server error
+*/
 module.exports.create = (req, res, next) => {
-    return new <%= schema.label.split(' ').join('') %>(req.body).save().then(function(response) {
-        return res.status(200).send(response).end();
-    }).catch(next);
+    return new <%= schema.label.split(' ').join('') %>(req.body).save()
+    .then((response) => {
+        return res
+        .status(200)
+        .send(response)
+        .end();
+    })
+    .catch(next);
 };
 
-// // // //
-
-// GET /<%= schema.identifier_plural %>/:id
+/**
+* @api {GET} /api/<%= schema.identifier_plural %>/:id Show
+* @APIname Show
+* @APIgroup <%= schema.label.split(' ').join('') %> Controller
+* @apidescription Fetch a single <%= schema.label %>
+* @apiSuccess {json} The requested <%= schema.label %>
+* @apiError (Error) 500 Internal server error
+*/
 module.exports.show = (req, res, next) => {
-    return <%= schema.label.split(' ').join('') %>.findById(req.params.id).then(function(response) {
-        return res.status(200).send(response).end();
-    }).catch(next);
+    return <%= schema.label.split(' ').join('') %>.findById(req.params.id)
+    .then((response) => {
+        return res
+        .status(200)
+        .send(response)
+        .end();
+    })
+    .catch(next);
 };
 
 // // // //
 
-// PUT /<%= schema.identifier_plural %>/:id
+/**
+* @api {PUT} /api/<%= schema.identifier_plural %>/:id Update
+* @APIname Update
+* @APIgroup <%= schema.label.split(' ').join('') %> Controller
+* @apidescription Update a single <%= schema.label %>
+* @apiSuccess {json} The updated <%= schema.label %>
+* @apiError (Error) 500 Internal server error
+*/
 module.exports.update = (req, res, next) => {
-    return <%= schema.label.split(' ').join('') %>.findByIdAndUpdate(req.params.id, {$set: req.body}, { new: true }).then(function(response) {
-        return res.status(200).send(response).end();
-    }).catch(next);
+    return <%= schema.label.split(' ').join('') %>.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
+    .then((response) => {
+        return res
+        .status(200)
+        .send(response)
+        .end();
+    })
+    .catch(next);
 };
 
 // // // //
 
-// DELETE /<%= schema.identifier_plural %>/:id
+/**
+* @api {DELETE} /api/<%= schema.identifier_plural %>/:id Destroy
+* @APIname Destroy
+* @APIgroup <%= schema.label.split(' ').join('') %> Controller
+* @apidescription Destroy a single <%= schema.label %>
+* @apiSuccess {json} The destroyed <%= schema.label %>
+* @apiError (Error) 500 Internal server error
+*/
 module.exports.delete = (req, res, next) => {
-    return <%= schema.label.split(' ').join('') %>.remove({_id: req.params.id }).then(function(response) {
-        return res.status(200).send(response).end();
-    }).catch(next);
+    return <%= schema.label.split(' ').join('') %>.remove({ _id: req.params.id })
+    .then((response) => {
+        return res
+        .status(200)
+        .send(response)
+        .end();
+    })
+    .catch(next);
 };
