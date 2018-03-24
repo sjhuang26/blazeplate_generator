@@ -36,20 +36,19 @@
 </template>
 
 <script>
-// TODO - this should be split into a series of smaller components
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'Navbar',
-  computed: {
-    allSchemas () {
-      return this.$store.getters['schema/collection']
-    },
-    currentUser () {
-      return this.$store.getters['auth/user']
-    },
-    isAuthenticated () {
-      return this.$store.getters['auth/isAuthenticated']
-    }
-  }
+  computed: mapGetters({
+    isAuthenticated: 'auth/is_authenticated',
+    isMentor: 'auth/isMentor',
+    isAdmin: 'auth/isAdmin',
+    currentUser: 'auth/current_user'
+  }),
+  methods: mapActions({
+    logout: 'auth/logout'
+  })
 }
 </script>
 
