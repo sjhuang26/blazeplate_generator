@@ -1,16 +1,10 @@
-import _ from 'lodash'
+import { COLLECTION_GETTERS, MODEL_GETTERS, FILTER_GETTERS } from '../lib/mixins'
 
 // <%= schema.label %> Module Getters
 const getters = {
-  collection: state => {
-    return state.collection
-  },
-  current: state => {
-    return _.find(state.collection, { _id: state.current })
-  },
-  fetching: state => {
-    return state.fetching
-  }
+  ...COLLECTION_GETTERS,
+  ...MODEL_GETTERS,
+  ...FILTER_GETTERS
 }
 
 export default getters

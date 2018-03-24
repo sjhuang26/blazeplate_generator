@@ -16,7 +16,7 @@ function buildRequest (verb, options) {
   let requestHeaders = { ...REQUEST_HEADERS }
 
   // Adds `Authorization` header to request if token parameter is defined
-  if (options.token) requestHeaders['Authorization'] = `Bearer ${options.token}`
+  if (options.token) requestHeaders['Authorization'] = `JWT ${options.token}`
 
   // Returns request object
   let req = { method: verb, headers: new Headers(requestHeaders) }

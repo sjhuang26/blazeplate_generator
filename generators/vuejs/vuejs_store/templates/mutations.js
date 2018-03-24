@@ -1,19 +1,8 @@
-import _ from 'lodash'
+import { COLLECTION_MUTATIONS, MODEL_MUTATIONS, FILTER_MUTATIONS } from '@/store/lib/mixins'
 
-// <%= schema.label %> Module mutations
-const mutations = {
-  fetching (state, isFetching) {
-    state.fetching = isFetching
-  },
-  sync (state, collection) {
-    state.collection = collection
-  },
-  current (state, { id }) {
-    state.current = id
-  },
-  remove (state, id) {
-    state.collection = _.filter(state.collection, (each) => { return each._id !== id })
-  }
+// <%= schema.label %> Module Mutations
+export default {
+  ...COLLECTION_MUTATIONS,
+  ...FILTER_MUTATIONS,
+  ...MODEL_MUTATIONS
 }
-
-export default mutations
