@@ -14,6 +14,11 @@ const <%= schema.label.split(' ').join('') %> = new Schema({
     <%= attr.identifier %>: {
         type: Number
     },
+    <% } else if (attr.datatype === 'BELONGS_TO') { %>
+    <%= attr.identifier %>: {
+        type: Schema.Types.ObjectId,
+        ref: '<%= attr.datatypeOptions.schema_label %>'
+    },
     <% } else { %>
     <%= attr.identifier %>: {
         type: String
