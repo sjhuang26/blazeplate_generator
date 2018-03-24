@@ -1,6 +1,7 @@
 // import createPersistedState from 'vuex-persistedstate'
 import Vue from 'vue'
 import Vuex from 'vuex'
+// TODO - these modules should be dynamicallly generated
 import auth from './auth'
 import user from './user'
 import notification from './notification'

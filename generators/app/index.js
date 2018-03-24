@@ -58,6 +58,7 @@ module.exports = class extends Generator {
     this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build });
     this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build });
     this.composeWith(require.resolve('../vuejs/vuejs_app_store'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_auth'), { build });
     this.composeWith(require.resolve('../vuejs/vuejs_form_component'), { build });
     this.composeWith(require.resolve('../vuejs/vuejs_new_container'), { build });
     this.composeWith(require.resolve('../vuejs/vuejs_edit_container'), { build });
