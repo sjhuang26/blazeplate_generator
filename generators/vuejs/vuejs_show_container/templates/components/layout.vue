@@ -38,6 +38,7 @@
             <!-- Table Header -->
             <tbody>
             <% for (index in schema.attributes) { %>
+            <% if (schema.attributes[index].datatype !== 'HAS_MANY') { %>
               <tr>
                 <td>
                   <%= schema.attributes[index].label %>
@@ -46,6 +47,7 @@
                   {{model.<%= schema.attributes[index].identifier %>}}
                 </td>
               </tr>
+            <% } %>
             <% } %>
             </tbody>
 
