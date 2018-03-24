@@ -14,7 +14,7 @@ exports.profile = (req, res) => {
 exports.list = (req, res) => {
     return User.find({}, '-password -__v').exec()
     .then( (users) => {
-        res.json({ items: users })
+        res.json(users)
     })
 }
 
