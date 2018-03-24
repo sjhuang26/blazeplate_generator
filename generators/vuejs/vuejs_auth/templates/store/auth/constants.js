@@ -1,7 +1,7 @@
 // Routes
 export const LOGIN_ROUTE = '/api/auth/login'
 export const REGISTER_ROUTE = '/api/auth/register'
-export const PROFILE_ROUTE = '/api/users/me'
+export const PROFILE_ROUTE = '/api/users/profile'
 
 // Notifications
 export const LOGIN_SUCCESS_NOTIFICATION = {

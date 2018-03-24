@@ -52,7 +52,7 @@ class Auth {
   }
 
   setupRouter () {
-    Vue.http.headers.common['Authorization'] = 'Bearer ' + this.getToken()
+    Vue.http.headers.common['Authorization'] = 'JWT ' + this.getToken()
     this.setupInterceptor()
   }
 
