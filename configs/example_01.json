@@ -36,6 +36,21 @@
         },
         {
           "order":3,
+          "label":"Invoices",
+          "help":"Invoices belonging to a single contact",
+          "required":false,
+          "datatype":"HAS_MANY",
+          "datatypeOptions":{
+            "schema_id": "invoice_ids",
+            "schema_label": "Invoice",
+            "schema_label_plural": "Invoices"
+          },
+          "col_span":6,
+          "identifier":"invoice_ids",
+          "_id":"attr_6"
+        },
+        {
+          "order":4,
           "label":"Phone Number",
           "help":"Phone number of the individual",
           "required":false,
