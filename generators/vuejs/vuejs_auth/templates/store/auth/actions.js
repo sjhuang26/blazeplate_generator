@@ -1,79 +1,113 @@
-import store from '@/store'
-import AuthFactory from './factory'
+import Router from '@/routers'
+import { $GET, $POST } from '@/store/lib/helpers'
+import {
+  LOGIN_ROUTE,
+  REGISTER_ROUTE,
+  PROFILE_ROUTE,
+  LOGIN_SUCCESS_NOTIFICATION,
+  LOGIN_ERROR_NOTIFICATION,
+  REGISTER_SUCCESS_NOTIFICATION,
+  REGISTER_ERROR_NOTIFICATION
+} from './constants'
 
-// // // //
-
-// actions
-// functions that causes side effects and can involve asynchronous operations.
+// Auth module actions
 const actions = {
-
-  authenticate: ({ commit }, data) => {
-    // State.fetching = true
-    commit('fetching', true)
-
-    // Authenticates User
-    AuthFactory.authenticate(data).then((response) => {
-      // Sets state.token
-      commit('set_token', response.token)
-
-      // State.fetching = false
-      // TODO - should this be a global state attribute, perhaps part of a store/main module?
-      commit('fetching', false)
-
-      // Shows CREATE_SUCCESS message
-      store.commit('notification/add', { message: 'Successfully authenticated', context: 'info', dismissible: true })
-
-      // Redirects to REDIRECT_SUCCESS
-      // TODO - What is the best way to manage redirection in VueJS?
-      window.location = '#/'
-    })
-  },
-
-  register: ({ commit }, data) => {
-    // State.fetching = true
-    commit('fetching', true)
-    console.log(data)
-    // Fetches Collection from the server
-    AuthFactory.register(data)
-    .then((response) => {
-      console.log(response)
-      // State.fetching = false
-      commit('fetching', false)
-
-      // Shows CREATE_SUCCESS message
-      store.commit('notification/add', { message: 'Successfully registered new user.', context: 'info', dismissible: true })
-
-      // Redirects to REDIRECT_SUCCESS
-      // TODO - What is the best way to manage redirection in VueJS?
-      window.location = '#/auth/login'
-    })
-    .catch((obj) => {
-      // State.fetching = false
-      commit('fetching', false)
-      console.log(obj)
-      // Shows CREATE_SUCCESS message
-      store.commit('notification/add', { message: 'Error registering new user.', context: 'danger', dismissible: true })
-    })
-  },
-
-  logout: ({ commit }, data) => {
-    commit('flush_token')
-    store.commit('notification/add', { message: 'Successfully logged out.', context: 'info', dismissible: true })
-    window.location = '#/auth/login'
-  },
-
-  is_authenticated: ({ commit }, data) => {
+  // fetchUserProfile
+  // Fetches a user's profiles form the server
+  fetchUserProfile ({ state, commit }) {
     return new Promise((resolve, reject) => {
-      AuthFactory.getSession(store.getters['auth/token'])
-      .then((session) => {
-        commit('set_user', session)
+      $GET(PROFILE_ROUTE, { token: state.token })
+      .then((json) => {
+        commit('current_user', json)
+        return resolve(json)
       })
-      .catch(() => {
-        console.log('Error fetching session')
+      .catch((err) => {
+        commit('clear_token')
+        commit('clear_current_user')
+        // throw err
+        return reject(err)
       })
     })
-  }
+  },
 
+  // register
+  // Handles user registration state management
+  register ({ state, dispatch, commit }) {
+    // state.loggin_in = true
+    commit('logging_in', true)
+
+    // Assembles request payload
+    let { email, password, name, github } = state.register_user
+
+    // Sends registration data to server
+    $POST(REGISTER_ROUTE, { body: { email, password, name, github } })
+    .then((json) => {
+      commit('clear_register_user')
+      commit('logging_in', false)
+
+      // Updates store.token
+      commit('token', json.token)
+
+      // Fetches user profile
+      dispatch('fetchUserProfile')
+
+      // Shows REGISTER_SUCCESS_NOTIFICATION message
+      commit('notification/add', REGISTER_SUCCESS_NOTIFICATION, { root: true })
+
+      // Redirects to home route
+      Router.push('/')
+    })
+    .catch((err) => {
+      // Shows REGISTER_ERROR_NOTIFICATION message
+      commit('notification/add', REGISTER_ERROR_NOTIFICATION, { root: true })
+      throw err
+    })
+  },
+
+  // login
+  // Handles user login state management
+  login ({ commit, dispatch, state }) {
+    // state.loggin_in = true
+    commit('logging_in', true)
+
+    // Assembles request payload
+    let { email, password } = state.login_user
+
+    // Sends login data to server
+    $POST(LOGIN_ROUTE, { body: { email, password } })
+    .then((json) => {
+      // Changes loading state
+      commit('logging_in', false)
+
+      // Clears state.login_user
+      commit('clear_login_user')
+
+      // Updates store.token
+      commit('token', json.token)
+
+      // Shows LOGIN_SUCCESS_NOTIFICATION message
+      commit('notification/add', LOGIN_SUCCESS_NOTIFICATION, { root: true })
+
+      // Fetches user profile
+      dispatch('fetchUserProfile')
+
+      // Redirects to home route
+      Router.push('/')
+    })
+    .catch((err) => {
+      // Shows LOGIN_ERROR_NOTIFICATION message
+      commit('notification/add', LOGIN_ERROR_NOTIFICATION, { root: true })
+      throw err
+    })
+  },
+
+  // logout
+  // Handles user logout
+  logout ({ commit }) {
+    commit('clear_token')
+    commit('clear_current_user')
+    Router.push('/auth/login')
+  }
 }
 
 // // // //

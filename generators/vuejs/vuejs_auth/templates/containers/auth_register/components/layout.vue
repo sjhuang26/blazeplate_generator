@@ -5,24 +5,19 @@
 
                 <div class="card card-body">
                     <h4 class="card-title">Register</h4>
-                    <p class="card-text" v-if="$route.query.redirect">You need to login first.</p>
 
                       <form @submit.prevent="register">
                           <fieldset>
 
-                              <!-- <FormInput></FormInput> -->
+                              <FormInput v-model="register_user.name" name='name' label='Name' placeholder='Name'/>
+                              <FormInput v-model="register_user.email" name='email' label='Email' placeholder='Email'/>
+                              <FormInput v-model="register_user.github.login" name='github'  label='GitHub Username' placeholder='GitHub Username'/>
+                              <FormInput v-model="register_user.password" name='password' label='Password' placeholder='Password' type='password'/>
+                              <FormInput v-model="register_user.passwordverify" name='passwordverify' label='Confirm Password' placeholder='Confirm Password' type='password'/>
 
-                              <div class="form-group">
-                                  <input class="form-control" placeholder="E-mail" v-model="email" type="text">
-                              </div>
+                              <FormSubmit :props="{ label: 'Sign Up', css: 'btn-success btn-block' }"/>
 
-                              <div class="form-group">
-                                  <input class="form-control" placeholder="Password" v-model="password" type="password" value="">
-                              </div>
-
-                              <FormSubmit></FormSubmit>
-
-                              <p v-if="error" class="error">Bad registration information</p>
+                              <p v-if="register_user.error" class="error">Bad registration information</p>
 
                           </fieldset>
 
@@ -37,31 +32,19 @@
 <script>
 import FormInput from '@/components/FormInput'
 import FormSubmit from '@/components/FormSubmit'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  data () {
-    return {
-      email: 'alex@foo.bar',
-      password: 'abc123abc123',
-      remember: false,
-      loading: false,
-      error: false
-    }
-  },
-
   components: {
     FormInput,
     FormSubmit
   },
-
-  methods: {
-    isValid () {
-      return !(this.email === '' || this.password === '')
-    },
-    register () {
-      if (!this.isValid()) { return }
-      return this.$store.dispatch('auth/register', { username: this.email, password: this.password })
-    }
-  }
+  computed: mapGetters({
+    loading: 'auth/loading',
+    register_user: 'auth/register_user'
+  }),
+  methods: mapActions({
+    register: 'auth/register'
+  })
 }
 </script>

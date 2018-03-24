@@ -4,17 +4,41 @@ const mutations = {
   fetching (state, isFetching) {
     state.fetching = isFetching
   },
-
-  set_token (state, jsonwebtoken) {
-    state.token = jsonwebtoken
+  clear_login_user (state) {
+    state.login_user = {
+      email: '',
+      password: '',
+      errors: {}
+    }
   },
-
-  flush_token (state) {
-    state.token = null
+  clear_register_user (state) {
+    state.register_user = {
+      name: '',
+      email: '',
+      password: '',
+      passwordverify: '',
+      github: {
+        login: ''
+      },
+      errors: {}
+    }
   },
-
-  set_user (state, user) {
-    state.user = user
+  logging_in (state, status) {
+    state.logging_in = status
+  },
+  token (state, token) {
+    localStorage.token = token
+    state.token = token
+  },
+  clear_token (state) {
+    localStorage.token = ''
+    state.token = ''
+  },
+  current_user (state, currentUser) {
+    state.current_user = currentUser
+  },
+  clear_current_user (state) {
+    state.current_user = {}
   }
 }
 
