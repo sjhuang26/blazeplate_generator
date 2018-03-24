@@ -23,6 +23,14 @@
           <input type="number" class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
         <% } else if (attr.datatype === 'DATE') { %>
           <input type="date" class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
+        <% } else if (attr.datatype === 'BELONGS_TO') { %>
+          <select type="text" class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
+            <option :value="<%=attr.datatypeOptions.schema_identifier%>._id" v-for="<%=attr.datatypeOptions.schema_identifier%> in <%= attr.datatypeOptions.schema_identifier_plural %>">{{ <%= attr.datatypeOptions.schema_identifier %>.<%= attr.datatypeOptions.schema_label_attr %> }}</option>
+          </select>
+        <% } else if (attr.datatype === 'HAS_MANY') { %>
+          <select type="text" multiple class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
+            <option :value="<%=attr.datatypeOptions.schema_identifier%>._id" v-for="<%=attr.datatypeOptions.schema_identifier%> in <%= attr.datatypeOptions.schema_identifier_plural %>">{{ <%= attr.datatypeOptions.schema_identifier %>.<%= attr.datatypeOptions.schema_label_attr %> }}</option>
+          </select>
         <% } %>
         </div>
       </div>
@@ -68,6 +76,17 @@ export default {
     return {
       model: {}
     }
+  },
+  computed: {
+    <% for (index in schema.attributes) { %>
+    <% let attr = schema.attributes[index] %>
+    <% if (attr.datatype === 'BELONGS_TO' || attr.datatype === 'HAS_MANY') { %>
+    <%=attr.datatypeOptions.schema_identifier_plural%> () {
+      this.$store.dispatch('<%= attr.datatypeOptions.schema_identifier %>/fetchCollection')
+      return this.$store.getters['<%= attr.datatypeOptions.schema_identifier %>/collection']
+    }
+    <% } %>
+    <% } %>
   },
   methods: {
     formSubmit () {

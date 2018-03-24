@@ -44,6 +44,10 @@
             <i class="fa fa-fw fa-square-o" v-if="!m.<%=attr.identifier%>"></i>
           </span>
         </td>
+        <% } else if (attr.datatype === 'HAS_MANY') { %>
+        <td>
+          {{ m.<%=attr.identifier%>.length }}
+        </td>
         <% } else { %>
         <td>{{m.<%= schema.attributes[index].identifier %>}}</td>
         <% } %>
