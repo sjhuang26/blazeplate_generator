@@ -13,6 +13,7 @@
   ],
   "dependencies": {
     "lodash": "^4.17.4",
+    "rexreplace": "^3.0.1",
     "underscore.string": "^3.3.4",
     "yeoman-generator": "^1.0.0"
   }

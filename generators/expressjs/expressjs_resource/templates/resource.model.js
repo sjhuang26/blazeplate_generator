@@ -1,7 +1,9 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+// // // // BLAZEPLATE WHITESPACE
 // // // //
+// // // // BLAZEPLATE WHITESPACE
 
 const <%= schema.class_name %> = new Schema({
   <% for (index in schema.attributes) { %>
@@ -49,29 +51,32 @@ const <%= schema.class_name %> = new Schema({
   versionKey: false
 });
 
+// // // // BLAZEPLATE WHITESPACE
 // // // //
+// // // // BLAZEPLATE WHITESPACE
 
-
- <% for (index in schema.attributes) { %>
- <% let attr = schema.attributes[index] %>
+<% for (index in schema.attributes) { %>
+<% let attr = schema.attributes[index] %>
 
 <% if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { %>
-<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label %> = function (cb){
+<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').findById(this.<%= attr.identifier %>);
 }
 
 <% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { %>
-<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label_plural %> = function (cb){
+<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label_plural %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').find({ <%= schema.identifier %>_id: this._id });
 }
 
 <% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { %>
-<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label %> = function (cb){
+<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').findById(this.<%= attr.identifier %> });
 }
 
 <% } %>
 <% } %>
 
+// // // // BLAZEPLATE WHITESPACE
 // TODO - absract schema.class_name
 module.exports = mongoose.model('<%= schema.class_name %>', <%= schema.label.split(' ').join('') %>)
+// // // // BLAZEPLATE WHITESPACE

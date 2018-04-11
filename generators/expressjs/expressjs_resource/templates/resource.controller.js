@@ -6,8 +6,10 @@ const <%= attr.datatypeOptions.schema_class_name %> = require('../<%= attr.datat
 <% } %>
 <% } %>
 
+// // // // BLAZEPLATE WHITESPACE
 // // // //
 
+// // // // BLAZEPLATE WHITESPACE
 /**
 * @api {get} /api/<%= schema.identifier_plural %> Index
 * @APIname Index
@@ -28,8 +30,10 @@ module.exports.list = (req, res, next) => {
     })
     .catch(next);
 };
+// // // // BLAZEPLATE WHITESPACE
 
 
+// // // // BLAZEPLATE WHITESPACE
 /**
 * @api {POST} /api/<%= schema.identifier_plural %> Create
 * @APIname Create
@@ -48,7 +52,10 @@ module.exports.create = (req, res, next) => {
     })
     .catch(next);
 };
+// // // // BLAZEPLATE WHITESPACE
 
+
+// // // // BLAZEPLATE WHITESPACE
 /**
 * @api {GET} /api/<%= schema.identifier_plural %>/:id Show
 * @APIname Show
@@ -67,14 +74,14 @@ module.exports.show = (req, res, next) => {
     })
     .catch(next);
 };
-
-// // // //
+// // // // BLAZEPLATE WHITESPACE
 
 <% for (index in schema.attributes) { %>
 <% let attr = schema.attributes[index] %>
 
 <% if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { %>
 
+// // // // BLAZEPLATE WHITESPACE
 /**
 * @api {GET} /api/<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier %> show<%= attr.datatypeOptions.schema_label %>
 * @APIname show<%= attr.datatypeOptions.schema_label %>
@@ -99,11 +106,11 @@ module.exports.show<%= attr.datatypeOptions.schema_label %> = (req, res, next) =
     })
     .catch(next);
 };
-
-// // // //
+// // // // BLAZEPLATE WHITESPACE
 
 <% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { %>
 
+// // // // BLAZEPLATE WHITESPACE
 /**
 * @api {GET} /api/<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier_plural %> show<%= attr.datatypeOptions.schema_label_plural %>
 * @APIname show<%= attr.datatypeOptions.schema_label_plural %>
@@ -122,8 +129,7 @@ module.exports.show<%= attr.datatypeOptions.schema_label_plural %> = (req, res, 
     })
     .catch(next);
 };
-
-// // // //
+// // // // BLAZEPLATE WHITESPACE
 
 <% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { %>
 // GET /<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier %>
@@ -153,9 +159,9 @@ module.exports.update = (req, res, next) => {
     })
     .catch(next);
 };
+// // // // BLAZEPLATE WHITESPACE
 
-// // // //
-
+// // // // BLAZEPLATE WHITESPACE
 /**
 * @api {DELETE} /api/<%= schema.identifier_plural %>/:id Destroy
 * @APIname Destroy
@@ -174,3 +180,4 @@ module.exports.delete = (req, res, next) => {
     })
     .catch(next);
 };
+// // // // BLAZEPLATE WHITESPACE
