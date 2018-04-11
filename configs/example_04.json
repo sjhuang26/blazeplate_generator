@@ -9,6 +9,8 @@
       "label_plural": "Users",
       "identifier": "user",
       "identifier_plural": "users",
+      "class_name": "User",
+      "class_name_plural": "Users",
       "unqiue_id_prefix": "US_",
       "authentications": [],
       "attributes": [
