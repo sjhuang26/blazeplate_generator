@@ -4,13 +4,13 @@ services:
 
   mongo:
     image: mongo
-    container_name: 'bp-mongo'
+    container_name: '<%= container_name_prefix %>-mongo'
     ports:
       - "27017:27017"
 
   mongo_admin:
     image: mongo-express
-    container_name: 'bp-mongo-express'
+    container_name: '<%= container_name_prefix %>-mongo-express'
     links:
       - mongo
     ports:
@@ -18,7 +18,7 @@ services:
 
   redis:
     image: redis
-    container_name: 'bp-redis'
+    container_name: '<%= container_name_prefix %>-redis'
     ports:
       - "6379:6379"
 

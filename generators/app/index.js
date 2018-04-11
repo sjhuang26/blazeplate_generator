@@ -50,7 +50,7 @@ module.exports = class extends Generator {
   // TODO - is there a way to conditionally run a generator?
   initializing(){
 
-    // TODO - format build before generation to minimize
+    // TODO - format build before generation to minimize repeated code and formatting
     let build = this.options.build
 
     // Client - VueJS
