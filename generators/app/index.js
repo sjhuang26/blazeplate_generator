@@ -42,7 +42,6 @@ module.exports = class extends Generator {
 
     // Sets this.options.build
     this.options.build = build
-    console.log(build) // DEBUG
 
   }
 
@@ -50,8 +49,36 @@ module.exports = class extends Generator {
   // TODO - is there a way to conditionally run a generator?
   initializing(){
 
-    // TODO - format build before generation to minimize repeated code and formatting
-    let build = this.options.build
+    // Fomats the build parameters for the generator
+    // Mostly adds some additional metadata to each relation to simplify template rendering
+    function formatBuild (build) {
+
+        // Iterates over each schema
+        build.app.schemas = _.map(build.app.schemas, (schema) => {
+
+            // Iterates over all attributes, handles relations
+            schema.attributes = _.map(schema.attributes, (attr) => {
+                if (attr.datatype !== 'RELATION') return attr
+
+                let relatedSchema = _.find(build.app.schemas, { _id: attr.datatypeOptions.schema_id })
+
+                // Pulls metadata from relatedSchema
+                let { label, label_plural, identifier, identifier_plural, class_name } = relatedSchema
+                attr.datatypeOptions.schema_label = label
+                attr.datatypeOptions.schema_label_plural = label_plural
+                attr.datatypeOptions.schema_identifier = identifier
+                attr.datatypeOptions.schema_identifier_plural = identifier_plural
+                attr.datatypeOptions.schema_class_name = class_name
+                return attr
+            })
+
+            return schema
+        })
+        return build
+    }
+
+    // Formats build before generation to minimize repeated code and formatting
+    let build = formatBuild(this.options.build)
 
     // Client - VueJS
     this.composeWith(require.resolve('../vuejs/vuejs_app'), { build });

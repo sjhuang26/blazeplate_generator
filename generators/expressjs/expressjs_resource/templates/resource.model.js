@@ -13,7 +13,9 @@ const <%= schemaLabel %> = new Schema({
   },
   <% } else if (attr.datatype === 'NUMBER') { %>
   <%= attr.identifier %>: {
-    type: Number
+    type: Number,
+    required: <%= attr.required %>,
+    unique: <%= attr.unique %>
   },
   <% } else if (attr.datatype === 'BELONGS_TO') { %>
   <%= attr.identifier %>: {
@@ -32,7 +34,9 @@ const <%= schemaLabel %> = new Schema({
   }],
   <% } else { %>
   <%= attr.identifier %>: {
-    type: String
+    type: String,
+    required: <%= attr.required %>,
+    unique: <%= attr.unique %>
  },
   <% } %>
   <% } %>
@@ -52,17 +56,17 @@ const <%= schemaLabel %> = new Schema({
  <% for (index in schema.attributes) { %>
  <% let attr = schema.attributes[index] %>
 
-<% if (attr.datatype === 'BELONGS_TO') { %>
+<% if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { %>
 <%= schemaLabel %>.methods.get<%= attr.datatypeOptions.schema_label %> = function (cb){
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').findById(this.<%= attr.identifier %>);
 }
 
-<% } else if (attr.datatype === 'HAS_MANY') { %>
+<% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { %>
 <%= schemaLabel %>.methods.get<%= attr.datatypeOptions.schema_label_plural %> = function (cb){
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').find({ <%= schema.identifier %>_id: this._id });
 }
 
-<% } else if (attr.datatype === 'HAS_ONE') { %>
+<% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { %>
 <%= schemaLabel %>.methods.get<%= attr.datatypeOptions.schema_label %> = function (cb){
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').findById(this.<%= attr.identifier %> });
 }

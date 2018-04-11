@@ -1,6 +1,6 @@
 {
-  "label": "Observatory",
-  "identifier": "observatory",
+  "label": "Blazeplate Project",
+  "identifier": "blazeplate_project",
   "schemas": [
     {
       "_id": "SCHEMA_2",
@@ -40,11 +40,11 @@
       ]
     },
     {
-      "_id": "schema_1399771286415",
-      "label": "Project",
-      "label_plural": "Projects",
-      "identifier": "project",
-      "identifier_plural": "projects",
+      "_id": "schema_15652994829682",
+      "label": "Course",
+      "label_plural": "Courses",
+      "identifier": "course",
+      "identifier_plural": "courses",
       "attributes": [
         {
           "order": 0,
@@ -54,25 +54,68 @@
           "required": true,
           "unique": true,
           "datatype": "TEXT",
-          "datatypeOptions": {},
-          "_id": "ATTR_30093460634996"
+          "datatypeOptions": {}
         },
         {
           "order": 1,
-          "label": "Active",
-          "identifier": "active",
+          "label": "Assignments",
+          "identifier": "assignment_ids",
           "help": "",
           "required": false,
           "unique": false,
-          "datatype": "BOOL",
-          "datatypeOptions": {},
-          "_id": "ATTR_34799817620406"
+          "datatype": "RELATION",
+          "datatypeOptions": {
+            "relationType": "HAS_MANY",
+            "schema_id": "schema_4625927934382",
+            "reverse_relation": "ATTR_27850403809506"
+          },
+          "_id": "ATTR_29485777414497"
         }
       ],
       "display": {
         "icon": "fa-square-o",
         "navbar_link": true
-      }
+      },
+      "class_name": "Course"
+    },
+    {
+      "_id": "schema_4625927934382",
+      "label": "Assignment",
+      "label_plural": "Assignments",
+      "identifier": "assignment",
+      "identifier_plural": "assignments",
+      "attributes": [
+        {
+          "order": 0,
+          "label": "Label",
+          "identifier": "label",
+          "help": "",
+          "required": false,
+          "unique": false,
+          "datatype": "TEXT",
+          "datatypeOptions": {}
+        },
+        {
+          "order": 2,
+          "label": "Course",
+          "identifier": "course_id",
+          "help": "",
+          "required": false,
+          "unique": false,
+          "datatype": "RELATION",
+          "datatypeOptions": {
+            "relationType": "BELONGS_TO",
+            "schema_id": "schema_15652994829682",
+            "reverse_relation": "ATTR_29485777414497"
+          },
+          "_id": "ATTR_27850403809506"
+        }
+      ],
+      "display": {
+        "icon": "fa-square-o",
+        "navbar_link": true
+      },
+      "class_name": "Assignment"
     }
   ],
   "stack": {
@@ -88,5 +131,5 @@
     "features": [],
     "deployments": []
   },
-  "_id": "PR_22158757924470"
+  "_id": "PR_66889694257848"
 }
