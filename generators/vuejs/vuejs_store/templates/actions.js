@@ -36,7 +36,7 @@ export default {
     })
     .then((<%= schema.identifier %>) => {
       commit('fetching', false)
-      console.log('UPDATED')
+      console.log('CREATED')
     })
     .catch((err) => {
       commit('fetching', false)
