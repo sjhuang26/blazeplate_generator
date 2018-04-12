@@ -1,6 +1,5 @@
-
-// Project Module Getters
-const getters = {
+// User Module Getters
+export default {
   collection: state => {
     return state.collection
   },
@@ -11,5 +10,3 @@ const getters = {
     return state.fetching
   }
 }
-
-export default getters
