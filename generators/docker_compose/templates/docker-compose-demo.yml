@@ -15,7 +15,19 @@ services:
       - mongo
     ports:
       - "8081:8081"
-
+  <% if (seedData) { %>
+  mongo-seed:
+    container_name: observatory_mongo_seed
+    build:
+      context: ./docker
+      dockerfile: Dockerfile-MongoSeed
+    links:
+      - mongo
+    depends_on:
+      - mongo
+    deploy:
+      restart_policy: any
+  <% } %>
   redis:
     image: redis
     container_name: '<%= container_name_prefix %>-redis'
