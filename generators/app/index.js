@@ -108,23 +108,23 @@ module.exports = class extends Generator {
     let build = formatBuild(this.options.build)
 
     // Client - VueJS
-    // this.composeWith(require.resolve('../vuejs/vuejs_app'), { build });
-    // this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build });
-    // this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build });
-    // this.composeWith(require.resolve('../vuejs/vuejs_app_store'), { build });
-    // this.composeWith(require.resolve('../vuejs/vuejs_auth'), { build });
-    // this.composeWith(require.resolve('../vuejs/vuejs_form_component'), { build });
-    // this.composeWith(require.resolve('../vuejs/vuejs_new_container'), { build });
-    // this.composeWith(require.resolve('../vuejs/vuejs_edit_container'), { build });
-    // this.composeWith(require.resolve('../vuejs/vuejs_list_container'), { build });
-    // this.composeWith(require.resolve('../vuejs/vuejs_router'), { build });
-    // this.composeWith(require.resolve('../vuejs/vuejs_show_container'), { build });
-    // this.composeWith(require.resolve('../vuejs/vuejs_store'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_app'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_app_store'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_auth'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_form_component'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_new_container'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_edit_container'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_list_container'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_router'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_show_container'), { build });
+    this.composeWith(require.resolve('../vuejs/vuejs_store'), { build });
 
     // Server - ExpressJS
-    // this.composeWith(require.resolve('../expressjs/expressjs_app'), { build });
-    // this.composeWith(require.resolve('../expressjs/expressjs_routes'), { build });
-    // this.composeWith(require.resolve('../expressjs/expressjs_resource'), { build });
+    this.composeWith(require.resolve('../expressjs/expressjs_app'), { build });
+    this.composeWith(require.resolve('../expressjs/expressjs_routes'), { build });
+    this.composeWith(require.resolve('../expressjs/expressjs_resource'), { build });
 
     // Infrastructure
     this.composeWith(require.resolve('../docker_compose'), { build });

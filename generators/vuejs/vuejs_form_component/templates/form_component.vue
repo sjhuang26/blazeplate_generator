@@ -39,20 +39,17 @@
 <!-- // // // //  -->
 
 <script>
-import store from '@/store'
+// TODO - integrate RelationDropdown & abstract colection logic from this component
 import RelationDropdown from '@/components/RelationDropdown'
 
 export default {
   name: '<%= schema.identifier %>_form',
+  props: ['model'],
   components: {
     RelationDropdown
   },
-  data () {
-    return {
-      model: {}
-    }
-  },
   created () {
+    console.log(this.model)
     <% for (index in schema.attributes) { %>
     <% let attr = schema.attributes[index] %>
     <% if (attr.datatype === 'RELATION') { %>
