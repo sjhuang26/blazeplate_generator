@@ -62,9 +62,9 @@ module.exports = class extends Generator {
 
                 let relatedSchema = _.find(build.app.schemas, { _id: attr.datatypeOptions.schema_id })
 
-                console.log('REALTED SCHEMA???')
-                console.log(attr.datatypeOptions)
-                console.log(relatedSchema)
+                // console.log('REALTED SCHEMA???')
+                // console.log(attr.datatypeOptions)
+                // console.log(relatedSchema)
 
                 // Pulls metadata from relatedSchema
                 let { label, label_plural, identifier, identifier_plural, class_name } = relatedSchema
@@ -79,6 +79,28 @@ module.exports = class extends Generator {
 
             return schema
         })
+
+        // Defines the data to split up build.app.seeds by the records' respective schemas
+        build.app.seed_data = {}
+        _.each(build.app.schemas, (s) => {
+            build.app.seed_data[s._id] = {
+                identifier: s.identifier_plural,
+                records: []
+            }
+        })
+
+        // Iterates over each piece of seed data
+        _.each(build.app.seeds, (seed) => {
+            let seedObject = {}
+            seedObject._id = { '$oid': seed._id }
+            seedObject = {
+                ...seedObject,
+                ...seed.attributes
+            }
+            // Adds to build.app.seed_data object
+            build.app.seed_data[seed.schema_id].records.push(seedObject)
+        })
+
         return build
     }
 
@@ -86,26 +108,27 @@ module.exports = class extends Generator {
     let build = formatBuild(this.options.build)
 
     // Client - VueJS
-    this.composeWith(require.resolve('../vuejs/vuejs_app'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_app_store'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_auth'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_form_component'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_new_container'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_edit_container'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_list_container'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_router'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_show_container'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_store'), { build });
+    // this.composeWith(require.resolve('../vuejs/vuejs_app'), { build });
+    // this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build });
+    // this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build });
+    // this.composeWith(require.resolve('../vuejs/vuejs_app_store'), { build });
+    // this.composeWith(require.resolve('../vuejs/vuejs_auth'), { build });
+    // this.composeWith(require.resolve('../vuejs/vuejs_form_component'), { build });
+    // this.composeWith(require.resolve('../vuejs/vuejs_new_container'), { build });
+    // this.composeWith(require.resolve('../vuejs/vuejs_edit_container'), { build });
+    // this.composeWith(require.resolve('../vuejs/vuejs_list_container'), { build });
+    // this.composeWith(require.resolve('../vuejs/vuejs_router'), { build });
+    // this.composeWith(require.resolve('../vuejs/vuejs_show_container'), { build });
+    // this.composeWith(require.resolve('../vuejs/vuejs_store'), { build });
 
     // Server - ExpressJS
-    this.composeWith(require.resolve('../expressjs/expressjs_app'), { build: this.options.build });
-    this.composeWith(require.resolve('../expressjs/expressjs_routes'), { build: this.options.build });
-    this.composeWith(require.resolve('../expressjs/expressjs_resource'), { build: this.options.build });
+    // this.composeWith(require.resolve('../expressjs/expressjs_app'), { build });
+    // this.composeWith(require.resolve('../expressjs/expressjs_routes'), { build });
+    // this.composeWith(require.resolve('../expressjs/expressjs_resource'), { build });
 
     // Infrastructure
-    this.composeWith(require.resolve('../docker_compose'), { build: this.options.build });
+    this.composeWith(require.resolve('../docker_compose'), { build });
+    this.composeWith(require.resolve('../seed_data'), { build });
 
   }
 
