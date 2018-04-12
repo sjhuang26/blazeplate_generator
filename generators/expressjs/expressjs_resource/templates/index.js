@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const controller = require('./<%= schema.identifier %>.controller');
-
+<% if (schema.identifier === 'user') { %>
+const authorization = require('../middleware/authorization')
+<% } %>
 // // // // BLAZEPLATE WHITESPACE
 // // // //
 
@@ -11,6 +13,12 @@ router.get('/', controller.list);
 // // // // BLAZEPLATE WHITESPACE
 // POST /<%= schema.identifier_plural %>
 router.post('/', controller.create);
+
+<% if (schema.identifier === 'user') { %>
+// // // // BLAZEPLATE WHITESPACE
+// GET /<%= schema.identifier_plural %>/profile
+router.get('/profile', authorization, controller.profile)
+<% } %>
 
 // // // // BLAZEPLATE WHITESPACE
 // GET /<%= schema.identifier_plural %>/:id
@@ -23,6 +31,8 @@ router.put('/:id', controller.update);
 // // // // BLAZEPLATE WHITESPACE
 // DELETE /<%= schema.identifier_plural %>/:id
 router.delete('/:id', controller.delete);
+
+
 
 <% for (index in schema.attributes) { %>
 <% let attr = schema.attributes[index] %>

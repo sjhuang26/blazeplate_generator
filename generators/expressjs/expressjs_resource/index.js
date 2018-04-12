@@ -19,11 +19,19 @@ module.exports = class extends Generator {
       // server/api/resource/resource.model.js
       // TODO - find related schemas BEFORE rendering this template
       // let relatedSchema = _.find(allSchemas, { _id: attr.datatypeOptions.schema_id })
-      this.fs.copyTpl(
-        this.templatePath('resource.model.js'),
-        this.destinationPath(dest + 'server/api/' + schema.identifier + '/' + schema.identifier + '.model.js'),
-        { schema: schema }
-      );
+      if (schema.identifier === 'user') {
+        this.fs.copyTpl(
+          this.templatePath('user.resource.model.js'),
+          this.destinationPath(dest + 'server/api/' + schema.identifier + '/' + schema.identifier + '.model.js'),
+          { schema: schema }
+        );
+      } else {
+        this.fs.copyTpl(
+          this.templatePath('resource.model.js'),
+          this.destinationPath(dest + 'server/api/' + schema.identifier + '/' + schema.identifier + '.model.js'),
+          { schema: schema }
+        );
+      }
 
       // server/api/resource/resource.controller.js
       this.fs.copyTpl(

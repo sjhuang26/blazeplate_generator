@@ -9,6 +9,23 @@ const <%= attr.datatypeOptions.schema_class_name %> = require('../<%= attr.datat
 // // // // BLAZEPLATE WHITESPACE
 // // // //
 
+
+<% if (schema.identifier === 'user') { %>
+// // // // BLAZEPLATE WHITESPACE
+/**
+* @api {get} /api/<%= schema.identifier_plural %> Profile
+* @APIname Profile
+* @APIgroup <%= schema.class_name %> Controller
+* @apidescription Gets profile of the current <%= schema.label %>
+* @apiSuccess {json} User's profile
+* @apiError (Error) 500 Internal server error
+*/
+exports.profile = (req, res) => {
+    return <%= schema.class_name %>.findOne({ username: req.user.username }, '-password -__v').exec()
+    .then( (user) => { res.json(user) })
+}
+<% } %>
+
 // // // // BLAZEPLATE WHITESPACE
 /**
 * @api {get} /api/<%= schema.identifier_plural %> Index
@@ -43,7 +60,11 @@ module.exports.list = (req, res, next) => {
 * @apiError (Error) 500 Internal server error
 */
 module.exports.create = (req, res, next) => {
+    <% if (schema.identifier === 'user') { %>
+    return User.create(req.body)
+    <% } else { %>
     return new <%= schema.class_name %>(req.body).save()
+    <% } %>
     .then((response) => {
         return res
         .status(200)
