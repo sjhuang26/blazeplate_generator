@@ -1,26 +1,73 @@
-import { $GET, $POST, $PUT, $DELETE } from '@/store/lib/helpers'
+import { $GET, $POST, $PUT, $DEL } from '@/store/lib/helpers'
+
+const API_ROOT = '/api/<%= schema.identifier_plural %>'
 
 // // // //
 
-// actions
-// functions that causes side effects and can involve asynchronous operations.
-const actions = {
-  // fetchCollection: ({ commit }) => Factory.fetchCollection({ commit }),
-  // create: ({ commit }, attributes) => Factory.create({ commit }, attributes),
-  // update: ({ commit }, attributes) => Factory.update({ commit }, attributes),
-  // destroy: ({ commit }, id) => Factory.destroy({ commit }, id)
+export default {
   fetchCollection ({ state, commit, dispatch }) {
+    commit('fetching', true)
+    $GET(API_ROOT)
+    .then((<%= schema.identifier_plural %>) => {
+      commit('collection', <%= schema.identifier_plural %>)
+      commit('fetching', false)
+    })
+    .catch((err) => {
+      commit('fetching', false)
+      throw err // TODO - better error handling
+    })
   },
-  fetchModel ({ state, commit, dispatch }) {
+  fetchModel ({ state, commit, dispatch }, <%= schema.identifier %>Id) {
+    commit('fetching', true)
+    $GET(`${API_ROOT}/${<%= schema.identifier %>Id}`)
+    .then((<%= schema.identifier %>) => {
+      commit('model', <%= schema.identifier %>)
+      commit('fetching', false)
+    })
+    .catch((err) => {
+      commit('fetching', false)
+      throw err // TODO - better error handling
+    })
   },
-  createModel ({ state, commit, dispatch }) {
+  createModel ({ state, commit, dispatch }, <%= schema.identifier %>Model) {
+    commit('fetching', true)
+    $POST(`${API_ROOT}`, {
+      body: <%= schema.identifier %>Model
+    })
+    .then((<%= schema.identifier %>) => {
+      commit('fetching', false)
+      console.log('UPDATED')
+    })
+    .catch((err) => {
+      commit('fetching', false)
+      console.log('ERR!')
+      throw err
+    })
   },
-  updateModel ({ state, commit, dispatch }) {
+  updateModel ({ state, commit }, <%= schema.identifier %>Model) {
+    commit('fetching', true)
+    $PUT(`${API_ROOT}/${<%= schema.identifier %>Model._id}`, {
+      body: <%= schema.identifier %>Model
+    })
+    .then((<%= schema.identifier %>) => {
+      commit('fetching', false)
+      console.log('UPDATED')
+    })
+    .catch((err) => {
+      commit('fetching', false)
+      console.log('ERR!')
+      throw err
+    })
   },
-  deleteModel ({ state, commit, dispatch }) {
-  },
+  deleteModel ({ state, commit }, <%= schema.identifier %>Model) {
+    commit('fetching', true)
+    $DEL(`${API_ROOT}/${<%= schema.identifier %>Model._id}`)
+    .then((<%= schema.identifier %>) => {
+      commit('fetching', false)
+    })
+    .catch((err) => {
+      commit('fetching', false)
+      throw err // TODO - better error handling
+    })
+  }
 }
-
-// // // //
-
-export default actions

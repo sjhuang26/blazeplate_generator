@@ -23,13 +23,6 @@ module.exports = class extends Generator {
         { schema: schema }
       );
 
-      // client/src/store/resource/factory.js
-      this.fs.copyTpl(
-        this.templatePath('factory.js'),
-        this.destinationPath(vueSrc + 'store/' + schema.identifier + '/factory.js'),
-        { schema: schema }
-      );
-
       // client/src/store/resource/getters.js
       this.fs.copyTpl(
         this.templatePath('getters.js'),

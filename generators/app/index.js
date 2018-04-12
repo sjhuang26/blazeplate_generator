@@ -62,6 +62,10 @@ module.exports = class extends Generator {
 
                 let relatedSchema = _.find(build.app.schemas, { _id: attr.datatypeOptions.schema_id })
 
+                console.log('REALTED SCHEMA???')
+                console.log(attr.datatypeOptions)
+                console.log(relatedSchema)
+
                 // Pulls metadata from relatedSchema
                 let { label, label_plural, identifier, identifier_plural, class_name } = relatedSchema
                 attr.datatypeOptions.schema_label = label
