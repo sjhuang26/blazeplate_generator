@@ -6,10 +6,11 @@
 <!-- // // // //  -->
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import LayoutView from './components/layout.vue'
-import store from '@/store'
 
 export default {
+  props: ['id'],
   name: '<%= schema.identifier %>_edit',
   components: {
     LayoutView
@@ -17,15 +18,14 @@ export default {
   metaInfo: {
     title: '<%= schema.label %>s - Edit' // title is now "TITLE - <%= schema.label %> - Edit"
   },
-  props: ['id'],
   created () {
-    store.dispatch('<%= schema.identifier %>/fetchCollection')
-    store.commit('<%= schema.identifier %>/current', { id: this.id })
+    this.fetch()
   },
-  computed: {
-    model () {
-      return store.getters['<%= schema.identifier %>/current']
-    }
-  }
+  methods: mapActions({
+    fetch: '<%= schema.identifier %>/fetchModel'
+  }),
+  computed: mapGetters({
+    model: '<%= schema.identifier %>/model'
+  })
 }
 </script>

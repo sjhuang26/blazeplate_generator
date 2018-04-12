@@ -23,7 +23,7 @@ module.exports = class extends Generator {
     }
 
     function buildModule (s) {
-      routeModules.push(`${ s.label }Routes`)
+      routeModules.push(`...${ s.label }Routes`)
     }
 
     // Defaults

@@ -37,8 +37,6 @@
 <!-- // // // //  -->
 
 <script>
-import store from '@/store'
-
 export default {
   props: ['id'],
   created () {
@@ -46,16 +44,16 @@ export default {
   },
   methods: {
     fetch () {
-      return store.dispatch('<%= schema.identifier %>/fetchModel', this.id)
+      return this.store.dispatch('<%= schema.identifier %>/fetchModel', this.id)
     },
     formSubmit () {
       // TODO - validations
-      return store.dispatch('<%= schema.identifier %>/update', this.model)
+      return this.store.dispatch('<%= schema.identifier %>/update', this.model)
     }
   },
   computed: {
     model () {
-      return store.getters['<%= schema.identifier %>/current']
+      return this.store.getters['<%= schema.identifier %>/current']
     }
   }
 

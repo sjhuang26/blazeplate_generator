@@ -69,6 +69,7 @@ module.exports = class extends Generator {
                 attr.datatypeOptions.schema_identifier = identifier
                 attr.datatypeOptions.schema_identifier_plural = identifier_plural
                 attr.datatypeOptions.schema_class_name = class_name
+                attr.datatypeOptions.lead_attr = relatedSchema.attributes[0].identifier
                 return attr
             })
 

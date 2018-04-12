@@ -18,13 +18,15 @@
         <input type="number" class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
       <% } else if (attr.datatype === 'DATE') { %>
         <input type="date" class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
-      <% } else if (attr.datatype === 'BELONGS_TO') { %>
+      <% } else if (attr.datatype === 'RELATION') { %>
+
+      <% } if (attr.datatypeOptions.relationType === 'BELONGS_TO') { %>
         <select type="text" class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
-          <option :value="<%=attr.datatypeOptions.schema_identifier%>._id" v-for="<%=attr.datatypeOptions.schema_identifier%> in <%= attr.datatypeOptions.schema_identifier_plural %>">{{ <%= attr.datatypeOptions.schema_identifier %>.<%= attr.datatypeOptions.schema_label_attr %> }}</option>
+          <option :value="<%=attr.datatypeOptions.schema_identifier%>._id" v-for="<%=attr.datatypeOptions.schema_identifier%> in <%= attr.datatypeOptions.schema_identifier_plural %>">{{ <%= attr.datatypeOptions.schema_identifier %>.<%= attr.datatypeOptions.lead_attr %> }}</option>
         </select>
-      <% } else if (attr.datatype === 'HAS_MANY') { %>
+      <% } else if (attr.datatypeOptions.relationType === 'HAS_MANY') { %>
         <select type="text" multiple class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
-          <option :value="<%=attr.datatypeOptions.schema_identifier%>._id" v-for="<%=attr.datatypeOptions.schema_identifier%> in <%= attr.datatypeOptions.schema_identifier_plural %>">{{ <%= attr.datatypeOptions.schema_identifier %>.<%= attr.datatypeOptions.schema_label_attr %> }}</option>
+          <option :value="<%=attr.datatypeOptions.schema_identifier%>._id" v-for="<%=attr.datatypeOptions.schema_identifier%> in <%= attr.datatypeOptions.schema_identifier_plural %>">{{ <%= attr.datatypeOptions.schema_identifier %>.<%= attr.datatypeOptions.lead_attr %> }}</option>
         </select>
       <% } %>
       </div>
@@ -38,9 +40,13 @@
 
 <script>
 import store from '@/store'
+import RelationDropdown from '@/components/RelationDropdown'
 
 export default {
   name: '<%= schema.identifier %>_form',
+  components: {
+    RelationDropdown
+  },
   data () {
     return {
       model: {}
@@ -49,7 +55,7 @@ export default {
   created () {
     <% for (index in schema.attributes) { %>
     <% let attr = schema.attributes[index] %>
-    <% if (attr.datatype === 'BELONGS_TO' || attr.datatype === 'HAS_MANY') { %>
+    <% if (attr.datatype === 'RELATION') { %>
     this.$store.dispatch('<%= attr.datatypeOptions.schema_identifier %>/fetchCollection')
     <% } %>
     <% } %>
@@ -57,7 +63,7 @@ export default {
   computed: {
     <% for (index in schema.attributes) { %>
     <% let attr = schema.attributes[index] %>
-    <% if (attr.datatype === 'BELONGS_TO' || attr.datatype === 'HAS_MANY') { %>
+    <% if (attr.datatype === 'RELATION') { %>
     <%=attr.datatypeOptions.schema_identifier_plural%> () {
       return this.$store.getters['<%= attr.datatypeOptions.schema_identifier %>/collection']
     }
@@ -66,5 +72,3 @@ export default {
   }
 }
 </script>
-
-

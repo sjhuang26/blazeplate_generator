@@ -11,12 +11,21 @@ glob-run js-beautify --max_preserve_newlines 1 -r -s 2 'generated_apps/blazeplat
 
 # TODO - can we use ESLINT to auto-lint things like trailing commas?
 
+# Turns whitespace markers into actual whitespace (SERVER)
 rexreplace '// // // // BLAZEPLATE WHITESPACE\n' '\n' generated_apps/blazeplate_project/web_api/server/api/**/*.model.js
 rexreplace '// // // // BLAZEPLATE WHITESPACE\n' '\n' generated_apps/blazeplate_project/web_api/server/api/**/*.controller.js
 rexreplace '// // // // BLAZEPLATE WHITESPACE\n' '\n' generated_apps/blazeplate_project/web_api/server/api/**/index.js
-
 
 rexreplace '// // // // BLAZEPLATE WHITESPACE' '' generated_apps/blazeplate_project/web_api/server/api/**/*.model.js
 rexreplace '// // // // BLAZEPLATE WHITESPACE' '' generated_apps/blazeplate_project/web_api/server/api/**/*.controller.js
 rexreplace '// // // // BLAZEPLATE WHITESPACE' '' generated_apps/blazeplate_project/web_api/server/api/**/index.js
 
+
+# # # # #
+
+# Client beautify
+# glob-run js-beautify --max_preserve_newlines 1 -r -s 2 'generated_apps/blazeplate_project/web_client/src/**/*.js'
+
+# Turns whitespace markers into actual whitespace (SERVER)
+rexreplace '// // // // BLAZEPLATE WHITESPACE\n' '\n' generated_apps/blazeplate_project/web_client/src/**/*.js
+rexreplace '// // // // BLAZEPLATE WHITESPACE' '' generated_apps/blazeplate_project/web_client/src/**/*.js
