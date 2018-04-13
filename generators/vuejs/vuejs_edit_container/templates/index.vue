@@ -1,10 +1,17 @@
 
 <template>
   <div class="container">
-    <a href="#/<%= schema.identifier_plural %>">Back</a>
-    <h2><%= schema.label %> - Edit</h2>
+    <div class="row">
+      <div class="col-sm-12">
+        <h2><%= schema.label %> - Edit</h2>
+      </div>
+    </div>
+
     <hr>
-    <<%= schema.label %>Form :model="model" v-if="model._id" />
+
+    <<%= schema.label %>Form :model="model" v-if="model._id && !fetching" />
+    <Loading v-else />
+
     <div class="row">
       <div class="col-lg-12 text-right">
 
@@ -28,6 +35,7 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+import Loading from '@/components/Loading'
 import <%= schema.label %>Form from '@/components/<%= schema.label %>Form'
 
 export default {
@@ -37,16 +45,16 @@ export default {
     title: '<%= schema.label %> - Edit'
   },
   components: {
+    Loading,
     <%= schema.label %>Form
   },
   created () {
     this.fetch(this.id)
     .then(() => {
-      console.log('FETCHED')
+      // TODO - this is ugly, fix it.
       setTimeout(() => {
-        console.log(this.$store.getters['<%= schema.identifier %>/model'])
         this.setEditModel(this.$store.getters['<%= schema.identifier %>/model'])
-      }, 1000)
+      }, 500)
     })
   },
   computed: mapGetters({

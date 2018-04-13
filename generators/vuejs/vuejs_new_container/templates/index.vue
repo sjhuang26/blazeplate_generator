@@ -1,9 +1,15 @@
 
 <template>
   <div class="container">
-    <a href="#/<%= schema.identifier_plural %>">Back</a>
-    <h2><%= schema.label %> - New</h2>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <h2><%= schema.label %> - New</h2>
+      </div>
+    </div>
+
     <hr>
+
     <<%= schema.label %>Form :model="model" />
     <div class="row">
       <div class="col-lg-12 text-right">

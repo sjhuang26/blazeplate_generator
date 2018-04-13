@@ -37,7 +37,6 @@ export default {
     })
     .then((<%= schema.identifier %>) => {
       commit('fetching', false)
-      console.log('CREATED')
       router.push(`/<%= schema.identifier_plural %>`)
     })
     .catch((err) => {
@@ -53,7 +52,7 @@ export default {
     })
     .then((<%= schema.identifier %>) => {
       commit('fetching', false)
-      router.push(`#/<%= schema.identifier_plural %>`)
+      router.push(`/<%= schema.identifier_plural %>/${<%= schema.identifier %>._id}`)
     })
     .catch((err) => {
       commit('fetching', false)
@@ -68,7 +67,7 @@ export default {
       commit('fetching', false)
       let collection = _.filter(state.collection, (m) => { return m._id !== <%= schema.identifier %>Model._id })
       commit('collection', collection)
-      router.push(`#/<%= schema.identifier_plural %>`)
+      // router.push(`/<%= schema.identifier_plural %>`)
     })
     .catch((err) => {
       commit('fetching', false)
