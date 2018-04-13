@@ -8,8 +8,8 @@ const RedisClient = require('../../lib/redis') // TOOD - drop relative path?
 // { username, password }
 exports.register = (req, res) => {
 
-    // Parses username, password parameters from req.body
-    const { username, password } = req.body
+    // Pulls parameters from req.body
+    const { name, username, password, email } = req.body
 
     // Create a new User instance if one does not exist
     const create = (user) => {
@@ -20,11 +20,11 @@ exports.register = (req, res) => {
         }
 
         // Creates a new User
-        return User.create(username, password)
+        return User.create({ name, email, username, password })
     }
 
     // Respond to the client
-    const respond = (isAdmin) => {
+    const respond = (user) => {
         res.json({
             message: 'Registered Successfully.'
         })
@@ -51,7 +51,7 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
 
     // Gathers username, password
-    const { username, password } = req.body
+    const { name, email, username, password } = req.body
 
     // check the user info & generate the jwt
     // Ensures presence of the User in the database
@@ -62,7 +62,7 @@ exports.login = (req, res) => {
         if(!user){
 
             // Invalid password
-            throw new Error('login failed')
+            throw new Error('Login failed - user does not exist.')
             return
         }
 
@@ -70,16 +70,18 @@ exports.login = (req, res) => {
         if (!user.verify(password)) {
 
             // Invalid password
-            throw new Error('login failed')
+            throw new Error('Login failed - invalid password.')
             return
         }
 
         // Assembles JWT User Payload
         const jwt_paylod = {
             id: user._id.toString(),
+            name: user.name,
             admin: user.admin,
+            email: user.email,
             username: user.username,
-            iat: Date.now()
+            iat: Date.now() // Issued At
         }
 
         // JWT Options
@@ -101,6 +103,7 @@ exports.login = (req, res) => {
                 resolve({ token, user })
             }
 
+            // Signs & encrypts the JWT - generates the web token
             jwt.sign(jwt_paylod, process.env.JWT_SECRET, jwt_options, jwtCallback)
 
         })
@@ -117,6 +120,8 @@ exports.login = (req, res) => {
         const response_payload = {
             _id: user_id,
             username: user.username,
+            name: user.name,
+            email: user.email,
             admin: user.admin,
             roles: user.roles,
             token: token
@@ -128,7 +133,7 @@ exports.login = (req, res) => {
         return RedisClient.set(user_id, token, (err, reply) => {
 
             // TODO - abstract HEADER
-            const CONTENT_TYPE_JSON = { 'Content-Type': 'application/json' }
+            const CONTENT_TYPE_JSON = { 'Content-Type': 'application/json' };
 
             // 500 Internal Server Error
             // Error writing to Redis
@@ -162,13 +167,19 @@ exports.login = (req, res) => {
 
 // // // //
 // POST /api/auth/logout
-// TODO - just apply standard AUTH middleware (requiresLogin)
 exports.logout = (req, res) => {
-    console.log('LOGOUT HERE')
-    console.log(req.user)
-    console.log(req.user)
     RedisClient.del(req.user.id)
-
-    // RedisClient.key(req.user.id).clear()
     return res.json({ logout: true })
+}
+
+// // // //
+
+// POST /api/auth/reset_password
+exports.reset_password = (req, res) => {
+    console.log('TODO - reset password logic')
+    // Password reset workflow (option A):
+    // 1 - Fetch User -> User.findByUsername(req.user.username)
+    // 2 - Generate RandomPassword
+    // 3 - Email RandomPassword to User.email
+    // 4 - Assign User.password = RandomPassword
 }

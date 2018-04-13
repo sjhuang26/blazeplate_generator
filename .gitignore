@@ -9,10 +9,10 @@ test/e2e/reports
 selenium-debug.log
 
 # Generated Apps & Zips
-generated_apps/**/*
-build_configs/**/*
-!generated_apps/.gitkeep
-!build_configs/.gitkeep
+build/**/*
+configs/**/*
+!build/.gitkeep
+!configs/.gitkeep
 
 # Editor directories and files
 .idea

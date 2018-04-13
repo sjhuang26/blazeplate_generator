@@ -1,9 +1,10 @@
+import { COLLECTION_STATE, MODEL_STATE, FILTER_STATE } from '@/store/lib/mixins'
 
 // <%= schema.label %> Module State
-const state = {
-  collection: [],
-  current: {},
-  fetching: false
+export default {
+  ...COLLECTION_STATE,
+  ...MODEL_STATE,
+  ...FILTER_STATE,
+  newModel: {},
+  editModel: {}
 }
-
-export default state

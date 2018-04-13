@@ -22,7 +22,9 @@ module.exports = class extends Generator {
 
     // client/src/store/index.js
     _.each(app.schemas, (s) => {
-      buildHeaderLink(s)
+      if (s.identifier !== 'user') {
+        buildHeaderLink(s)
+      }
     })
 
 

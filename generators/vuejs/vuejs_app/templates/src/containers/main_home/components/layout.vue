@@ -18,7 +18,7 @@
 
       <div class="row my-4">
         <div class="col-lg-12 text-center">
-          <a class="btn btn-lg btn-outline-dark" href="https://github.com/blazeplate" target="_blank">
+          <a class="btn btn-lg btn-outline-dark" href="https://github.com/aeksco/blazeplate" target="_blank">
             <i class="fa fa-book mr-1"></i>
             Documentation
           </a>

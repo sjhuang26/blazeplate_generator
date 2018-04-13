@@ -6,7 +6,6 @@ import App from './App'
 import router from './routers'
 import store from '@/store'
 
-// QUESTION - ??
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

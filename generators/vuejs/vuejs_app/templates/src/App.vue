@@ -27,12 +27,7 @@ export default {
     htmlAttrs: {
       lang: 'en'
     }
-  },
-
-  created () {
-    this.$store.dispatch('auth/is_authenticated')
   }
-
 }
 </script>
 

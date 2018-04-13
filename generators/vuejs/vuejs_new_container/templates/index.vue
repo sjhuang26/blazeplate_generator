@@ -1,25 +1,62 @@
 
 <template>
-  <LayoutView :model="model"/>
+  <div class="container">
+
+    <div class="row">
+      <div class="col-sm-12">
+        <h2><%= schema.label %> - New</h2>
+      </div>
+    </div>
+
+    <hr>
+
+    <<%= schema.label %>Form :model="model" />
+    <div class="row">
+      <div class="col-lg-12 text-right">
+
+        <a href="#/<%= schema.identifier_plural %>" class="btn btn-outline-dark mr-2">
+          <i class="fa fa-fw fa-times mr-1"></i>
+          Cancel
+        </a>
+
+        <button class="btn btn-outline-success" @click="formSubmit(model)">
+          <i class="fa fa-fw fa-plus mr-1"></i>
+          Create <%= schema.label %>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
 </template>
 
 <!-- // // // //  -->
 
 <script>
-import LayoutView from './components/layout.vue'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
+import <%= schema.label %>Form from '@/components/<%= schema.label %>Form'
 
 export default {
   name: '<%= schema.identifier %>_new',
-  components: {
-    LayoutView
-  },
   metaInfo: {
-    title: '<%= schema.label %> - New' // title is now "TITLE - <%= schema.label %> - New"
+    title: '<%= schema.label %> - New'
   },
-  data () {
-    return {
-      model: {}
-    }
+  components: {
+    <%= schema.label %>Form
+  },
+  created () {
+    this.resetNewModel()
+  },
+  computed: mapGetters({
+    model: '<%= schema.identifier %>/newModel'
+  }),
+  methods: {
+    ...mapActions({
+      formSubmit: '<%= schema.identifier %>/createModel'
+    }),
+    ...mapMutations({
+      resetNewModel: '<%= schema.identifier %>/resetNewModel'
+    })
   }
 }
 </script>

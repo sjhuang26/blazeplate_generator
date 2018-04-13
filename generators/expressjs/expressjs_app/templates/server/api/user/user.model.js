@@ -15,14 +15,23 @@ function encryptPassword (password) {
 
 // User Schema definition
 // TODO - generator must add additional attributes
+// TODO - User should store unique `salt` attribute for encrypting passwords
 const User = new Schema({
     username: {
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true
+        // TODO - email validation
+    },
     password: {
         type: String,
         required: true
+    },
+    password_reset_token: {
+        type: String
     },
     admin: {
         type: Boolean,
@@ -35,10 +44,12 @@ const User = new Schema({
 })
 
 // Create new User document
-User.statics.create = function (username, password) {
+// TODO - add email
+User.statics.create = function ({ email, username, password }) {
 
     // Instantiates new User model
     const user = new this({
+        email,
         username,
         password: encryptPassword(password)
     })

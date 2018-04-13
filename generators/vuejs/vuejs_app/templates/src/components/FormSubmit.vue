@@ -1,10 +1,14 @@
 <template>
-  <input class="btn btn-outline-success btn-block" type="submit" value="Login">
+  <button class="btn btn-outline-success" @click="click()">
+    <i class="fa fa-fw fa-check mr-2"></i>
+    Submit
+  </button>
 </template>
 
 <script>
 export default {
-  name: 'FormSubmit'
+  name: 'FormSubmit',
+  props: ['click', 'label', 'icon', 'context']
 }
 </script>
 

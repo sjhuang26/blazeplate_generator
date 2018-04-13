@@ -1,13 +1,11 @@
 const _ = require('lodash')
 const Generator = require('yeoman-generator')
-const classify = require('underscore.string/classify')
 
 // // // //
 
 module.exports = class extends Generator {
 
   // writing to file
-  // TODO - remove hard-coded resource schema
   writing() {
 
     let app = this.options.build.app
@@ -16,31 +14,45 @@ module.exports = class extends Generator {
     let destinationRoot = this.options.build.dest.root
     let vueSrc = this.options.build.dest.vue.src
 
+    // Variables sent to the template
     let routeImports = []
     let routeModules = []
 
     function buildImport (s) {
-      routeImports.push(`import { ${ s.label }ListRoute, ${ s.label }ShowRoute, ${ s.label }NewRoute, ${ s.label }EditRoute } from './${ s.identifier }'`)
+      routeImports.push(`import ${ s.label }Routes from './${ s.identifier }'`)
     }
 
     function buildModule (s) {
-      routeModules.push(`${ s.label }ListRoute`)
-      routeModules.push(`${ s.label }NewRoute`)
-      routeModules.push(`${ s.label }EditRoute`)
-      routeModules.push(`${ s.label }ShowRoute`)
+      routeModules.push(`...${ s.label }Routes`)
     }
 
+    // Defaults
+    const defaultModules = [
+      { label: 'Main', identifier: 'main' },
+      { label: 'Auth', identifier: 'auth' },
+      { label: 'User', identifier: 'user' }
+    ]
+
+    // TODO - these should all be opt-in
+    _.each(defaultModules, (m) => {
+      buildImport(m)
+      buildModule(m)
+    })
+
+
     // client/src/store/index.js
-    // TODO - move into separate generator class definition
+    // TODO - abstract into separate generator class definition
     _.each(app.schemas, (s) => {
-      buildImport(s)
-      buildModule(s)
+      if (s.identifier !== 'user') {
+        buildImport(s)
+        buildModule(s)
+      }
     })
 
     this.fs.copyTpl(
       this.templatePath('router.js'),
       this.destinationPath(vueSrc + 'routers/index.js'),
-      { appSchema: app, routeImports: routeImports.join("\n"), routeModules: routeModules.join(",\n    ")  } // TODO - constantize indentation size?
+      { appSchema: app, routeImports: routeImports.join("\n"), routeModules: routeModules.join(",\n    ")  }
     );
 
   }

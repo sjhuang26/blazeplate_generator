@@ -1,9 +1,6 @@
-
-// Project Module State
-const state = {
+// User Module State
+export default {
   collection: [],
   current: {},
   fetching: false
 }
-
-export default state

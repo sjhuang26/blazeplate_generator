@@ -1,0 +1,186 @@
+{
+  "label":"websys_lab",
+  "identifier":"websys_lab",
+  "schemas":[
+    {
+      "label":"Tweet",
+      "identifier":"tweet",
+      "_id":"schema_29321443037762",
+      "attributes":[
+        {
+          "order":1,
+          "label":"tweet_id",
+          "help":"Name of the individual",
+          "required":true,
+          "datatype":"TEXT",
+          "datatypeOptions":{
+
+          },
+          "col_span":6,
+          "identifier":"tweet_id",
+          "unique":false,
+          "_id":"attr_1"
+        },
+        {
+          "order":1,
+          "label":"created_at",
+          "help":"Name of the individual",
+          "required":true,
+          "datatype":"TEXT",
+          "datatypeOptions":{
+
+          },
+          "col_span":6,
+          "identifier":"created_at",
+          "unique":false,
+          "_id":"attr_1"
+        },
+        {
+          "order":2,
+          "label":"user_id",
+          "help":"user_id of the individual",
+          "required":false,
+          "datatype":"TEXT",
+          "datatypeOptions":{
+
+          },
+          "col_span":6,
+          "identifier":"user_id",
+          "_id":"attr_2"
+        },
+        {
+          "order":3,
+          "label":"user_name",
+          "help":"user_name of the individual",
+          "required":false,
+          "datatype":"TEXT",
+          "datatypeOptions":{
+
+          },
+          "col_span":6,
+          "identifier":"user_name",
+          "_id":"attr_3"
+        },
+        {
+          "order":4,
+          "label":"user_screen_name",
+          "help":"user_screen_name of the individual",
+          "required":false,
+          "datatype":"TEXT",
+          "datatypeOptions":{
+
+          },
+          "col_span":6,
+          "identifier":"user_screen_name",
+          "_id":"attr_4"
+        },
+        {
+          "order":5,
+          "label":"user_location",
+          "help":"user_location of the individual",
+          "required":false,
+          "datatype":"TEXT",
+          "datatypeOptions":{
+
+          },
+          "col_span":6,
+          "identifier":"user_location",
+          "_id":"attr_5"
+        },
+        {
+          "order":6,
+          "label":"user_followers_count",
+          "help":"user_followers_count of the individual",
+          "required":false,
+          "datatype":"TEXT",
+          "datatypeOptions":{
+
+          },
+          "col_span":6,
+          "identifier":"user_followers_count",
+          "_id":"attr_6"
+        },
+        {
+          "order":7,
+          "label":"user_friends_count",
+          "help":"user_friends_count of the individual",
+          "required":false,
+          "datatype":"TEXT",
+          "datatypeOptions":{
+
+          },
+          "col_span":6,
+          "identifier":"user_friends_count",
+          "_id":"attr_7"
+        },
+        {
+          "order":8,
+          "label":"user_created_at",
+          "help":"user_created_at of the individual",
+          "required":false,
+          "datatype":"TEXT",
+          "datatypeOptions":{
+
+          },
+          "col_span":6,
+          "identifier":"user_created_at",
+          "_id":"attr_8"
+        },
+        {
+          "order":9,
+          "label":"user_time_zone",
+          "help":"user_time_zone of the individual",
+          "required":false,
+          "datatype":"TEXT",
+          "datatypeOptions":{
+
+          },
+          "col_span":6,
+          "identifier":"user_time_zone",
+          "_id":"attr_9"
+        },
+        {
+          "order":10,
+          "label":"user_profile_background_color",
+          "help":"user_profile_background_color of the individual",
+          "required":false,
+          "datatype":"TEXT",
+          "datatypeOptions":{
+
+          },
+          "col_span":6,
+          "identifier":"user_profile_background_color",
+          "_id":"attr_10"
+        },
+        {
+          "order":11,
+          "label":"user_profile_image_url",
+          "help":"user_profile_image_url of the individual",
+          "required":false,
+          "datatype":"TEXT",
+          "datatypeOptions":{
+
+          },
+          "col_span":6,
+          "identifier":"user_profile_image_url",
+          "_id":"attr_11"
+        },
+        {
+          "order":12,
+          "label":"place",
+          "help":"place of the individual",
+          "required":false,
+          "datatype":"TEXT",
+          "datatypeOptions":{
+
+          },
+          "col_span":6,
+          "identifier":"place",
+          "_id":"attr_12"
+        }
+      ],
+      "label_plural":"Tweets",
+      "identifier_plural":"tweets"
+    }
+  ]
+}

@@ -1,58 +1,57 @@
 <template>
-	<nav class="navbar navbar-expand-lg fixed-top">
+  <b-navbar toggleable="md" type="dark" variant="dark" fixed="top">
+    <b-navbar-brand href="#/">
+      <%=appSchema.label %>
+    </b-navbar-brand>
 
-    <a class="navbar-brand" href="#/">
-      <strong><%=appSchema.label %></strong>
-    </a>
+    <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+    <b-collapse is-nav id="nav_collapse">
 
-	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	    <span class="navbar-toggler-icon"></span>
-	  </button>
-
-	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-	    <ul class="navbar-nav mr-auto">
+      <!-- Navbar Links -->
+      <b-navbar-nav class="mr-auto">
 
         <% for (i in headerLinks) { %>
-        <li class="nav-item">
-          <a class="nav-link" href="<%= headerLinks[i].href %>"><%= headerLinks[i].text %></a>
-        </li>
+        <b-nav-item href="<%= headerLinks[i].href %>"><%= headerLinks[i].text %></b-nav-item>
         <% } %>
 
-	    </ul>
+        <!-- TODO - render this conditionally -->
+        <b-nav-item href="#/users">Users</b-nav-item>
 
-	    <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#/schemas">Admin</a>
-        </li>
-	      <li class="nav-item" v-if="!currentUser">
-	        <a class="nav-link" href="#/auth/register">Register</a>
-	      </li>
-	      <li class="nav-item" v-if="!currentUser">
-	        <a class="nav-link" href="#/auth/login">Login</a>
-	      </li>
-        <li class="nav-item" v-if="currentUser">
-          <a class="nav-link" href="#/user/profile">{{currentUser.username}}</a>
-        </li>
-	    </ul>
-	  </div>
-	</nav>
+      </b-navbar-nav>
+
+      <!-- User Dropdown -->
+      <b-navbar-nav class="ml-auto" v-if="isAuthenticated">
+        <b-nav-item-dropdown right>
+          <template slot="button-content">
+            {{ currentUser.email }}
+          </template>
+          <b-dropdown-item :href="'#/users/' + currentUser._id">Profile</b-dropdown-item>
+          <b-dropdown-item @click="logout()">Logout</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
+
+      <!-- Register / Login -->
+      <b-navbar-nav v-else>
+        <b-nav-item href="#/auth/register">Register</b-nav-item>
+        <b-nav-item href="#/auth/login">Login</b-nav-item>
+      </b-navbar-nav>
+
+    </b-collapse>
+  </b-navbar>
 </template>
 
 <script>
-// TODO - this should be split into a series of smaller components
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'Navbar',
-  computed: {
-    allSchemas () {
-      return this.$store.getters['schema/collection']
-    },
-    currentUser () {
-      return this.$store.getters['auth/user']
-    },
-    isAuthenticated () {
-      return this.$store.getters['auth/isAuthenticated']
-    }
-  }
+  computed: mapGetters({
+    isAuthenticated: 'auth/is_authenticated',
+    currentUser: 'auth/current_user'
+  }),
+  methods: mapActions({
+    logout: 'auth/logout'
+  })
 }
 </script>
 
