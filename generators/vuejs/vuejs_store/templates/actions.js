@@ -66,6 +66,8 @@ export default {
     $DEL(`${API_ROOT}/${<%= schema.identifier %>Model._id}`)
     .then((<%= schema.identifier %>) => {
       commit('fetching', false)
+      let collection = _.filter(state.collection, (m) => { return m._id !== <%= schema.identifier %>Model._id })
+      commit('collection', collection)
       router.push(`#/<%= schema.identifier_plural %>`)
     })
     .catch((err) => {

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "nodemon -L ./server/bin/www.js",
-    "apidoc": "apidoc -i ./server/api -o doc/",
+    "apidoc": "apidoc -i ./server/api -o doc/"
   },
   "license": "MIT",
   "dependencies": {

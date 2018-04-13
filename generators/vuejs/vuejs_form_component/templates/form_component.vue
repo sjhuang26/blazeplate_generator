@@ -63,7 +63,7 @@ export default {
     <% if (attr.datatype === 'RELATION') { %>
     <%=attr.datatypeOptions.schema_identifier_plural%> () {
       return this.$store.getters['<%= attr.datatypeOptions.schema_identifier %>/collection']
-    }
+    },
     <% } %>
     <% } %>
   }

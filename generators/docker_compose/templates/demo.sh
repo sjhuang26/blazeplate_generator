@@ -1,5 +1,6 @@
-# Copies demo compose file
-cp ./docker-compose-demo.yml ./docker-compose.yml
+# Copies dev compose file
+cp ./docker-compose-dev.yml ./docker-compose.yml
 
 # Starts docker-compose
+docker-compose build
 docker-compose up -d

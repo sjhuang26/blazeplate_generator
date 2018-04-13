@@ -62,10 +62,28 @@
             <i class="fa fa-fw fa-pencil"></i>
           </a>
 
-          <!-- Destroy -->
-          <button class="btn btn-sm btn-outline-danger" @click="confirmDestroy(m._id)">
+          <button class="btn btn-sm btn-outline-danger" v-b-modal="'modal_' + m._id">
             <i class="fa fa-fw fa-trash"></i>
           </button>
+
+          <!-- Bootstrap Modal Component -->
+          <b-modal :id="'modal_' + m._id"
+            :title="'Destroy <%= schema.label %>?'"
+            @ok="onConfirmDestroy(m)"
+            header-bg-variant='dark'
+            header-text-variant='light'
+            body-bg-variant='dark'
+            body-text-variant='light'
+            footer-bg-variant='danger'
+            footer-text-variant='light'
+            ok-variant='danger'
+            ok-title='DESTROY'
+            cancel-title='Cancel'
+            cancel-variant='dark'
+          >
+            <p class="text-left">Are you sure you want to destroy this <%= schema.label %>?</p>
+          </b-modal>
+
         </td>
       </tr>
     </tbody>
@@ -77,16 +95,13 @@
 <!-- // // // //  -->
 
 <script>
-import store from '@/store'
+import { mapActions } from 'vuex'
 
 export default {
   props: ['collection'],
-  methods: {
-    confirmDestroy (id) {
-      store.commit('<%= schema.identifier %>/remove', id)
-      return store.dispatch('<%= schema.identifier %>/destroy', id)
-    }
-  }
+  methods: mapActions({
+    onConfirmDestroy: '<%= schema.identifier %>/deleteModel'
+  })
 }
 </script>
 

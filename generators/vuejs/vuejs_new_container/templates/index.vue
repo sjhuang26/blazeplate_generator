@@ -27,7 +27,6 @@
 <!-- // // // //  -->
 
 <script>
-import store from '@/store'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import <%= schema.label %>Form from '@/components/<%= schema.label %>Form'
 

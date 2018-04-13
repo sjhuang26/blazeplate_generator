@@ -7,6 +7,9 @@ const getters = {
   ...FILTER_GETTERS,
   newModel: state => {
     return state.newModel
+  },
+  editModel: state => {
+    return state.editModel
   }
 }
 

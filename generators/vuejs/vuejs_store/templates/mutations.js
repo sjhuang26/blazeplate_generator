@@ -9,5 +9,8 @@ export default {
   ...MODEL_MUTATIONS,
   resetNewModel (state) {
     state.newModel = _.cloneDeep(NEW_<%= schema.label.toUpperCase() %>)
+  },
+  editModel (state, model) {
+    state.editModel = _.cloneDeep(model)
   }
 }
