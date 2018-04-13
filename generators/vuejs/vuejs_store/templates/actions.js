@@ -1,3 +1,4 @@
+import router from '@/routers'
 import { $GET, $POST, $PUT, $DEL } from '@/store/lib/helpers'
 
 const API_ROOT = '/api/<%= schema.identifier_plural %>'
@@ -37,6 +38,7 @@ export default {
     .then((<%= schema.identifier %>) => {
       commit('fetching', false)
       console.log('CREATED')
+      router.push(`/<%= schema.identifier_plural %>`)
     })
     .catch((err) => {
       commit('fetching', false)
@@ -51,7 +53,7 @@ export default {
     })
     .then((<%= schema.identifier %>) => {
       commit('fetching', false)
-      console.log('UPDATED')
+      router.push(`#/<%= schema.identifier_plural %>`)
     })
     .catch((err) => {
       commit('fetching', false)
@@ -64,6 +66,7 @@ export default {
     $DEL(`${API_ROOT}/${<%= schema.identifier %>Model._id}`)
     .then((<%= schema.identifier %>) => {
       commit('fetching', false)
+      router.push(`#/<%= schema.identifier_plural %>`)
     })
     .catch((err) => {
       commit('fetching', false)

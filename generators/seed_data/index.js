@@ -36,12 +36,12 @@ module.exports = class extends Generator {
       if (data.records.length) {
 
         // COPY statement
-        let copyStatement = `COPY seed/${data.identifier}.json /${data.identifier}.json`
+        let copyStatement = `COPY seeds/${data.identifier}.json /${data.identifier}.json`
         copyStatements.push(copyStatement)
 
         // MongoImport statement
         // TODO - remove hard-coded `blazeplate` database name
-        let importStatement = `mongoimport --host mongodb --db blazeplate --collection ${data.identifier} --type json --file ./${data.identifier}.json --jsonArray`
+        let importStatement = `mongoimport --host mongo --db blazeplate --collection ${data.identifier} --type json --file ./${data.identifier}.json --jsonArray`
         mongoImports.push(importStatement)
 
         // Generates generated/docker/seeds/identifier.json

@@ -1,6 +1,6 @@
 {
   "label": "Classroom App",
-  "identifier": "blazeplate_project",
+  "identifier": "classroom_app",
   "schemas": [
     {
       "_id": "SCHEMA_2",
@@ -169,10 +169,42 @@
   ],
   "seeds": [
     {
-      "_id": "5acfc1354ecff53a11af8d4a",
+      "_id": "5acfe9aaac9d82d0d91922ca",
+      "schema_id": "SCHEMA_2",
+      "attributes": {
+        "email": "aeksco@gmail.com",
+        "username": "aeksco",
+        "name": "Alexander Schwartzberg",
+        "password": "abc123",
+        "admin": true
+      }
+    },
+    {
+      "_id": "5acfeea25535afdb753d55f6",
       "schema_id": "schema_4625927934382",
       "attributes": {
-        "label": "Dummy Assignment"
+        "label": "Dummy Assignment #2"
+      }
+    },
+    {
+      "_id": "5acfeea85535afdb753d55f7",
+      "schema_id": "schema_4625927934382",
+      "attributes": {
+        "label": "Dummy Assignment #1"
+      }
+    },
+    {
+      "_id": "5acff0f966dcfde584f91b94",
+      "schema_id": "schema_15652994829682",
+      "attributes": {
+        "label": "Operating Systems"
+      }
+    },
+    {
+      "_id": "5acff0ff66dcfde584f91b95",
+      "schema_id": "schema_15652994829682",
+      "attributes": {
+        "label": "Data Structures"
       }
     }
   ],
@@ -186,8 +218,11 @@
     "database": {
       "id": "mongodb"
     },
+    "auth": {
+      "id": "email"
+    },
     "features": [],
     "deployments": []
   },
-  "_id": "5acfbf2ae5ce445b28f10c79"
+  "_id": "5acfe5b4f35cf9538e9228e9"
 }
