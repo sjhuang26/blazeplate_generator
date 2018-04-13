@@ -15,20 +15,30 @@ module.exports = class extends Generator {
     // Global build configuration
     let build = {
       dest: {
+        id: '',
         root: null,
+        out: '',
         vue: {},
         expressjs: {}
       }
     }
 
+    // Debugging
+    // console.log('APP CONFIG')
+    // console.log(opts)
+
     // TODO - Yoeman argument/option best practices
     let rawConfig = fs.readFileSync(opts['appconfig'])
     build.app = JSON.parse(rawConfig)
 
+    // Isolates the buildId
+    const buildId = opts['buildId']
+    build.id = buildId
+
     // // // //
     // Destination helpers & constants
-
-    build.dest.root = './generated_apps/' + build.app.identifier + '/'
+    build.dest.out = './build/' + buildId + '/'
+    build.dest.root = build.dest.out + build.app.identifier + '/'
 
     // VueJS
     build.dest.vue.root = build.dest.root + 'web_client/'
@@ -62,7 +72,7 @@ module.exports = class extends Generator {
 
                 let relatedSchema = _.find(build.app.schemas, { _id: attr.datatypeOptions.schema_id })
 
-                // console.log('REALTED SCHEMA???')
+                // Debugging
                 // console.log(attr.datatypeOptions)
                 // console.log(relatedSchema)
 
@@ -126,7 +136,7 @@ module.exports = class extends Generator {
     this.composeWith(require.resolve('../expressjs/expressjs_routes'), { build });
     this.composeWith(require.resolve('../expressjs/expressjs_resource'), { build });
 
-    // Infrastructure
+    // Infrastructure & Seed Data
     this.composeWith(require.resolve('../docker_compose'), { build });
     this.composeWith(require.resolve('../seed_data'), { build });
 

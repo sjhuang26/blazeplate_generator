@@ -1,19 +1,19 @@
 
 # Blazeplate generate
 # yo blazeplate --force --appconfig=./configs/example_01.json
-yo blazeplate --force --appconfig=./configs/example_04.json
+yo blazeplate --force --appconfig=./configs/example_04.json --buildId=5acfeea85535afdb753d55f7
 
 # JS Beautify
-glob-run js-beautify --max_preserve_newlines 1 -r -s 2 'generated_apps/blazeplate_project/web_api/server/**/*.js'
+# glob-run js-beautify --max_preserve_newlines 1 -r -s 2 'generated_apps/blazeplate_project/web_api/server/**/*.js'
 
 # Turns whitespace markers into actual whitespace (SERVER)
-rexreplace '// // // // BLAZEPLATE WHITESPACE\n' '\n' generated_apps/blazeplate_project/web_api/server/api/**/*.model.js
-rexreplace '// // // // BLAZEPLATE WHITESPACE\n' '\n' generated_apps/blazeplate_project/web_api/server/api/**/*.controller.js
-rexreplace '// // // // BLAZEPLATE WHITESPACE\n' '\n' generated_apps/blazeplate_project/web_api/server/api/**/index.js
+# rexreplace '// // // // BLAZEPLATE WHITESPACE\n' '\n' generated_apps/blazeplate_project/web_api/server/api/**/*.model.js
+# rexreplace '// // // // BLAZEPLATE WHITESPACE\n' '\n' generated_apps/blazeplate_project/web_api/server/api/**/*.controller.js
+# rexreplace '// // // // BLAZEPLATE WHITESPACE\n' '\n' generated_apps/blazeplate_project/web_api/server/api/**/index.js
 
-rexreplace '// // // // BLAZEPLATE WHITESPACE' '' generated_apps/blazeplate_project/web_api/server/api/**/*.model.js
-rexreplace '// // // // BLAZEPLATE WHITESPACE' '' generated_apps/blazeplate_project/web_api/server/api/**/*.controller.js
-rexreplace '// // // // BLAZEPLATE WHITESPACE' '' generated_apps/blazeplate_project/web_api/server/api/**/index.js
+# rexreplace '// // // // BLAZEPLATE WHITESPACE' '' generated_apps/blazeplate_project/web_api/server/api/**/*.model.js
+# rexreplace '// // // // BLAZEPLATE WHITESPACE' '' generated_apps/blazeplate_project/web_api/server/api/**/*.controller.js
+# rexreplace '// // // // BLAZEPLATE WHITESPACE' '' generated_apps/blazeplate_project/web_api/server/api/**/index.js
 
 # # # # #
 
@@ -21,8 +21,8 @@ rexreplace '// // // // BLAZEPLATE WHITESPACE' '' generated_apps/blazeplate_proj
 # glob-run js-beautify --max_preserve_newlines 1 -r -s 2 'generated_apps/blazeplate_project/web_client/src/**/*.js'
 
 # Turns whitespace markers into actual whitespace (SERVER)
-rexreplace '// // // // BLAZEPLATE WHITESPACE\n' '\n' generated_apps/blazeplate_project/web_client/src/**/*.js
-rexreplace '// // // // BLAZEPLATE WHITESPACE' '' generated_apps/blazeplate_project/web_client/src/**/*.js
+# rexreplace '// // // // BLAZEPLATE WHITESPACE\n' '\n' generated_apps/blazeplate_project/web_client/src/**/*.js
+# rexreplace '// // // // BLAZEPLATE WHITESPACE' '' generated_apps/blazeplate_project/web_client/src/**/*.js
 
 # # # # #
 
