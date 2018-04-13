@@ -6,28 +6,42 @@
       <div class="col-lg-12">
         <div class="card card-body">
 
+
+          <!-- Bootstrap Modal Component -->
+          <b-modal :id="'destroyModal'"
+            :title="'Destroy <%= schema.label %>?'"
+            @ok="onConfirmDestroy(model)"
+            header-bg-variant='dark'
+            header-text-variant='light'
+            body-bg-variant='dark'
+            body-text-variant='light'
+            footer-bg-variant='danger'
+            footer-text-variant='light'
+            ok-variant='danger'
+            ok-title='DESTROY'
+            cancel-title='Cancel'
+            cancel-variant='dark'
+          >
+            <p class="text-left">Are you sure you want to destroy this <%= schema.label %>?</p>
+          </b-modal>
+
           <div class="row">
-            <div class="col-lg-8">
+            <div class="col-sm-8">
               <h2>
                 <%= schema.label %> Detail
               </h2>
             </div>
-            <div class="col-lg-4 text-right">
+            <div class="col-sm-4 text-right">
 
-              <!-- Edit Link -->
+              <!-- Edit -->
               <a class="btn btn-outline-warning btn-sm" :href="'#/<%= schema.identifier_plural %>/' + model._id + '/edit'">
                 <i class="fa fa-fw fa-pencil"></i>
               </a>
 
-              <!-- Opens Destroy Confirmation Modal -->
-              <!-- <button class="btn btn-outline-danger btn-sm" v-b-modal.confirm-modal> -->
-                <!-- <i class="fa fa-fw fa-trash"></i> -->
-              <!-- </button> -->
-
-              <!-- Bootstrap Modal Component -->
-              <!-- <b-modal id="confirm-modal" title="Destroy <%= schema.label %>?" @ok="onConfirm"> -->
-                <!-- <p class="my-4">Are you sure you want to destroy this <%= schema.label %>?</p> -->
-              <!-- </b-modal> -->
+              <!-- Destroy -->
+              <button class="btn btn-sm btn-outline-danger" v-b-modal="'destroyModal'">
+                <i class="fa fa-fw fa-trash"></i>
+              </button>
 
             </div>
           </div>
@@ -79,7 +93,8 @@ export default {
     this.fetch(this.id)
   },
   methods: mapActions({
-    fetch: '<%= schema.identifier %>/fetchModel'
+    fetch: '<%= schema.identifier %>/fetchModel',
+    onConfirmDestroy: '<%= schema.identifier %>/deleteModel'
   }),
   computed: mapGetters({
     model: '<%= schema.identifier %>/model',

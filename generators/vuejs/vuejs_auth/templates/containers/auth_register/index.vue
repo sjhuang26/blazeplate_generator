@@ -3,7 +3,8 @@
     <div class="row d-flex justify-content-center">
       <div class="col-lg-4">
 
-        <div class="card card-body">
+        <Loading v-if="fetching" />
+        <div class="card card-body" v-else>
           <h4 class="card-title">Register</h4>
           <form>
             <fieldset>
@@ -30,6 +31,7 @@
 </template>
 
 <script>
+import Loading from '@/components/Loading'
 import FormInput from '@/components/FormInput'
 import FormSubmit from '@/components/FormSubmit'
 import { mapGetters, mapActions } from 'vuex'
@@ -40,11 +42,12 @@ export default {
     title: 'Auth - Register'
   },
   components: {
+    Loading,
     FormInput,
     FormSubmit
   },
   computed: mapGetters({
-    loading: 'auth/loading',
+    fetching: 'auth/logging_in',
     register_user: 'auth/register_user'
   }),
   methods: mapActions({

@@ -2,7 +2,8 @@
   <div class="container h-100">
     <div class="row d-flex justify-content-center">
       <div class="col-lg-4">
-        <div class="card card-body">
+        <Loading v-if="fetching" />
+        <div class="card card-body" v-else>
           <h4 class="card-title">Sign In</h4>
           <fieldset>
 
@@ -28,6 +29,7 @@
 
 <script>
 import FormInput from '@/components/FormInput'
+import Loading from '@/components/Loading'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -36,11 +38,12 @@ export default {
     title: 'Auth - Login'
   },
   components: {
-    FormInput
+    FormInput,
+    Loading
   },
   computed: mapGetters({
     login_user: 'auth/login_user',
-    logging_in: 'auth/logging_in'
+    fetching: 'auth/logging_in'
   }),
   methods: mapActions({
     login: 'auth/login'

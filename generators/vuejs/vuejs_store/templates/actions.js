@@ -15,6 +15,7 @@ export default {
     })
     .catch((err) => {
       commit('fetching', false)
+      commit('notification/add', { message: 'Fetch error', context: 'danger', dismissible: true }, { root: true })
       throw err // TODO - better error handling
     })
   },
@@ -27,6 +28,7 @@ export default {
     })
     .catch((err) => {
       commit('fetching', false)
+      commit('notification/add', { message: 'Fetch error', context: 'danger', dismissible: true }, { root: true })
       throw err // TODO - better error handling
     })
   },
@@ -41,7 +43,7 @@ export default {
     })
     .catch((err) => {
       commit('fetching', false)
-      console.log('ERR!')
+      commit('notification/add', { message: 'Create error', context: 'danger', dismissible: true }, { root: true })
       throw err
     })
   },
@@ -56,7 +58,7 @@ export default {
     })
     .catch((err) => {
       commit('fetching', false)
-      console.log('ERR!')
+      commit('notification/add', { message: 'Update error', context: 'danger', dismissible: true }, { root: true })
       throw err
     })
   },
@@ -67,10 +69,11 @@ export default {
       commit('fetching', false)
       let collection = _.filter(state.collection, (m) => { return m._id !== <%= schema.identifier %>Model._id })
       commit('collection', collection)
-      // router.push(`/<%= schema.identifier_plural %>`)
+      router.push(`/<%= schema.identifier_plural %>`)
     })
     .catch((err) => {
       commit('fetching', false)
+      commit('notification/add', { message: 'Destroy error', context: 'danger', dismissible: true }, { root: true })
       throw err // TODO - better error handling
     })
   }

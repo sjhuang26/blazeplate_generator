@@ -49,7 +49,6 @@ export default {
     RelationDropdown
   },
   created () {
-    console.log(this.model)
     <% for (index in schema.attributes) { %>
     <% let attr = schema.attributes[index] %>
     <% if (attr.datatype === 'RELATION') { %>

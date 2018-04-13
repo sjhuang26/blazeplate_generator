@@ -9,6 +9,12 @@ const <%= attr.datatypeOptions.schema_class_name %> = require('../<%= attr.datat
 // // // // BLAZEPLATE WHITESPACE
 // // // //
 
+function handleError (res, err) {
+    return res.status(500).json({ error: err }).end()
+}
+
+// // // // BLAZEPLATE WHITESPACE
+// // // //
 
 <% if (schema.identifier === 'user') { %>
 // // // // BLAZEPLATE WHITESPACE
@@ -45,7 +51,9 @@ module.exports.list = (req, res, next) => {
         .send(response)
         .end();
     })
-    .catch(next);
+    .catch((err) => {
+        handleError(res, err)
+    });
 };
 // // // // BLAZEPLATE WHITESPACE
 
@@ -71,7 +79,9 @@ module.exports.create = (req, res, next) => {
         .send(response)
         .end();
     })
-    .catch(next);
+    .catch((err) => {
+        handleError(res, err)
+    });
 };
 // // // // BLAZEPLATE WHITESPACE
 
@@ -93,7 +103,9 @@ module.exports.show = (req, res, next) => {
         .send(response)
         .end();
     })
-    .catch(next);
+    .catch((err) => {
+        handleError(res, err)
+    });
 };
 // // // // BLAZEPLATE WHITESPACE
 
@@ -122,10 +134,14 @@ module.exports.show<%= attr.datatypeOptions.schema_label %> = (req, res, next) =
             .send(<%= attr.datatypeOptions.schema_identifier %>)
             .end();
         })
-        .catch(next);
+        .catch((err) => {
+            handleError(res, err)
+        });
 
     })
-    .catch(next);
+    .catch((err) => {
+        handleError(res, err)
+    });
 };
 // // // // BLAZEPLATE WHITESPACE
 
@@ -148,7 +164,9 @@ module.exports.show<%= attr.datatypeOptions.schema_label_plural %> = (req, res, 
         .send(<%= attr.datatypeOptions.schema_identifier_plural %>)
         .end();
     })
-    .catch(next);
+    .catch((err) => {
+        handleError(res, err)
+    });
 };
 // // // // BLAZEPLATE WHITESPACE
 
@@ -178,7 +196,9 @@ module.exports.update = (req, res, next) => {
         .send(response)
         .end();
     })
-    .catch(next);
+    .catch((err) => {
+        handleError(res, err)
+    });
 };
 // // // // BLAZEPLATE WHITESPACE
 
@@ -199,6 +219,8 @@ module.exports.delete = (req, res, next) => {
         .send(response)
         .end();
     })
-    .catch(next);
+    .catch((err) => {
+        handleError(res, err)
+    });
 };
 // // // // BLAZEPLATE WHITESPACE

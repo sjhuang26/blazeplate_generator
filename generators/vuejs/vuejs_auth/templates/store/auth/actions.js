@@ -15,15 +15,18 @@ const actions = {
   // fetchUserProfile
   // Fetches a user's profiles form the server
   fetchUserProfile ({ state, commit }) {
+    commit('logging_in', true)
     return new Promise((resolve, reject) => {
       $GET(PROFILE_ROUTE, { token: state.token })
       .then((json) => {
         commit('current_user', json)
+        commit('logging_in', false)
         return resolve(json)
       })
       .catch((err) => {
         commit('clear_token')
         commit('clear_current_user')
+        commit('logging_in', false)
         // throw err
         return reject(err)
       })
@@ -45,20 +48,15 @@ const actions = {
       commit('clear_register_user')
       commit('logging_in', false)
 
-      // Updates store.token
-      commit('token', json.token)
-
-      // Fetches user profile
-      dispatch('fetchUserProfile')
-
       // Shows REGISTER_SUCCESS_NOTIFICATION message
       commit('notification/add', REGISTER_SUCCESS_NOTIFICATION, { root: true })
 
-      // Redirects to home route
-      Router.push('/')
+      // Redirects to login route
+      Router.push('/auth/login')
     })
     .catch((err) => {
       // Shows REGISTER_ERROR_NOTIFICATION message
+      commit('logging_in', false)
       commit('notification/add', REGISTER_ERROR_NOTIFICATION, { root: true })
       throw err
     })
@@ -96,6 +94,7 @@ const actions = {
     })
     .catch((err) => {
       // Shows LOGIN_ERROR_NOTIFICATION message
+      commit('logging_in', false)
       commit('notification/add', LOGIN_ERROR_NOTIFICATION, { root: true })
       throw err
     })

@@ -7,7 +7,9 @@
     <% for (index in schema.attributes) { %>
       <th>
         <%= schema.attributes[index].label %>
+        <% if (schema.attributes[index].help) { %>
         <i class="fa fa-fw fa-question-circle-o" v-b-tooltip.hover.bottom title="<%= schema.attributes[index].help %>" ></i>
+        <% } %>
       </th>
     <% } %>
       <th></th>

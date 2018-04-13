@@ -6,15 +6,15 @@ const state = {
   logging_in: false,
   current_user: {},
   login_user: {
-    username: 'boofar',
-    email: 'foo@bar.com',
+    username: 'johndoe',
+    email: 'john@doe.com',
     password: 'abc123',
     errors: {}
   },
   register_user: {
-    name: 'Name Namerson',
-    email: 'foo@bar.com',
-    username: 'boofar',
+    name: 'John Doe',
+    email: 'john@doe.com',
+    username: 'johndoe',
     password: 'abc123',
     passwordverify: 'abc123',
     errors: {}
