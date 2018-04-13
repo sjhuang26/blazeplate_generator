@@ -8,8 +8,8 @@ const RedisClient = require('../../lib/redis') // TOOD - drop relative path?
 // { username, password }
 exports.register = (req, res) => {
 
-    // Parses username, password parameters from req.body
-    const { username, password } = req.body
+    // Pulls parameters from req.body
+    const { name, username, password, email } = req.body
 
     // Create a new User instance if one does not exist
     const create = (user) => {
@@ -20,7 +20,7 @@ exports.register = (req, res) => {
         }
 
         // Creates a new User
-        return User.create(username, password)
+        return User.create({ name, email, username, password })
     }
 
     // Respond to the client
@@ -51,7 +51,7 @@ exports.register = (req, res) => {
 exports.login = (req, res) => {
 
     // Gathers username, password
-    const { username, password } = req.body
+    const { name, email, username, password } = req.body
 
     // check the user info & generate the jwt
     // Ensures presence of the User in the database
@@ -77,7 +77,9 @@ exports.login = (req, res) => {
         // Assembles JWT User Payload
         const jwt_paylod = {
             id: user._id.toString(),
+            name: user.name,
             admin: user.admin,
+            email: user.email,
             username: user.username,
             iat: Date.now() // Issued At
         }
@@ -118,6 +120,8 @@ exports.login = (req, res) => {
         const response_payload = {
             _id: user_id,
             username: user.username,
+            name: user.name,
+            email: user.email,
             admin: user.admin,
             roles: user.roles,
             token: token

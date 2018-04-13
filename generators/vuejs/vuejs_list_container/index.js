@@ -23,13 +23,6 @@ module.exports = class extends Generator {
         { schema: schema }
       );
 
-      // client/src/containers/resource_list/layout.vue
-      this.fs.copyTpl(
-        this.templatePath('components/layout.vue'),
-        this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_list/components/layout.vue'),
-        { schema: schema }
-      );
-
       // client/src/containers/resource_list/components/list.vue
       this.fs.copyTpl(
         this.templatePath('components/list.vue'),

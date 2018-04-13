@@ -45,10 +45,11 @@ const User = new Schema({
 
 // Create new User document
 // TODO - add email
-User.statics.create = function (username, password) {
+User.statics.create = function ({ email, username, password }) {
 
     // Instantiates new User model
     const user = new this({
+        email,
         username,
         password: encryptPassword(password)
     })

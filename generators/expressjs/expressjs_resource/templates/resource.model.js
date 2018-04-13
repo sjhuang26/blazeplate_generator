@@ -1,10 +1,11 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+// // // // BLAZEPLATE WHITESPACE
 // // // //
-<% let schemaLabel = schema.label.split(' ').join('') %>
+// // // // BLAZEPLATE WHITESPACE
 
-const <%= schemaLabel %> = new Schema({
+const <%= schema.class_name %> = new Schema({
   <% for (index in schema.attributes) { %>
   <% let attr = schema.attributes[index] %>
   <% if (attr.datatype === 'BOOL') { %>
@@ -13,26 +14,30 @@ const <%= schemaLabel %> = new Schema({
   },
   <% } else if (attr.datatype === 'NUMBER') { %>
   <%= attr.identifier %>: {
-    type: Number
+    type: Number,
+    required: <%= attr.required %>,
+    unique: <%= attr.unique %>
   },
-  <% } else if (attr.datatype === 'BELONGS_TO') { %>
+  <% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { %>
   <%= attr.identifier %>: {
     type: Schema.Types.ObjectId,
     ref: '<%= attr.datatypeOptions.schema_label %>'
   },
-  <% } else if (attr.datatype === 'HAS_MANY') { %>
+  <% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { %>
   <%= attr.identifier %>: [{
     type: Schema.Types.ObjectId,
     ref: '<%= attr.datatypeOptions.schema_label %>'
   }],
-  <% } else if (attr.datatype === 'HAS_ONE') { %>
+  <% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { %>
   <%= attr.identifier %>: [{
     type: Schema.Types.ObjectId,
     ref: '<%= attr.datatypeOptions.schema_label %>'
   }],
   <% } else { %>
   <%= attr.identifier %>: {
-    type: String
+    type: String,
+    required: <%= attr.required %>,
+    unique: <%= attr.unique %>
  },
   <% } %>
   <% } %>
@@ -46,29 +51,32 @@ const <%= schemaLabel %> = new Schema({
   versionKey: false
 });
 
+// // // // BLAZEPLATE WHITESPACE
 // // // //
+// // // // BLAZEPLATE WHITESPACE
 
+<% for (index in schema.attributes) { %>
+<% let attr = schema.attributes[index] %>
 
- <% for (index in schema.attributes) { %>
- <% let attr = schema.attributes[index] %>
-
-<% if (attr.datatype === 'BELONGS_TO') { %>
-<%= schemaLabel %>.methods.get<%= attr.datatypeOptions.schema_label %> = function (cb){
+<% if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { %>
+<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').findById(this.<%= attr.identifier %>);
 }
 
-<% } else if (attr.datatype === 'HAS_MANY') { %>
-<%= schemaLabel %>.methods.get<%= attr.datatypeOptions.schema_label_plural %> = function (cb){
+<% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { %>
+<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label_plural %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').find({ <%= schema.identifier %>_id: this._id });
 }
 
-<% } else if (attr.datatype === 'HAS_ONE') { %>
-<%= schemaLabel %>.methods.get<%= attr.datatypeOptions.schema_label %> = function (cb){
+<% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { %>
+<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').findById(this.<%= attr.identifier %> });
 }
 
 <% } %>
 <% } %>
 
-// TODO - absract schemaLabel
-module.exports = mongoose.model('<%= schemaLabel %>', <%= schema.label.split(' ').join('') %>)
+// // // // BLAZEPLATE WHITESPACE
+// TODO - absract schema.class_name
+module.exports = mongoose.model('<%= schema.class_name %>', <%= schema.label.split(' ').join('') %>)
+// // // // BLAZEPLATE WHITESPACE

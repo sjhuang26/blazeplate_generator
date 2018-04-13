@@ -1,6 +1,6 @@
-// Generator index file
-var Generator = require('yeoman-generator');
-var classify = require('underscore.string/classify');
+const _ = require('lodash')
+const Generator = require('yeoman-generator');
+const classify = require('underscore.string/classify');
 
 // // // //
 
@@ -16,17 +16,21 @@ module.exports = class extends Generator {
       // Isolates the individual schema
       let schema = this.options.build.app.schemas[i]
 
+      let newModel = {}
+      _.each(schema.attributes, (attr) => {
+        if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') {
+          newModel[attr.identifier] = []
+        } else if (attr.datatype === 'NUMBER') {
+          newModel[attr.identifier] = 0
+        } else {
+          newModel[attr.identifier] = ''
+        }
+      })
+
       // client/src/store/resource/actions.js
       this.fs.copyTpl(
         this.templatePath('actions.js'),
         this.destinationPath(vueSrc + 'store/' + schema.identifier + '/actions.js'),
-        { schema: schema }
-      );
-
-      // client/src/store/resource/factory.js
-      this.fs.copyTpl(
-        this.templatePath('factory.js'),
-        this.destinationPath(vueSrc + 'store/' + schema.identifier + '/factory.js'),
         { schema: schema }
       );
 
@@ -42,6 +46,14 @@ module.exports = class extends Generator {
         this.templatePath('index.js'),
         this.destinationPath(vueSrc + 'store/' + schema.identifier + '/index.js'),
         { schema: schema }
+      );
+
+      // client/src/store/resource/constants.js
+      // TODO - how can we get newModel to print as a JavaScript object, rather than stringified JSON?
+      this.fs.copyTpl(
+        this.templatePath('constants.js'),
+        this.destinationPath(vueSrc + 'store/' + schema.identifier + '/constants.js'),
+        { schema: schema, newModel: JSON.stringify(newModel, null, 2) }
       );
 
       // client/src/store/resource/mutations.js

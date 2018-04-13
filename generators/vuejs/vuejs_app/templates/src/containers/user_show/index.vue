@@ -6,30 +6,26 @@
 <!-- // // // //  -->
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import LayoutView from './components/layout.vue'
-import store from '@/store'
 
 export default {
+  props: ['id'],
   components: {
     LayoutView
   },
   metaInfo: {
-    title: 'Users - Show' // title is now "RCOS - Loading..."
+    title: 'Users - Show'
   },
-  props: ['id'],
   created () {
-    this.fetch()
+    this.fetch(this.id)
   },
-  methods: {
-    fetch () {
-      return store.dispatch('user/fetchModel', this.id)
-    }
-  },
-  computed: {
-    model () {
-      return store.getters['user/current']
-    }
-  }
+  methods: mapActions({
+    fetch: 'user/fetchModel'
+  }),
+  computed: mapGetters({
+    model: 'user/current'
+  })
 }
 </script>
 

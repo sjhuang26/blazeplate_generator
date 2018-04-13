@@ -1,6 +1,5 @@
-
-// Project Module mutations
-const mutations = {
+// User Module mutations
+export default {
   fetching (state, isFetching) {
     state.fetching = isFetching
   },
@@ -9,7 +8,8 @@ const mutations = {
   },
   current (state, attributes) {
     state.current = attributes
+  },
+  collection (state, collection) {
+    state.collection = collection
   }
 }
-
-export default mutations

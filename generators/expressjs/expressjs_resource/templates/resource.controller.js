@@ -1,11 +1,42 @@
-const <%= schema.label.split(' ').join('') %> = require('./<%= schema.identifier %>.model')
+const <%= schema.class_name %> = require('./<%= schema.identifier %>.model')
+<% for (index in schema.attributes) { %>
+<% let attr = schema.attributes[index] %>
+<% if (attr.datatype === 'RELATION' && attr.class_name !== schema.class_name) { %>
+const <%= attr.datatypeOptions.schema_class_name %> = require('../<%= attr.datatypeOptions.schema_identifier %>/<%= attr.datatypeOptions.schema_identifier %>.model')
+<% } %>
+<% } %>
 
+// // // // BLAZEPLATE WHITESPACE
 // // // //
 
+function handleError (res, err) {
+    return res.status(500).json({ error: err }).end()
+}
+
+// // // // BLAZEPLATE WHITESPACE
+// // // //
+
+<% if (schema.identifier === 'user') { %>
+// // // // BLAZEPLATE WHITESPACE
+/**
+* @api {get} /api/<%= schema.identifier_plural %> Profile
+* @APIname Profile
+* @APIgroup <%= schema.class_name %> Controller
+* @apidescription Gets profile of the current <%= schema.label %>
+* @apiSuccess {json} User's profile
+* @apiError (Error) 500 Internal server error
+*/
+exports.profile = (req, res) => {
+    return <%= schema.class_name %>.findOne({ username: req.user.username }, '-password -__v').exec()
+    .then( (user) => { res.json(user) })
+}
+<% } %>
+
+// // // // BLAZEPLATE WHITESPACE
 /**
 * @api {get} /api/<%= schema.identifier_plural %> Index
 * @APIname Index
-* @APIgroup <%= schema.label.split(' ').join('') %> Controller
+* @APIgroup <%= schema.class_name %> Controller
 * @apidescription Gets list of current <%= schema.label_plural %>
 * @apiSuccess {json} Collection of <%= schema.label_plural %>
 * @apiError (Error) 500 Internal server error
@@ -13,93 +44,183 @@ const <%= schema.label.split(' ').join('') %> = require('./<%= schema.identifier
 // TODO - query middleware (optional)
 // TODO - pagination middleware (optional)
 module.exports.list = (req, res, next) => {
-    return <%= schema.label.split(' ').join('') %>.find({})
+    return <%= schema.class_name %>.find({})
     .then((response) => {
         return res
         .status(200)
         .send(response)
         .end();
     })
-    .catch(next);
+    .catch((err) => {
+        handleError(res, err)
+    });
 };
+// // // // BLAZEPLATE WHITESPACE
 
 
+// // // // BLAZEPLATE WHITESPACE
 /**
 * @api {POST} /api/<%= schema.identifier_plural %> Create
 * @APIname Create
-* @APIgroup <%= schema.label.split(' ').join('') %> Controller
+* @APIgroup <%= schema.class_name %> Controller
 * @apidescription Creates a new <%= schema.label %>
 * @apiSuccess {json} The newly created <%= schema.label %>
 * @apiError (Error) 500 Internal server error
 */
 module.exports.create = (req, res, next) => {
-    return new <%= schema.label.split(' ').join('') %>(req.body).save()
+    <% if (schema.identifier === 'user') { %>
+    return User.create(req.body)
+    <% } else { %>
+    return new <%= schema.class_name %>(req.body).save()
+    <% } %>
     .then((response) => {
         return res
         .status(200)
         .send(response)
         .end();
     })
-    .catch(next);
+    .catch((err) => {
+        handleError(res, err)
+    });
 };
+// // // // BLAZEPLATE WHITESPACE
 
+
+// // // // BLAZEPLATE WHITESPACE
 /**
 * @api {GET} /api/<%= schema.identifier_plural %>/:id Show
 * @APIname Show
-* @APIgroup <%= schema.label.split(' ').join('') %> Controller
+* @APIgroup <%= schema.class_name %> Controller
 * @apidescription Fetch a single <%= schema.label %>
 * @apiSuccess {json} The requested <%= schema.label %>
 * @apiError (Error) 500 Internal server error
 */
 module.exports.show = (req, res, next) => {
-    return <%= schema.label.split(' ').join('') %>.findById(req.params.id)
+    return <%= schema.class_name %>.findById(req.params.id)
     .then((response) => {
         return res
         .status(200)
         .send(response)
         .end();
     })
-    .catch(next);
+    .catch((err) => {
+        handleError(res, err)
+    });
 };
+// // // // BLAZEPLATE WHITESPACE
 
+<% for (index in schema.attributes) { %>
+<% let attr = schema.attributes[index] %>
+
+<% if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { %>
+
+// // // // BLAZEPLATE WHITESPACE
+/**
+* @api {GET} /api/<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier %> show<%= attr.datatypeOptions.schema_label %>
+* @APIname show<%= attr.datatypeOptions.schema_label %>
+* @APIgroup <%= schema.class_name %> Controller
+* @apidescription Gets related <%= attr.datatypeOptions.schema_label %>
+* @apiSuccess {json} The related <%= attr.datatypeOptions.schema_label %> model
+* @apiError (Error) 500 Internal server error
+*/
+module.exports.show<%= attr.datatypeOptions.schema_label %> = (req, res, next) => {
+    return <%= schema.class_name %>.findById(req.params.id)
+    .then((<%= schema.identifier %>) => {
+
+        return <%= attr.datatypeOptions.schema_class_name %>.find({ _id: <%= schema.identifier %>.<%= attr.datatypeOptions.schema_identifier + '_id' %> })
+        .then((<%= attr.datatypeOptions.schema_identifier %>) => {
+            return res
+            .status(200)
+            .send(<%= attr.datatypeOptions.schema_identifier %>)
+            .end();
+        })
+        .catch((err) => {
+            handleError(res, err)
+        });
+
+    })
+    .catch((err) => {
+        handleError(res, err)
+    });
+};
+// // // // BLAZEPLATE WHITESPACE
+
+<% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { %>
+
+// // // // BLAZEPLATE WHITESPACE
+/**
+* @api {GET} /api/<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier_plural %> show<%= attr.datatypeOptions.schema_label_plural %>
+* @APIname show<%= attr.datatypeOptions.schema_label_plural %>
+* @APIgroup <%= schema.class_name %> Controller
+* @apidescription Gets related <%= attr.datatypeOptions.schema_label_plural %>
+* @apiSuccess {json} The related <%= attr.datatypeOptions.schema_label_plural %>
+* @apiError (Error) 500 Internal server error
+*/
+module.exports.show<%= attr.datatypeOptions.schema_label_plural %> = (req, res, next) => {
+    return <%= attr.datatypeOptions.schema_class_name %>.find({ <%= schema.identifier %>_id: req.params.id })
+    .then((<%= attr.datatypeOptions.schema_identifier_plural %>) => {
+        return res
+        .status(200)
+        .send(<%= attr.datatypeOptions.schema_identifier_plural %>)
+        .end();
+    })
+    .catch((err) => {
+        handleError(res, err)
+    });
+};
+// // // // BLAZEPLATE WHITESPACE
+
+<% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { %>
+// GET /<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier %>
+// router.get('/:id/<%= attr.datatypeOptions.schema_identifier %>', controller.show<%= attr.datatypeOptions.schema_label %>);
+// TODO - INTEGRATE HAS_ONE IN CONTROLLER
 // // // //
+
+<% } %>
+<% } %>
+
 
 /**
 * @api {PUT} /api/<%= schema.identifier_plural %>/:id Update
 * @APIname Update
-* @APIgroup <%= schema.label.split(' ').join('') %> Controller
+* @APIgroup <%= schema.class_name %> Controller
 * @apidescription Update a single <%= schema.label %>
 * @apiSuccess {json} The updated <%= schema.label %>
 * @apiError (Error) 500 Internal server error
 */
 module.exports.update = (req, res, next) => {
-    return <%= schema.label.split(' ').join('') %>.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
+    return <%= schema.class_name %>.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
     .then((response) => {
         return res
         .status(200)
         .send(response)
         .end();
     })
-    .catch(next);
+    .catch((err) => {
+        handleError(res, err)
+    });
 };
+// // // // BLAZEPLATE WHITESPACE
 
-// // // //
-
+// // // // BLAZEPLATE WHITESPACE
 /**
 * @api {DELETE} /api/<%= schema.identifier_plural %>/:id Destroy
 * @APIname Destroy
-* @APIgroup <%= schema.label.split(' ').join('') %> Controller
+* @APIgroup <%= schema.class_name %> Controller
 * @apidescription Destroy a single <%= schema.label %>
 * @apiSuccess {json} The destroyed <%= schema.label %>
 * @apiError (Error) 500 Internal server error
 */
 module.exports.delete = (req, res, next) => {
-    return <%= schema.label.split(' ').join('') %>.remove({ _id: req.params.id })
+    return <%= schema.class_name %>.remove({ _id: req.params.id })
     .then((response) => {
         return res
         .status(200)
         .send(response)
         .end();
     })
-    .catch(next);
+    .catch((err) => {
+        handleError(res, err)
+    });
 };
+// // // // BLAZEPLATE WHITESPACE

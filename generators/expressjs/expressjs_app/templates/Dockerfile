@@ -9,15 +9,13 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Copy dependency definitions
-COPY package.json /usr/src/app
-
 # Get all the code needed to run the app
+COPY package.json /usr/src/app
+COPY .env.demo /usr/src/app/.env
 COPY server /usr/src/app/server
-# COPY app.js /usr/src/app
 
 # Install dependecies
 RUN npm install
-
 
 # Serve the app
 CMD ["npm", "start"]
