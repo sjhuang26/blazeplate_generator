@@ -1,12 +1,10 @@
 const _ = require('lodash')
-const Generator = require('yeoman-generator')
+const Generator = require('../../util/generator')
 
 // // // //
 
-module.exports = class extends Generator {
-
-  // writing to file
-  writing() {
+module.exports = class VueJsAppRouter extends Generator {
+  async write () {
 
     let app = this.options.build.app
 
@@ -49,8 +47,8 @@ module.exports = class extends Generator {
       }
     })
 
-    this.fs.copyTpl(
-      this.templatePath('router.js'),
+    await this.copyTemplate(
+      this.templatePath(__dirname, 'router.js'),
       this.destinationPath(vueSrc + 'routers/index.js'),
       { appSchema: app, routeImports: routeImports.join("\n"), routeModules: routeModules.join(",\n    ")  }
     );

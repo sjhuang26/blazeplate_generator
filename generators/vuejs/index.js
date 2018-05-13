@@ -1,8 +1,8 @@
 const Generator = require('../util/generator')
 const VueApp = require('./vuejs_app')
 const VueAppNavbar = require('./vuejs_app_navbar')
+const VueAppRouter = require('./vuejs_app_router')
 
-// const VueAppRouter = require('./vuejs_app_router')
 // const VueAppStore = require('./vuejs_app_store')
 // const VueAuth = require('./vuejs_auth')
 // const VueRouter = require('./vuejs_router')
@@ -17,7 +17,6 @@ module.exports = class VueJs extends Generator {
   async write () {
     await this.composeWith(VueApp)
     await this.composeWith(VueAppNavbar)
-    // await this.composeWith(ExpressResource)
-    // await this.composeWith(ExpressRoutes)
+    await this.composeWith(VueAppRouter)
   }
 }
