@@ -1,6 +1,6 @@
 const Runner = require('./runner')
 
-let runner = new Runner({ foo: 'bar' })
+let runner = new Runner({ build: { foo: 'barrrrrr!' }})
 
 runner.write()
 .then(() => {

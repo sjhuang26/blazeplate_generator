@@ -1,8 +1,11 @@
 const Generator = require('./generator')
 
-// BlazeplateGenerator class definition
 module.exports = class extends Generator {
   async write () {
-    console.log('WRITING in TEST CLASS VUE')
+    return this.copyTemplate(
+      './test/foo.js',
+      './output/foo.js',
+      { foo: this.options.build.foo }
+    )
   }
 }
