@@ -1,16 +1,13 @@
 const _ = require('lodash')
 const fs = require('fs')
 const Helpers = require('../util/helpers')
-const Generator = require('../util/generator')
+const BlazeplateGenerator = require('../util/generator')
+const Generators = require('./generators')
 const classify = require('underscore.string/classify')
 
 // // // //
 
-let SeedDataGenerator = require('../seed_data')
-
-// // // //
-
-module.exports = class extends Generator {
+module.exports = class extends BlazeplateGenerator {
 
   // constructor
   // Sets required input parameters
@@ -107,8 +104,8 @@ module.exports = class extends Generator {
     // await this.composeWith(require.resolve('../expressjs/expressjs_resource'), { build });
 
     // Infrastructure & Seed Data
-    // await this.composeWith(require.resolve('../docker_compose'), { build });
-    await this.composeWith(SeedDataGenerator);
+    await this.composeWith(Generators.SeedData);
+    await this.composeWith(Generators.DockerCompose);
     console.log('GENERATED ALL')
 
   }

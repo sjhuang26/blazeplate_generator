@@ -62,8 +62,6 @@ module.exports = class extends Generator {
     copyStatements = copyStatements.join('\n')
     mongoImports = mongoImports.join(' && \\\n')
 
-    console.log('WRITING???')
-
     // generated/docker/Dockerfile-MongoSeed
     await this.copyTemplate(
       __dirname + '/templates/Dockerfile-MongoSeed',
