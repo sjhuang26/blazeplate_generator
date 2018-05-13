@@ -4,7 +4,7 @@ var classify = require('underscore.string/classify');
 
 // // // //
 
-module.exports = class VueRouter extends Generator {
+module.exports = class VueJsRouter extends Generator {
 
   // writing to file
   async write() {
@@ -16,7 +16,7 @@ module.exports = class VueRouter extends Generator {
       let schema = this.options.build.app.schemas[i]
 
       // client/src/routers/resource.js
-      this.copyTemplate(
+      await this.copyTemplate(
         this.templatePath(__dirname, 'router.js'),
         this.destinationPath(this.options.build.dest.vue.src + 'routers/' + schema.identifier + '.js'),
         { schema: schema }

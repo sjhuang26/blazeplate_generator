@@ -15,13 +15,13 @@ module.exports = class VueJsAppStore extends Generator {
       storeModules.push(s.identifier)
     })
 
-    this.copyTemplate(
+    await this.copyTemplate(
       this.templatePath(__dirname, 'index.js'),
       this.destinationPath(this.options.build.dest.vue.src + 'store/index.js'),
       { appSchema: app, storeModules: storeModules.join(",\n    ")  } // TODO - constantize indentation size?
     );
 
-    this.copyDir(
+    await this.copyDir(
       this.templatePath(__dirname, 'lib'),
       this.destinationPath(this.options.build.dest.vue.src + 'store/lib')
     );
