@@ -1,7 +1,8 @@
 
 # Blazeplate generate
 # yo blazeplate --force --appconfig=./configs/example_01.json
-yo blazeplate --force --appconfig=./configs/example_04.json --buildId=app_5acfeea85535afdb753d55f7
+# yo blazeplate --force --appconfig=./configs/example_04.json --buildId=app_5acfeea85535afdb753d55f7
+yo blazeplate --force --appconfig=./configs/example_05.json --buildId=app_5acfeea85535afdb753d55f7
 
 # JS Beautify
 glob-run js-beautify --max_preserve_newlines 1 -r -s 2 'build/app_5acfeea85535afdb753d55f7/classroom_app/web_api/server/**/*.js'

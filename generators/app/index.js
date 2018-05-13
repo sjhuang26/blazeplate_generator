@@ -61,6 +61,7 @@ module.exports = class extends Generator {
 
     // Fomats the build parameters for the generator
     // Mostly adds some additional metadata to each relation to simplify template rendering
+    // TODO - move formatBuild into a util/*.js
     function formatBuild (build) {
 
         // Iterates over each schema
@@ -116,6 +117,9 @@ module.exports = class extends Generator {
 
     // Formats build before generation to minimize repeated code and formatting
     let build = formatBuild(this.options.build)
+
+    // TODO - replace Yoeman with mem-fs-editor & custom build system
+    // https://github.com/SBoudrias/mem-fs-editor
 
     // Client - VueJS
     this.composeWith(require.resolve('../vuejs/vuejs_app'), { build });
