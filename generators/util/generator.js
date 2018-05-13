@@ -1,4 +1,5 @@
 const ejs = require('ejs')
+const path = require('path');
 const fsExtra = require('fs-extra')
 
 // // // //
@@ -22,6 +23,17 @@ module.exports = class BlazeplateGenerator {
   // Method for write files to the filesystem
   async write () {
     console.log('NOTHING TO WRITE - this should be overwritten by a subclassed generator.')
+  }
+
+  // ensureDir
+  // Ensures presence of directory for template compilation
+  async ensureDir (dest) {
+    return new Promise((resolve, reject) => {
+      return this.fs.ensureDir(dest, (err) => {
+        if (err) return reject(err)
+        return resolve()
+      })
+    })
   }
 
   // copyDir
@@ -57,6 +69,18 @@ module.exports = class BlazeplateGenerator {
       })
 
     })
+  }
+
+  // templatePath
+  // TODO - finish implementing this function with __dirname
+  templatePath (path) {
+    return path
+  }
+
+  // destinationPath
+  // TODO - finish implementing this function __dirname
+  destinationPath (path) {
+    return path
   }
 
   // composeWith

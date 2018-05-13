@@ -1,7 +1,12 @@
 const _ = require('lodash')
 const fs = require('fs')
-const Generator = require('yeoman-generator')
+const Helpers = require('../util/helpers')
+const Generator = require('../util/generator')
 const classify = require('underscore.string/classify')
+
+// // // //
+
+let SeedDataGenerator = require('../seed_data')
 
 // // // //
 
@@ -9,8 +14,13 @@ module.exports = class extends Generator {
 
   // constructor
   // Sets required input parameters
-  constructor(args, opts) {
-    super(args, opts);
+  constructor(options) {
+
+    // Invokes super
+    super(options)
+
+    // // // //
+    // TODO - abstract this into helpers.js
 
     // Global build configuration
     let build = {
@@ -24,19 +34,20 @@ module.exports = class extends Generator {
     }
 
     // Debugging
-    // console.log('APP CONFIG')
-    // console.log(opts)
+    console.log('APP CONFIG')
+    console.log(options)
 
     // TODO - Yoeman argument/option best practices
-    let rawConfig = fs.readFileSync(opts['appconfig'])
+    let rawConfig = fs.readFileSync(options['appconfig'])
     build.app = JSON.parse(rawConfig)
 
     // Isolates the buildId
-    const buildId = opts['buildId']
+    const buildId = options['buildId']
     build.id = buildId
 
     // // // //
     // Destination helpers & constants
+    // TODO - use this.env.cwd & path library, instead of hardcoded relative path
     build.dest.out = './build/' + buildId + '/'
     build.dest.root = build.dest.out + build.app.identifier + '/'
 
@@ -51,98 +62,54 @@ module.exports = class extends Generator {
     // // // //
 
     // Sets this.options.build
-    this.options.build = build
+    this.options = { build: Helpers.formatBuild(build) }
+    // console.log('DONE WITH CONSTRUCTOR')
+
+    return this
 
   }
 
   // TODO - compose this of SMALLER Vue/Express specific generators
   // TODO - is there a way to conditionally run a generator?
-  initializing(){
+  async write () {
 
-    // Fomats the build parameters for the generator
-    // Mostly adds some additional metadata to each relation to simplify template rendering
-    // TODO - move formatBuild into a util/*.js
-    function formatBuild (build) {
+    console.log('GENERATING')
+    console.log(this.options)
 
-        // Iterates over each schema
-        build.app.schemas = _.map(build.app.schemas, (schema) => {
-
-            // Iterates over all attributes, handles relations
-            schema.attributes = _.map(schema.attributes, (attr) => {
-                if (attr.datatype !== 'RELATION') return attr
-
-                let relatedSchema = _.find(build.app.schemas, { _id: attr.datatypeOptions.schema_id })
-
-                // Debugging
-                // console.log(attr.datatypeOptions)
-                // console.log(relatedSchema)
-
-                // Pulls metadata from relatedSchema
-                let { label, label_plural, identifier, identifier_plural, class_name } = relatedSchema
-                attr.datatypeOptions.schema_label = label
-                attr.datatypeOptions.schema_label_plural = label_plural
-                attr.datatypeOptions.schema_identifier = identifier
-                attr.datatypeOptions.schema_identifier_plural = identifier_plural
-                attr.datatypeOptions.schema_class_name = class_name
-                attr.datatypeOptions.lead_attr = relatedSchema.attributes[0].identifier
-                return attr
-            })
-
-            return schema
-        })
-
-        // Defines the data to split up build.app.seeds by the records' respective schemas
-        build.app.seed_data = {}
-        _.each(build.app.schemas, (s) => {
-            build.app.seed_data[s._id] = {
-                identifier: s.identifier_plural,
-                records: []
-            }
-        })
-
-        // Iterates over each piece of seed data
-        _.each(build.app.seeds, (seed) => {
-            let seedObject = {}
-            seedObject._id = { '$oid': seed._id }
-            seedObject = {
-                ...seedObject,
-                ...seed.attributes
-            }
-            // Adds to build.app.seed_data object
-            build.app.seed_data[seed.schema_id].records.push(seedObject)
-        })
-
-        return build
-    }
+    // Creates project build directories
+    // await this.ensureDir(this.options.build.dest.out)
+    await this.ensureDir(this.options.build.dest.root)
 
     // Formats build before generation to minimize repeated code and formatting
-    let build = formatBuild(this.options.build)
+    // let build = formatBuild(this.options.build)
+
 
     // TODO - replace Yoeman with mem-fs-editor & custom build system
     // https://github.com/SBoudrias/mem-fs-editor
 
     // Client - VueJS
-    this.composeWith(require.resolve('../vuejs/vuejs_app'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_app_store'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_auth'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_form_component'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_new_container'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_edit_container'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_list_container'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_router'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_show_container'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_store'), { build });
+    // await this.composeWith(require.resolve('../vuejs/vuejs_app'), { build });
+    // await this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build });
+    // await this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build });
+    // await this.composeWith(require.resolve('../vuejs/vuejs_app_store'), { build });
+    // await this.composeWith(require.resolve('../vuejs/vuejs_auth'), { build });
+    // await this.composeWith(require.resolve('../vuejs/vuejs_form_component'), { build });
+    // await this.composeWith(require.resolve('../vuejs/vuejs_new_container'), { build });
+    // await this.composeWith(require.resolve('../vuejs/vuejs_edit_container'), { build });
+    // await this.composeWith(require.resolve('../vuejs/vuejs_list_container'), { build });
+    // await this.composeWith(require.resolve('../vuejs/vuejs_router'), { build });
+    // await this.composeWith(require.resolve('../vuejs/vuejs_show_container'), { build });
+    // await this.composeWith(require.resolve('../vuejs/vuejs_store'), { build });
 
     // Server - ExpressJS
-    this.composeWith(require.resolve('../expressjs/expressjs_app'), { build });
-    this.composeWith(require.resolve('../expressjs/expressjs_routes'), { build });
-    this.composeWith(require.resolve('../expressjs/expressjs_resource'), { build });
+    // await this.composeWith(require.resolve('../expressjs/expressjs_app'), { build });
+    // await this.composeWith(require.resolve('../expressjs/expressjs_routes'), { build });
+    // await this.composeWith(require.resolve('../expressjs/expressjs_resource'), { build });
 
     // Infrastructure & Seed Data
-    this.composeWith(require.resolve('../docker_compose'), { build });
-    this.composeWith(require.resolve('../seed_data'), { build });
+    // await this.composeWith(require.resolve('../docker_compose'), { build });
+    await this.composeWith(SeedDataGenerator);
+    console.log('GENERATED ALL')
 
   }
 
