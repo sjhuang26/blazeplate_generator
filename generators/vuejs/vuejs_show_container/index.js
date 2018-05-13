@@ -1,12 +1,12 @@
 // Generator index file
-var Generator = require('yeoman-generator');
+var Generator = require('../../util/generator');
 var classify = require('underscore.string/classify');
 
 // // // //
 
-module.exports = class extends Generator {
+module.exports = class VueJsShowContainer extends Generator {
 
-  writing() {
+  async write() {
 
     let vueSrc = this.options.build.dest.vue.src
 
@@ -16,9 +16,11 @@ module.exports = class extends Generator {
       // Isolates the individual schema
       let schema = this.options.build.app.schemas[i]
 
+      await this.ensureDir(vueSrc + 'containers/' + schema.identifier + '_show')
+
       // client/src/containers/resource_show/index.vue
-      this.fs.copyTpl(
-        this.templatePath('index.vue'),
+      await this.copyTemplate(
+        this.templatePath(__dirname, 'index.vue'),
         this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_show/index.vue'),
         { schema: schema  }
       );

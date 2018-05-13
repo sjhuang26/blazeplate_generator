@@ -1,16 +1,23 @@
 const _ = require('lodash')
 const fs = require('fs')
-const Generator = require('yeoman-generator')
+const Helpers = require('../util/helpers')
+const BlazeplateGenerator = require('../util/generator')
+const Generators = require('./generators')
 const classify = require('underscore.string/classify')
 
 // // // //
 
-module.exports = class extends Generator {
+module.exports = class extends BlazeplateGenerator {
 
   // constructor
   // Sets required input parameters
-  constructor(args, opts) {
-    super(args, opts);
+  constructor(options) {
+
+    // Invokes super
+    super(options)
+
+    // // // //
+    // TODO - abstract this into helpers.js
 
     // Global build configuration
     let build = {
@@ -25,120 +32,63 @@ module.exports = class extends Generator {
 
     // Debugging
     // console.log('APP CONFIG')
-    // console.log(opts)
+    // console.log(options)
 
     // TODO - Yoeman argument/option best practices
-    let rawConfig = fs.readFileSync(opts['appconfig'])
+    let rawConfig = fs.readFileSync(options['appconfig'])
     build.app = JSON.parse(rawConfig)
 
     // Isolates the buildId
-    const buildId = opts['buildId']
+    const buildId = options['buildId']
     build.id = buildId
 
     // // // //
     // Destination helpers & constants
+    // TODO - use this.env.cwd & path library, instead of hardcoded relative path
     build.dest.out = './build/' + buildId + '/'
     build.dest.root = build.dest.out + build.app.identifier + '/'
 
     // VueJS
+    // TODO - move into the Vue generator
     build.dest.vue.root = build.dest.root + 'web_client/'
     build.dest.vue.src = build.dest.vue.root + 'src/'
 
     // ExpressJS
+    // TODO - move into the ExpressJs generator
     build.dest.expressjs.root = build.dest.root + 'web_api/'
 
     //
     // // // //
 
     // Sets this.options.build
-    this.options.build = build
+    this.options = { build: Helpers.formatBuild(build) }
+
+    // Returns the generator instance
+    return this
 
   }
 
-  // TODO - compose this of SMALLER Vue/Express specific generators
-  // TODO - is there a way to conditionally run a generator?
-  initializing(){
+  // TODO - update to conditionally run each generator
+  async write () {
 
-    // Fomats the build parameters for the generator
-    // Mostly adds some additional metadata to each relation to simplify template rendering
-    function formatBuild (build) {
+    console.log('Starting Blazeplate generate')
+    // console.log(this.options)
 
-        // Iterates over each schema
-        build.app.schemas = _.map(build.app.schemas, (schema) => {
-
-            // Iterates over all attributes, handles relations
-            schema.attributes = _.map(schema.attributes, (attr) => {
-                if (attr.datatype !== 'RELATION') return attr
-
-                let relatedSchema = _.find(build.app.schemas, { _id: attr.datatypeOptions.schema_id })
-
-                // Debugging
-                // console.log(attr.datatypeOptions)
-                // console.log(relatedSchema)
-
-                // Pulls metadata from relatedSchema
-                let { label, label_plural, identifier, identifier_plural, class_name } = relatedSchema
-                attr.datatypeOptions.schema_label = label
-                attr.datatypeOptions.schema_label_plural = label_plural
-                attr.datatypeOptions.schema_identifier = identifier
-                attr.datatypeOptions.schema_identifier_plural = identifier_plural
-                attr.datatypeOptions.schema_class_name = class_name
-                attr.datatypeOptions.lead_attr = relatedSchema.attributes[0].identifier
-                return attr
-            })
-
-            return schema
-        })
-
-        // Defines the data to split up build.app.seeds by the records' respective schemas
-        build.app.seed_data = {}
-        _.each(build.app.schemas, (s) => {
-            build.app.seed_data[s._id] = {
-                identifier: s.identifier_plural,
-                records: []
-            }
-        })
-
-        // Iterates over each piece of seed data
-        _.each(build.app.seeds, (seed) => {
-            let seedObject = {}
-            seedObject._id = { '$oid': seed._id }
-            seedObject = {
-                ...seedObject,
-                ...seed.attributes
-            }
-            // Adds to build.app.seed_data object
-            build.app.seed_data[seed.schema_id].records.push(seedObject)
-        })
-
-        return build
-    }
-
-    // Formats build before generation to minimize repeated code and formatting
-    let build = formatBuild(this.options.build)
+    // Creates project build directories
+    await this.ensureDir(this.options.build.dest.root)
 
     // Client - VueJS
-    this.composeWith(require.resolve('../vuejs/vuejs_app'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_app_store'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_auth'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_form_component'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_new_container'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_edit_container'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_list_container'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_router'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_show_container'), { build });
-    this.composeWith(require.resolve('../vuejs/vuejs_store'), { build });
+    await this.composeWith(Generators.VueJS)
 
     // Server - ExpressJS
-    this.composeWith(require.resolve('../expressjs/expressjs_app'), { build });
-    this.composeWith(require.resolve('../expressjs/expressjs_routes'), { build });
-    this.composeWith(require.resolve('../expressjs/expressjs_resource'), { build });
+    await this.composeWith(Generators.ExpressJS)
 
     // Infrastructure & Seed Data
-    this.composeWith(require.resolve('../docker_compose'), { build });
-    this.composeWith(require.resolve('../seed_data'), { build });
+    await this.composeWith(Generators.SeedData);
+    await this.composeWith(Generators.DockerCompose);
+
+    // TODO - implement a more robust logging solution
+    console.log('Finished Blazeplate generate')
 
   }
 

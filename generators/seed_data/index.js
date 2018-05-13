@@ -1,8 +1,8 @@
 const _ = require('lodash')
-const Generator = require('yeoman-generator')
+const Generator = require('../util/generator')
 
-module.exports = class extends Generator {
-  writing() {
+module.exports = class SeedData extends Generator {
+  async write () {
 
     // Returns boolean wether or not there is seed data
     function noSeedData (build) {
@@ -19,6 +19,9 @@ module.exports = class extends Generator {
     if (noSeedData(this.options.build)) {
       return
     }
+
+    // Ensures presence of docker directory
+    await this.fs.ensureDir(this.options.build.dest.root + 'docker/seeds/')
 
     // Stores `COPY seed/identifier.json /identifier.json` statements
     let copyStatements = []
@@ -45,11 +48,12 @@ module.exports = class extends Generator {
         mongoImports.push(importStatement)
 
         // Generates generated/docker/seeds/identifier.json
-        this.fs.copyTpl(
-          this.templatePath('seeds/data.json'),
-          this.destinationPath(this.options.build.dest.root + 'docker/seeds/' + data.identifier + '.json'),
+        this.copyTemplate(
+          __dirname + '/templates/seeds/data.json',
+          this.options.build.dest.root + 'docker/seeds/' + data.identifier + '.json',
           { jsonData: _.unescape(JSON.stringify(data.records, null, 2)) }
         )
+        // console.log(this.options.build.dest.root + 'docker/seeds/' + data.identifier + '.json')
 
       }
     })
@@ -59,25 +63,11 @@ module.exports = class extends Generator {
     mongoImports = mongoImports.join(' && \\\n')
 
     // generated/docker/Dockerfile-MongoSeed
-    this.fs.copyTpl(
-      this.templatePath('Dockerfile-MongoSeed'),
-      this.destinationPath(this.options.build.dest.root + 'docker/Dockerfile-MongoSeed'),
+    await this.copyTemplate(
+      __dirname + '/templates/Dockerfile-MongoSeed',
+      this.options.build.dest.root + 'docker/Dockerfile-MongoSeed',
       { mongoImports, copyStatements  }
     )
-
-    // // generated/docker-compose-demo.yml
-    // this.fs.copyTpl(
-    //   this.templatePath('docker-compose-demo.yml'),
-    //   this.destinationPath(this.options.build.dest.root + 'docker-compose-demo.yml'),
-    //   { container_name_prefix: this.options.build.app.identifier }
-    // )
-
-    // // generated/demo.sh
-    // this.fs.copyTpl(
-    //   this.templatePath('demo.sh'),
-    //   this.destinationPath(this.options.build.dest.root + 'demo.sh'),
-    //   {}
-    // )
 
   }
 }
