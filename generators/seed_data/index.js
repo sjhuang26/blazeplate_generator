@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const Generator = require('../util/generator')
 
-module.exports = class extends Generator {
+module.exports = class SeedData extends Generator {
   async write () {
 
     // Returns boolean wether or not there is seed data

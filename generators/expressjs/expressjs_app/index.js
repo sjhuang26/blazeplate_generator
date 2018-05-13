@@ -1,23 +1,18 @@
-const Generator = require('yeoman-generator')
+const Generator = require('../../util/generator')
 
 // // // //
 
-module.exports = class extends Generator {
+module.exports = class ExpressJsBase extends Generator {
+  async write () {
 
-  // writing to file
-  writing() {
+    // Ensures app/web_api
+    await this.ensureDir(this.options.build.dest.expressjs.root)
 
-    // server/**/*
-    this.fs.copy(
-      this.templatePath('./'),
-      this.destinationPath(this.options.build.dest.expressjs.root)
-    );
-
-    // server/.* (dotfiles)
-    this.fs.copy(
-      this.templatePath('./.*'),
-      this.destinationPath(this.options.build.dest.expressjs.root)
-    );
+    // Copies server base code
+    await this.copyDir(
+      __dirname + '/templates',
+      this.options.build.dest.expressjs.root
+    )
 
   }
 

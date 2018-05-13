@@ -73,8 +73,9 @@ module.exports = class BlazeplateGenerator {
 
   // templatePath
   // TODO - finish implementing this function with __dirname
-  templatePath (path) {
-    return path
+  templatePath (dir, path) {
+    return dir + '/templates/' + path
+
   }
 
   // destinationPath
@@ -87,6 +88,7 @@ module.exports = class BlazeplateGenerator {
   // Enables one generator to fire off several child generators
   async composeWith (generatorClass) {
     let generatorInstance = new generatorClass(this.options)
+    console.log(`Generating ${generatorClass.name}...`)
     return generatorInstance.write()
   }
 

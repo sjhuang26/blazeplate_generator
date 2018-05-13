@@ -1,11 +1,9 @@
-const Generator = require('yeoman-generator')
+const Generator = require('../../util/generator')
 
 // // // //
 
-module.exports = class extends Generator {
-
-  // writing to file
-  writing() {
+module.exports = class ExpressJsResources extends Generator {
+  async write () {
 
     // Destination helpers & constants
     let dest = this.options.build.dest.expressjs.root
@@ -16,34 +14,37 @@ module.exports = class extends Generator {
       // Isolates the individual schema
       let schema = this.options.build.app.schemas[i]
 
+      // Ensures the presence of the directory
+      await this.ensureDir(dest + 'server/api/' + schema.identifier)
+
       // server/api/resource/resource.model.js
       // TODO - find related schemas BEFORE rendering this template
       // let relatedSchema = _.find(allSchemas, { _id: attr.datatypeOptions.schema_id })
       if (schema.identifier === 'user') {
-        this.fs.copyTpl(
-          this.templatePath('user.resource.model.js'),
-          this.destinationPath(dest + 'server/api/' + schema.identifier + '/' + schema.identifier + '.model.js'),
+        await this.copyTemplate(
+          this.templatePath(__dirname, 'user.resource.model.js'),
+          dest + 'server/api/' + schema.identifier + '/' + schema.identifier + '.model.js',
           { schema: schema }
         );
       } else {
-        this.fs.copyTpl(
-          this.templatePath('resource.model.js'),
-          this.destinationPath(dest + 'server/api/' + schema.identifier + '/' + schema.identifier + '.model.js'),
+        await this.copyTemplate(
+          this.templatePath(__dirname, 'resource.model.js'),
+          dest + 'server/api/' + schema.identifier + '/' + schema.identifier + '.model.js',
           { schema: schema }
         );
       }
 
       // server/api/resource/resource.controller.js
-      this.fs.copyTpl(
-        this.templatePath('resource.controller.js'),
-        this.destinationPath(dest + 'server/api/' + schema.identifier + '/' + schema.identifier + '.controller.js'),
+      await this.copyTemplate(
+        this.templatePath(__dirname, 'resource.controller.js'),
+        dest + 'server/api/' + schema.identifier + '/' + schema.identifier + '.controller.js',
         { schema: schema }
       );
 
       // server/api/resource/index.js
-      this.fs.copyTpl(
-        this.templatePath('index.js'),
-        this.destinationPath(dest + 'server/api/' + schema.identifier + '/index.js'),
+      await this.copyTemplate(
+        this.templatePath(__dirname, 'index.js'),
+        dest + 'server/api/' + schema.identifier + '/index.js',
         { schema: schema }
       );
 
@@ -51,4 +52,3 @@ module.exports = class extends Generator {
   }
 
 };
-

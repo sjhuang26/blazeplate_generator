@@ -99,9 +99,7 @@ module.exports = class extends BlazeplateGenerator {
     // await this.composeWith(require.resolve('../vuejs/vuejs_store'), { build });
 
     // Server - ExpressJS
-    // await this.composeWith(require.resolve('../expressjs/expressjs_app'), { build });
-    // await this.composeWith(require.resolve('../expressjs/expressjs_routes'), { build });
-    // await this.composeWith(require.resolve('../expressjs/expressjs_resource'), { build });
+    await this.composeWith(Generators.ExpressJS)
 
     // Infrastructure & Seed Data
     await this.composeWith(Generators.SeedData);
