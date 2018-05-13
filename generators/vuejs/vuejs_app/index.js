@@ -1,25 +1,17 @@
-const Generator = require('yeoman-generator')
+const Generator = require('../../util/generator')
 
 // // // //
 
-module.exports = class extends Generator {
+module.exports = class VueJsBase extends Generator {
+  async write () {
 
-  // writing to file
-  writing() {
+    await this.ensureDir(this.options.build.dest.vue.root)
 
-    // client/**/*
-    this.fs.copy(
-      this.templatePath('./'),
-      this.destinationPath(this.options.build.dest.vue.root)
-    );
-
-    // client/.* (dotfiles)
-    this.fs.copy(
-      this.templatePath('./.*'),
-      this.destinationPath(this.options.build.dest.vue.root)
-    );
+    await this.copyDir(
+      __dirname + '/templates',
+      this.options.build.dest.vue.root
+    )
 
   }
-
-};
+}
 

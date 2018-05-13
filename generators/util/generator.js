@@ -87,8 +87,14 @@ module.exports = class BlazeplateGenerator {
   // composeWith
   // Enables one generator to fire off several child generators
   async composeWith (generatorClass) {
+
+    // Instantiates a nwe generatorClass object with this.options
     let generatorInstance = new generatorClass(this.options)
+
+    // Logs which generator is being run
     console.log(`Generating ${generatorClass.name}...`)
+
+    // Invokes BlazeplateGenerator.write()
     return generatorInstance.write()
   }
 

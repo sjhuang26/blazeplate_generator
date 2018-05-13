@@ -68,30 +68,17 @@ module.exports = class extends BlazeplateGenerator {
 
   }
 
-  // TODO - compose this of SMALLER Vue/Express specific generators
-  // TODO - is there a way to conditionally run a generator?
+  // TODO - update to conditionally run each generator
   async write () {
 
     console.log('Starting Blazeplate generate')
     // console.log(this.options)
 
     // Creates project build directories
-    // await this.ensureDir(this.options.build.dest.out)
     await this.ensureDir(this.options.build.dest.root)
 
     // Client - VueJS
-    // await this.composeWith(require.resolve('../vuejs/vuejs_app'), { build });
-    // await this.composeWith(require.resolve('../vuejs/vuejs_app_navbar'), { build });
-    // await this.composeWith(require.resolve('../vuejs/vuejs_app_router'), { build });
-    // await this.composeWith(require.resolve('../vuejs/vuejs_app_store'), { build });
-    // await this.composeWith(require.resolve('../vuejs/vuejs_auth'), { build });
-    // await this.composeWith(require.resolve('../vuejs/vuejs_form_component'), { build });
-    // await this.composeWith(require.resolve('../vuejs/vuejs_new_container'), { build });
-    // await this.composeWith(require.resolve('../vuejs/vuejs_edit_container'), { build });
-    // await this.composeWith(require.resolve('../vuejs/vuejs_list_container'), { build });
-    // await this.composeWith(require.resolve('../vuejs/vuejs_router'), { build });
-    // await this.composeWith(require.resolve('../vuejs/vuejs_show_container'), { build });
-    // await this.composeWith(require.resolve('../vuejs/vuejs_store'), { build });
+    await this.composeWith(Generators.VueJS)
 
     // Server - ExpressJS
     await this.composeWith(Generators.ExpressJS)
