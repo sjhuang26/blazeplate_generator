@@ -31,8 +31,8 @@ module.exports = class extends BlazeplateGenerator {
     }
 
     // Debugging
-    console.log('APP CONFIG')
-    console.log(options)
+    // console.log('APP CONFIG')
+    // console.log(options)
 
     // TODO - Yoeman argument/option best practices
     let rawConfig = fs.readFileSync(options['appconfig'])
@@ -49,10 +49,12 @@ module.exports = class extends BlazeplateGenerator {
     build.dest.root = build.dest.out + build.app.identifier + '/'
 
     // VueJS
+    // TODO - move into the Vue generator
     build.dest.vue.root = build.dest.root + 'web_client/'
     build.dest.vue.src = build.dest.vue.root + 'src/'
 
     // ExpressJS
+    // TODO - move into the ExpressJs generator
     build.dest.expressjs.root = build.dest.root + 'web_api/'
 
     //
@@ -60,8 +62,8 @@ module.exports = class extends BlazeplateGenerator {
 
     // Sets this.options.build
     this.options = { build: Helpers.formatBuild(build) }
-    // console.log('DONE WITH CONSTRUCTOR')
 
+    // Returns the generator instance
     return this
 
   }
@@ -70,19 +72,12 @@ module.exports = class extends BlazeplateGenerator {
   // TODO - is there a way to conditionally run a generator?
   async write () {
 
-    console.log('GENERATING')
-    console.log(this.options)
+    console.log('Starting Blazeplate generate')
+    // console.log(this.options)
 
     // Creates project build directories
     // await this.ensureDir(this.options.build.dest.out)
     await this.ensureDir(this.options.build.dest.root)
-
-    // Formats build before generation to minimize repeated code and formatting
-    // let build = formatBuild(this.options.build)
-
-
-    // TODO - replace Yoeman with mem-fs-editor & custom build system
-    // https://github.com/SBoudrias/mem-fs-editor
 
     // Client - VueJS
     // await this.composeWith(require.resolve('../vuejs/vuejs_app'), { build });
@@ -104,7 +99,9 @@ module.exports = class extends BlazeplateGenerator {
     // Infrastructure & Seed Data
     await this.composeWith(Generators.SeedData);
     await this.composeWith(Generators.DockerCompose);
-    console.log('GENERATED ALL')
+
+    // TODO - implement a more robust logging solution
+    console.log('Finished Blazeplate generate')
 
   }
 
