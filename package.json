@@ -13,6 +13,7 @@
     "yeoman-generator"
   ],
   "dependencies": {
+    "fs-extra": "^6.0.1",
     "lodash": "^4.17.4",
     "rexreplace": "^3.0.1",
     "underscore.string": "^3.3.4",
