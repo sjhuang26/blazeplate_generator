@@ -1,14 +1,12 @@
 const _ = require('lodash')
-const Generator = require('yeoman-generator')
+const Generator = require('../../util/generator')
 const classify = require('underscore.string/classify')
 
 // // // //
 
-module.exports = class extends Generator {
-
-  // writing to file
+module.exports = class VueJsNavbar extends Generator {
   // TODO - remove hard-coded resource schema
-  writing() {
+  async write () {
 
     let app = this.options.build.app
     let destinationRoot = this.options.build.dest.root
@@ -27,10 +25,9 @@ module.exports = class extends Generator {
       }
     })
 
-
-    this.fs.copyTpl(
-      this.templatePath('app_navbar.vue'),
-      this.destinationPath(vueSrc + 'containers/app_navbar/components/layout.vue'),
+    await this.copyTemplate(
+      this.templatePath(__dirname, 'Navbar.vue'),
+      this.destinationPath(vueSrc + 'components/Navbar.vue'),
       { appSchema: app, headerLinks: headerLinks }
     );
 

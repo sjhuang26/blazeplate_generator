@@ -1,12 +1,12 @@
 const _ = require('lodash')
-const Generator = require('yeoman-generator');
+const Generator = require('../../util/generator');
 const classify = require('underscore.string/classify');
 
 // // // //
 
-module.exports = class extends Generator {
+module.exports = class VueJsStore extends Generator {
 
-  writing() {
+  async write() {
 
     let vueSrc = this.options.build.dest.vue.src
 
@@ -27,45 +27,48 @@ module.exports = class extends Generator {
         }
       })
 
+      // Ensures presence of requisite directory
+      await this.ensureDir(vueSrc + 'store/' + schema.identifier)
+
       // client/src/store/resource/actions.js
-      this.fs.copyTpl(
-        this.templatePath('actions.js'),
+      await this.copyTemplate(
+        this.templatePath(__dirname, 'actions.js'),
         this.destinationPath(vueSrc + 'store/' + schema.identifier + '/actions.js'),
         { schema: schema }
       );
 
       // client/src/store/resource/getters.js
-      this.fs.copyTpl(
-        this.templatePath('getters.js'),
+      await this.copyTemplate(
+        this.templatePath(__dirname, 'getters.js'),
         this.destinationPath(vueSrc + 'store/' + schema.identifier + '/getters.js'),
         { schema: schema }
       );
 
       // client/src/store/resource/index.js
-      this.fs.copyTpl(
-        this.templatePath('index.js'),
+      await this.copyTemplate(
+        this.templatePath(__dirname, 'index.js'),
         this.destinationPath(vueSrc + 'store/' + schema.identifier + '/index.js'),
         { schema: schema }
       );
 
       // client/src/store/resource/constants.js
       // TODO - how can we get newModel to print as a JavaScript object, rather than stringified JSON?
-      this.fs.copyTpl(
-        this.templatePath('constants.js'),
+      await this.copyTemplate(
+        this.templatePath(__dirname, 'constants.js'),
         this.destinationPath(vueSrc + 'store/' + schema.identifier + '/constants.js'),
         { schema: schema, newModel: JSON.stringify(newModel, null, 2) }
       );
 
       // client/src/store/resource/mutations.js
-      this.fs.copyTpl(
-        this.templatePath('mutations.js'),
+      await this.copyTemplate(
+        this.templatePath(__dirname, 'mutations.js'),
         this.destinationPath(vueSrc + 'store/' + schema.identifier + '/mutations.js'),
         { schema: schema }
       );
 
       // client/src/store/resource/state.js
-      this.fs.copyTpl(
-        this.templatePath('state.js'),
+      await this.copyTemplate(
+        this.templatePath(__dirname, 'state.js'),
         this.destinationPath(vueSrc + 'store/' + schema.identifier + '/state.js'),
         { schema: schema }
       );

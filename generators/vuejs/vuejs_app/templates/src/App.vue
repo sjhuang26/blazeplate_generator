@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import AppNavbar from './containers/app_navbar'
-import Notification from './containers/app_notification'
+import AppNavbar from '@/components/Navbar'
+import Notification from '@/containers/app_notification'
 
 export default {
   name: 'app',

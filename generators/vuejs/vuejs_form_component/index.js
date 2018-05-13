@@ -1,12 +1,12 @@
 // Generator index file
-var Generator = require('yeoman-generator');
+var Generator = require('../../util/generator');
 var classify = require('underscore.string/classify');
 
 // // // //
 
-module.exports = class extends Generator {
+module.exports = class VueJsFormComponent extends Generator {
 
-  writing() {
+  async write() {
 
     let vueSrc = this.options.build.dest.vue.src
 
@@ -17,8 +17,8 @@ module.exports = class extends Generator {
       let schema = this.options.build.app.schemas[i]
 
       // client/src/components/resource_form.vue
-      this.fs.copyTpl(
-        this.templatePath('form_component.vue'),
+      await this.copyTemplate(
+        this.templatePath(__dirname, 'form_component.vue'),
         this.destinationPath(vueSrc + 'components/' + schema.label + 'Form.vue'),
         { schema: schema }
       )
