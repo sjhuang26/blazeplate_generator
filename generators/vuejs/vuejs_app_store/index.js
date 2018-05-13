@@ -1,11 +1,11 @@
 const _ = require('lodash')
-const Generator = require('yeoman-generator')
+const Generator = require('../../util/generator')
 
 // // // //
 
-module.exports = class extends Generator {
+module.exports = class VueJsAppStore extends Generator {
 
-  writing() {
+  async write() {
     let app = this.options.build.app
 
     // client/src/store/index.js
@@ -15,16 +15,15 @@ module.exports = class extends Generator {
       storeModules.push(s.identifier)
     })
 
-    this.fs.copyTpl(
-      this.templatePath('index.js'),
+    this.copyTemplate(
+      this.templatePath(__dirname, 'index.js'),
       this.destinationPath(this.options.build.dest.vue.src + 'store/index.js'),
       { appSchema: app, storeModules: storeModules.join(",\n    ")  } // TODO - constantize indentation size?
     );
 
-    this.fs.copyTpl(
-      this.templatePath('./lib'),
-      this.destinationPath(this.options.build.dest.vue.src + 'store/lib'),
-      { } // TODO - constantize indentation size?
+    this.copyDir(
+      this.templatePath(__dirname, 'lib'),
+      this.destinationPath(this.options.build.dest.vue.src + 'store/lib')
     );
 
   }
