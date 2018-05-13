@@ -1,23 +1,21 @@
 const _ = require('lodash')
-const Generator = require('yeoman-generator')
+const Generator = require('../../util/generator')
 
 // // // //
 
-module.exports = class extends Generator {
+module.exports = class VueJsAuth extends Generator {
 
-  writing() {
+  async write() {
     let app = this.options.build.app
 
-    this.fs.copyTpl(
-      this.templatePath('./store'),
-      this.destinationPath(this.options.build.dest.vue.src + 'store'),
-      { } // TODO - pass authentication options here
+    this.copyDir(
+      this.templatePath(__dirname, 'store'),
+      this.destinationPath(this.options.build.dest.vue.src + 'store')
     );
 
-    this.fs.copyTpl(
-      this.templatePath('./containers'),
-      this.destinationPath(this.options.build.dest.vue.src + 'containers'),
-      { } // TODO - pass authentication options here
+    this.copyDir(
+      this.templatePath(__dirname, 'containers'),
+      this.destinationPath(this.options.build.dest.vue.src + 'containers')
     );
 
   }
