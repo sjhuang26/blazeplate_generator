@@ -1,9 +1,6 @@
-const _ = require('lodash')
-const fs = require('fs')
 const Helpers = require('../util/helpers')
 const BlazeplateGenerator = require('../util/generator')
 const Generators = require('./generators')
-const classify = require('underscore.string/classify')
 
 // // // //
 
@@ -30,13 +27,8 @@ module.exports = class extends BlazeplateGenerator {
       }
     }
 
-    // Debugging
-    // console.log('APP CONFIG')
-    // console.log(options)
-
-    // TODO - Yoeman argument/option best practices
-    let rawConfig = fs.readFileSync(options['appconfig'])
-    build.app = JSON.parse(rawConfig)
+    // Assigngs build.app from options
+    build.app = options['appconfig']
 
     // Isolates the buildId
     const buildId = options['buildId']
