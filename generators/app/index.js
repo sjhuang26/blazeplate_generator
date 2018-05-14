@@ -1,9 +1,6 @@
-const _ = require('lodash')
-const fs = require('fs')
 const Helpers = require('../util/helpers')
 const BlazeplateGenerator = require('../util/generator')
 const Generators = require('./generators')
-const classify = require('underscore.string/classify')
 
 // // // //
 
@@ -30,13 +27,8 @@ module.exports = class extends BlazeplateGenerator {
       }
     }
 
-    // Debugging
-    // console.log('APP CONFIG')
-    // console.log(options)
-
-    // TODO - Yoeman argument/option best practices
-    let rawConfig = fs.readFileSync(options['appconfig'])
-    build.app = JSON.parse(rawConfig)
+    // Assigngs build.app from options
+    build.app = options['appconfig']
 
     // Isolates the buildId
     const buildId = options['buildId']
@@ -68,11 +60,32 @@ module.exports = class extends BlazeplateGenerator {
 
   }
 
+  // TODO - integrate into write() method
+  async writeBuildManifest (req, buildId) {
+    return new Promise((resolve, reject) => {
+
+      // Makes /build/buildId
+      this.fs.mkdirSync(__dirname + `/build/${buildId}`)
+
+      // Writes blazeplate.json file
+      this.fs.writeFile(__dirname + `/build/${buildId}/blazeplate.json`, JSON.stringify(req.body, null, 2), (err) => {
+        if (err) throw err;
+        // console.log(`Build ${buildId} manfiest saved`);
+        return resolve()
+      });
+
+    });
+
+  }
+
   // TODO - update to conditionally run each generator
   async write () {
 
     console.log('Starting Blazeplate generate')
     // console.log(this.options)
+
+    // TODO - write build configuration to JSON file
+    // await fs.writeFileSync(outputFile, this.options)
 
     // Creates project build directories
     await this.ensureDir(this.options.build.dest.root)
