@@ -1,8 +1,7 @@
 let Blazeplate = require('./generators/app')
 
-// TODO - pass build configuration into Blazeplate Generator directly,
-// Replace appconfig & fs.readFile() code
+// Invoke Blazeplate directly
 new Blazeplate({
-  appconfig: './configs/example_04.json',
+  appconfig: require('./configs/example_04.json'),
   buildId: 'app_5acfeea85535afdb753d55f7'
 }).write()

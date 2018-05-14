@@ -1,23 +1,22 @@
 const <%= schema.class_name %> = require('./<%= schema.identifier %>.model')
-<% for (index in schema.attributes) { %>
-<% let attr = schema.attributes[index] %>
-<% if (attr.datatype === 'RELATION' && attr.class_name !== schema.class_name) { %>
+<%_ for (index in schema.attributes) { _%>
+<%_ let attr = schema.attributes[index] _%>
+<%_ if (attr.datatype === 'RELATION' && attr.class_name !== schema.class_name) { _%>
 const <%= attr.datatypeOptions.schema_class_name %> = require('../<%= attr.datatypeOptions.schema_identifier %>/<%= attr.datatypeOptions.schema_identifier %>.model')
-<% } %>
-<% } %>
+<%_ } _%>
+<%_ } _%>
 
-// // // // BLAZEPLATE WHITESPACE
 // // // //
 
-function handleError (res, err) {
-    return res.status(500).json({ error: err }).end()
+function handleError (res) {
+    return function(err) {
+        return res.status(500).json({ error: err }).end()
+    }
 }
 
-// // // // BLAZEPLATE WHITESPACE
 // // // //
 
-<% if (schema.identifier === 'user') { %>
-// // // // BLAZEPLATE WHITESPACE
+<%_ if (schema.identifier === 'user') { _%>
 /**
 * @api {get} /api/<%= schema.identifier_plural %> Profile
 * @APIname Profile
@@ -30,9 +29,7 @@ exports.profile = (req, res) => {
     return <%= schema.class_name %>.findOne({ username: req.user.username }, '-password -__v').exec()
     .then( (user) => { res.json(user) })
 }
-<% } %>
-
-// // // // BLAZEPLATE WHITESPACE
+<%_ } _%>
 /**
 * @api {get} /api/<%= schema.identifier_plural %> Index
 * @APIname Index
@@ -41,8 +38,6 @@ exports.profile = (req, res) => {
 * @apiSuccess {json} Collection of <%= schema.label_plural %>
 * @apiError (Error) 500 Internal server error
 */
-// TODO - query middleware (optional)
-// TODO - pagination middleware (optional)
 module.exports.list = (req, res, next) => {
     return <%= schema.class_name %>.find({})
     .then((response) => {
@@ -51,14 +46,10 @@ module.exports.list = (req, res, next) => {
         .send(response)
         .end();
     })
-    .catch((err) => {
-        handleError(res, err)
-    });
+    .catch(handleError(res));
 };
-// // // // BLAZEPLATE WHITESPACE
 
 
-// // // // BLAZEPLATE WHITESPACE
 /**
 * @api {POST} /api/<%= schema.identifier_plural %> Create
 * @APIname Create
@@ -68,25 +59,21 @@ module.exports.list = (req, res, next) => {
 * @apiError (Error) 500 Internal server error
 */
 module.exports.create = (req, res, next) => {
-    <% if (schema.identifier === 'user') { %>
+    <%_ if (schema.identifier === 'user') { _%>
     return User.create(req.body)
-    <% } else { %>
+    <%_ } else { _%>
     return new <%= schema.class_name %>(req.body).save()
-    <% } %>
+    <%_ } _%>
     .then((response) => {
         return res
         .status(200)
         .send(response)
         .end();
     })
-    .catch((err) => {
-        handleError(res, err)
-    });
+    .catch(handleError(res));
 };
-// // // // BLAZEPLATE WHITESPACE
 
 
-// // // // BLAZEPLATE WHITESPACE
 /**
 * @api {GET} /api/<%= schema.identifier_plural %>/:id Show
 * @APIname Show
@@ -103,18 +90,13 @@ module.exports.show = (req, res, next) => {
         .send(response)
         .end();
     })
-    .catch((err) => {
-        handleError(res, err)
-    });
+    .catch(handleError(res));
 };
-// // // // BLAZEPLATE WHITESPACE
 
-<% for (index in schema.attributes) { %>
-<% let attr = schema.attributes[index] %>
+<%_ for (index in schema.attributes) { _%>
+<%_ let attr = schema.attributes[index] _%>
+<%_ if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { _%>
 
-<% if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { %>
-
-// // // // BLAZEPLATE WHITESPACE
 /**
 * @api {GET} /api/<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier %> show<%= attr.datatypeOptions.schema_label %>
 * @APIname show<%= attr.datatypeOptions.schema_label %>
@@ -134,20 +116,14 @@ module.exports.show<%= attr.datatypeOptions.schema_label %> = (req, res, next) =
             .send(<%= attr.datatypeOptions.schema_identifier %>)
             .end();
         })
-        .catch((err) => {
-            handleError(res, err)
-        });
+        .catch(handleError(res));
 
     })
-    .catch((err) => {
-        handleError(res, err)
-    });
+    .catch(handleError(res));
 };
-// // // // BLAZEPLATE WHITESPACE
 
 <% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { %>
 
-// // // // BLAZEPLATE WHITESPACE
 /**
 * @api {GET} /api/<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier_plural %> show<%= attr.datatypeOptions.schema_label_plural %>
 * @APIname show<%= attr.datatypeOptions.schema_label_plural %>
@@ -164,20 +140,16 @@ module.exports.show<%= attr.datatypeOptions.schema_label_plural %> = (req, res, 
         .send(<%= attr.datatypeOptions.schema_identifier_plural %>)
         .end();
     })
-    .catch((err) => {
-        handleError(res, err)
-    });
+    .catch(handleError(res));
 };
-// // // // BLAZEPLATE WHITESPACE
 
-<% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { %>
+<%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { _%>
 // GET /<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier %>
 // router.get('/:id/<%= attr.datatypeOptions.schema_identifier %>', controller.show<%= attr.datatypeOptions.schema_label %>);
 // TODO - INTEGRATE HAS_ONE IN CONTROLLER
 // // // //
-
-<% } %>
-<% } %>
+<%_ } _%>
+<%_ } _%>
 
 
 /**
@@ -196,13 +168,10 @@ module.exports.update = (req, res, next) => {
         .send(response)
         .end();
     })
-    .catch((err) => {
-        handleError(res, err)
-    });
+    .catch(handleError(res));
 };
-// // // // BLAZEPLATE WHITESPACE
 
-// // // // BLAZEPLATE WHITESPACE
+
 /**
 * @api {DELETE} /api/<%= schema.identifier_plural %>/:id Destroy
 * @APIname Destroy
@@ -219,8 +188,5 @@ module.exports.delete = (req, res, next) => {
         .send(response)
         .end();
     })
-    .catch((err) => {
-        handleError(res, err)
-    });
+    .catch(handleError(res));
 };
-// // // // BLAZEPLATE WHITESPACE
