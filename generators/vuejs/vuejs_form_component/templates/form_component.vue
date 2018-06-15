@@ -18,6 +18,8 @@
         <input type="number" class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
       <%_ } else if (attr.datatype === 'DATE') { _%>
         <input type="date" class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
+      <%_ } else if (attr.datatype === 'TIME') { _%>
+        <input type="time" class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
       <%_ } else if (attr.datatype === 'RELATION') { _%>
 
       <%_ } if (attr.datatypeOptions.relationType === 'BELONGS_TO') { _%>
@@ -41,7 +43,7 @@
 <!-- // // // //  -->
 
 <script>
-// TODO - integrate RelationDropdown & abstract colection logic from this component
+// TODO - integrate RelationDropdown & abstract collection logic from this component
 import RelationDropdown from '@/components/RelationDropdown'
 
 export default {
