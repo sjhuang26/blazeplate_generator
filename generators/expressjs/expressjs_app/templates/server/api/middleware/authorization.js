@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-const RedisClient = require('../../lib/redis')
 
 // // // //
 
@@ -53,34 +52,13 @@ module.exports = function (req, res, next) {
       const admin = decoded.admin;
       const issuedAt = decoded.iat; // NOTE - unused
 
-      // Ensure presnece of token in Redis
-      RedisClient.get(user_id, function(err, reply) {
+      // Success - user is authorized
+      // Attach the req.user object to be used in the application's controllers
+      req.user = { id: user_id, username: username, admin: admin  };
 
-        // Invalid or missing token error
-        if (err || typeof(reply) != 'string') {
-          // 401 Unauthorized
-          res.writeHead(401, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: 'Invalid or expired token.' }));
-          return;
-        }
-
-        // Ensures freshness of token
-        if (token != reply){
-          // 401 Unauthorized
-          res.writeHead(401, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: 'Expired token.' }));
-          return;
-        }
-
-        // Success - user is authorized
-        // Attach the req.user object to be used in the application's controllers
-        req.user = { id: user_id, username: username, admin: admin  };
-
-        // Continue through this middleware to the original request
-        next();
-        return;
-
-      });
+      // Continue through this middleware to the original request
+      next();
+      return;
 
     });
 

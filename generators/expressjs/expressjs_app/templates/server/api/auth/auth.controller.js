@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken')
 const User = require('../user/user.model')
-const RedisClient = require('../../lib/redis') // TOOD - drop relative path?
 
 // // // //
 
@@ -127,27 +126,13 @@ exports.login = (req, res) => {
             token: token
         };
 
-        // Stores token in Redis
-        // TODO - set Redis cache expiration
-        // TODO - scope this Redis cache to hold only authentication tokens?
-        return RedisClient.set(user_id, token, (err, reply) => {
+        // TODO - abstract HEADER
+        const CONTENT_TYPE_JSON = { 'Content-Type': 'application/json' };
 
-            // TODO - abstract HEADER
-            const CONTENT_TYPE_JSON = { 'Content-Type': 'application/json' };
-
-            // 500 Internal Server Error
-            // Error writing to Redis
-            if (err) {
-                res.writeHead(500, CONTENT_TYPE_JSON);
-                res.end(JSON.stringify({ error: 'An unknown exception has occured.' }));
-            }
-
-            // 200 OK - send token to client
-            res.writeHead(200, CONTENT_TYPE_JSON);
-            res.end(JSON.stringify(response_payload));
-
-        });
-
+        // 200 OK - send token to client
+        res.writeHead(200, CONTENT_TYPE_JSON);
+        res.end(JSON.stringify(response_payload));
+        return;
     }
 
     // error occured
@@ -163,13 +148,6 @@ exports.login = (req, res) => {
     .then(respond)
     .catch(onError)
 
-}
-
-// // // //
-// POST /api/auth/logout
-exports.logout = (req, res) => {
-    RedisClient.del(req.user.id)
-    return res.json({ logout: true })
 }
 
 // // // //

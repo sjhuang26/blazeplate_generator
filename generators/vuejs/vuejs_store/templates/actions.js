@@ -6,6 +6,7 @@ const API_ROOT = '/api/<%= schema.identifier_plural %>'
 // // // //
 
 export default {
+  // GET /api/<%= schema.identifier_plural %>
   fetchCollection ({ state, commit, dispatch }) {
     commit('fetching', true)
     $GET(API_ROOT)
@@ -19,6 +20,7 @@ export default {
       throw err // TODO - better error handling
     })
   },
+  // GET /api/<%= schema.identifier_plural %>/:id
   fetchModel ({ state, commit, dispatch }, <%= schema.identifier %>Id) {
     commit('fetching', true)
     $GET(`${API_ROOT}/${<%= schema.identifier %>Id}`)
@@ -32,6 +34,7 @@ export default {
       throw err // TODO - better error handling
     })
   },
+  // POST /api/<%= schema.identifier_plural %>
   createModel ({ state, commit, dispatch }, <%= schema.identifier %>Model) {
     commit('fetching', true)
     $POST(`${API_ROOT}`, {
@@ -47,6 +50,7 @@ export default {
       throw err
     })
   },
+  // PUT /api/<%= schema.identifier_plural %>/:id
   updateModel ({ state, commit }, <%= schema.identifier %>Model) {
     commit('fetching', true)
     $PUT(`${API_ROOT}/${<%= schema.identifier %>Model._id}`, {
@@ -62,6 +66,7 @@ export default {
       throw err
     })
   },
+  // DELETE /api/<%= schema.identifier_plural %>/:id
   deleteModel ({ state, commit }, <%= schema.identifier %>Model) {
     commit('fetching', true)
     $DEL(`${API_ROOT}/${<%= schema.identifier %>Model._id}`)

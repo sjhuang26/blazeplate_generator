@@ -2,11 +2,11 @@ const router = require('express').Router()
 
 // // // //
 
-// Bootstrap API routers
+// Bootstrap API module routers
 router.use('/auth', require('./api/auth'))
-<% for (index in appSchema.schemas) { %>
+<%_ for (index in appSchema.schemas) { _%>
 router.use('/<%= appSchema.schemas[index].identifier_plural %>', require('./api/<%= appSchema.schemas[index].identifier %>'))
-<% } %>
+<%_ } _%>
 
 // // // //
 

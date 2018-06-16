@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "start": "yo blazeplate:resources",
-    "test": "sh test.sh"
+    "test": "node blazeplate.js"
   },
   "dependencies": {
     "ejs": "^2.6.1",
