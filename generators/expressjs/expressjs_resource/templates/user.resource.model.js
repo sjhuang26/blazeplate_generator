@@ -2,9 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const crypto = require('crypto')
 
-// // // // BLAZEPLATE WHITESPACE
 // // // //
-// // // // BLAZEPLATE WHITESPACE
 
 // Password encryption helper function
 function encryptPassword (password) {
@@ -13,52 +11,50 @@ function encryptPassword (password) {
         .digest('base64')
 }
 
-// // // // BLAZEPLATE WHITESPACE
 // // // //
-// // // // BLAZEPLATE WHITESPACE
 
 const <%= schema.class_name %> = new Schema({
-  <% for (index in schema.attributes) { %>
-  <% let attr = schema.attributes[index] %>
-  <% if (attr.datatype === 'BOOL') { %>
-  <% continue %>
-  <% } else if (attr.datatype === 'BOOL') { %>
+  <%_ for (index in schema.attributes) { _%>
+  <%_ let attr = schema.attributes[index] _%>
+  <%_ if (attr.datatype === 'BOOL') { _%>
+  <%_ continue _%>
+  <%_ } else if (attr.datatype === 'BOOL') { _%>
   <%= attr.identifier %>: {
     type: Boolean
   },
-  <% } else if (attr.datatype === 'NUMBER') { %>
+  <%_ } else if (attr.datatype === 'NUMBER') { _%>
   <%= attr.identifier %>: {
     type: Number,
     required: <%= attr.required %>,
     unique: <%= attr.unique %>
   },
-  <% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { %>
+  <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { _%>
   <%= attr.identifier %>: {
     type: Schema.Types.ObjectId,
     ref: '<%= attr.datatypeOptions.schema_label %>'
   },
-  <% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { %>
+  <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { _%>
   <%= attr.identifier %>: [{
     type: Schema.Types.ObjectId,
     ref: '<%= attr.datatypeOptions.schema_label %>'
   }],
-  <% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { %>
+  <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { _%>
   <%= attr.identifier %>: [{
     type: Schema.Types.ObjectId,
     ref: '<%= attr.datatypeOptions.schema_label %>'
   }],
-  <% } else { %>
+  <%_ } else { _%>
   <%= attr.identifier %>: {
     type: String,
     required: <%= attr.required %>,
     unique: <%= attr.unique %>
- },
-  <% } %>
-  <% } %>
+  },
+  <%_ } _%>
+  <%_ } _%>
   roles: {
     type: [String],
     default: []
-  },
+  }
   },
   // Collection options
   {
@@ -69,9 +65,7 @@ const <%= schema.class_name %> = new Schema({
   versionKey: false
 });
 
-// // // // BLAZEPLATE WHITESPACE
 // // // //
-// // // // BLAZEPLATE WHITESPACE
 
 // Create new User document
 // TODO - add email
@@ -89,8 +83,6 @@ User.statics.create = function ({ name, email, username, password }) {
     return user.save()
 }
 
-// // // // BLAZEPLATE WHITESPACE
-
 // findOneByUsername
 // Find one User by username
 User.statics.findOneByUsername = function (username) {
@@ -98,16 +90,12 @@ User.statics.findOneByUsername = function (username) {
     return this.findOne({ username }).exec()
 }
 
-// // // // BLAZEPLATE WHITESPACE
-
 // verify
 // Verifies the password parameter of POST /auth/login requests
 User.methods.verify = function (password) {
     // Verifies saved password against a request's password
     return this.password === encryptPassword(password)
 }
-
-// // // // BLAZEPLATE WHITESPACE
 
 // assignAdmin
 // Assigns admin priviledges to a user
@@ -119,30 +107,22 @@ User.methods.assignAdmin = function () {
     return this.save()
 }
 
-// // // // BLAZEPLATE WHITESPACE
-
-<% for (index in schema.attributes) { %>
-<% let attr = schema.attributes[index] %>
-
-<% if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { %>
+<%_ for (index in schema.attributes) { _%>
+<%_ let attr = schema.attributes[index] _%>
+<%_ if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { _%>
 <%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').findById(this.<%= attr.identifier %>);
 }
-
-<% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { %>
+<%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { _%>
 <%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label_plural %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').find({ <%= schema.identifier %>_id: this._id });
 }
-
-<% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { %>
+<%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { _%>
 <%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').findById(this.<%= attr.identifier %> });
 }
+<%_ } _%>
+<%_ } _%>
 
-<% } %>
-<% } %>
-
-// // // // BLAZEPLATE WHITESPACE
 // TODO - absract schema.class_name
 module.exports = mongoose.model('<%= schema.class_name %>', <%= schema.label.split(' ').join('') %>)
-// // // // BLAZEPLATE WHITESPACE

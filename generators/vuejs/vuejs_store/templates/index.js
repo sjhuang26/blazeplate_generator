@@ -4,6 +4,7 @@ import getters from './getters'
 import mutations from './mutations'
 const namespaced = true
 
+// <%= schema.identifier %> Vuex module definition
 export default {
   namespaced,
   state,
@@ -11,6 +12,3 @@ export default {
   actions,
   getters
 }
-
-// Add this to /src/store/index:
-// import <%= schema.identifier %> from './<%= schema.identifier %>'

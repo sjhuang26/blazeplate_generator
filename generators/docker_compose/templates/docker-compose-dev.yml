@@ -26,11 +26,6 @@ services:
     depends_on:
       - mongo
   <% } %>
-  redis:
-    image: redis
-    container_name: '<%= container_name_prefix %>-redis'
-    ports:
-      - "6379:6379"
 
   # express:
   #   build: './web_api'
