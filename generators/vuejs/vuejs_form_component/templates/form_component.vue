@@ -3,6 +3,7 @@
   <div class='row'>
   <%_ for (index in schema.attributes) { _%>
   <%_ let attr = schema.attributes[index] _%>
+  <%_ if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'OWNS_MANY') continue _%>
     <div class="col-lg-6">
       <div class="form-group">
         <label class='mb-0'>
