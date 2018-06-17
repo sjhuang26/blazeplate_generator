@@ -27,14 +27,17 @@ router.delete('/:id', controller.delete);
 <%_ for (index in schema.attributes) { _%>
 <%_ let attr = schema.attributes[index] _%>
 <%_ if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { _%>
+
 // GET /<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier %>
 router.get('/:id/<%= attr.datatypeOptions.schema_identifier %>', controller.show<%= attr.datatypeOptions.schema_label %>);
 <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { _%>
+
 // GET /<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier_plural %>
 router.get('/:id/<%= attr.datatypeOptions.schema_identifier_plural %>', controller.show<%= attr.datatypeOptions.schema_label_plural %>);
-<%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { _%>
+<%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'OWNS_MANY') { _%>
+
 // GET /<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier %>
-router.get('/:id/<%= attr.datatypeOptions.schema_identifier %>', controller.show<%= attr.datatypeOptions.schema_label %>);
+router.get('/:id/<%= attr.datatypeOptions.schema_identifier_plural %>', controller.show<%= attr.datatypeOptions.schema_label_plural %>);
 <%_ } _%>
 <%_ } _%>
 
