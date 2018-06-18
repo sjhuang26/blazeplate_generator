@@ -8,7 +8,7 @@
       <div class="form-group">
         <label class='mb-0'>
           <%= attr.label %>
-          <%_ if (attr.required) { %><span class='text-danger'>*</span><% } _%>
+          <% if (attr.required) { %><span class='text-danger'>*</span><% } %>
         </label>
         <small class="form-text text-muted mb-2"><%= attr.help %></small>
       <%_ if (attr.datatype === 'BOOL') { _%>
@@ -21,6 +21,8 @@
         <input type="date" class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
       <%_ } else if (attr.datatype === 'TIME') { _%>
         <input type="time" class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
+      <%_ } else if (attr.datatype === 'DATETIME') { _%>
+        <input type="datetime-local" class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
       <%_ } else if (attr.datatype === 'RELATION') { _%>
 
       <%_ } if (attr.datatypeOptions.relationType === 'BELONGS_TO') { _%>
