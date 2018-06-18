@@ -28,6 +28,12 @@ const <%= schema.class_name %> = new Schema({
   }],
   <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'OWNS_MANY') { _%>
   <%_ continue _%>
+  <%_ } else if (attr.datatype === 'DATETIME') { _%>
+  <%= attr.identifier %>: {
+    type: Date,
+    required: <%= attr.required %>,
+    unique: <%= attr.unique %>
+  },
   <%_ } else { _%>
   <%= attr.identifier %>: {
     type: String,
