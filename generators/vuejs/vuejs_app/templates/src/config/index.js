@@ -3,9 +3,6 @@ import Vuex from 'vuex'
 import Meta from 'vue-meta'
 import BootstrapVue from 'bootstrap-vue'
 
-// Bootstraps VueGoodTable component
-Vue.use(VueGoodTable)
-
 // bootstrap-vue
 // Bootstrap components and directives
 Vue.use(BootstrapVue)
