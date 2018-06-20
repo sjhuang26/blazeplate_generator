@@ -18,9 +18,7 @@ module.exports = class VueJsFormComponent extends Generator {
 
       // Isolates relevant options for template
       let { ui_framework } = this.options.build.app.stack
-      let options = {
-        ui_framework: ui_framework.id
-      }
+      let options = { ui_framework }
 
       // client/src/components/resource_form.vue
       await this.copyTemplate(
