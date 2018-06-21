@@ -38,11 +38,8 @@ const <%= schema.class_name %> = new Schema({
     type: Schema.Types.ObjectId,
     ref: '<%= attr.datatypeOptions.schema_label %>'
   }],
-  <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { _%>
-  <%= attr.identifier %>: [{
-    type: Schema.Types.ObjectId,
-    ref: '<%= attr.datatypeOptions.schema_label %>'
-  }],
+  <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'OWNS_MANY') { _%>
+  <%_ continue _%>
   <%_ } else { _%>
   <%= attr.identifier %>: {
     type: String,

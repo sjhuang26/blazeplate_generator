@@ -50,18 +50,19 @@
 
             <!-- Table Header -->
             <tbody>
-            <% for (index in schema.attributes) { %>
-            <% if (schema.attributes[index].datatype !== 'HAS_MANY') { %>
+            <%_ for (index in schema.attributes) { _%>
+            <%_ let attr = schema.attributes[index] _%>
+            <%_ if (attr.datatype !== 'RELATION') { _%>
               <tr>
                 <td>
-                  <%= schema.attributes[index].label %>
+                  <%= attr.label %>
                 </td>
                 <td>
-                  {{model.<%= schema.attributes[index].identifier %>}}
+                  {{model.<%= attr.identifier %>}}
                 </td>
               </tr>
-            <% } %>
-            <% } %>
+            <%_ } _%>
+            <%_ } _%>
             </tbody>
 
           </table>

@@ -29,7 +29,7 @@ services:
 
   # express:
   #   build: './web_api'
-  #   container_name: 'bp-web-api'
+  #   container_name: '<%= container_name_prefix %>-web-api'
   #   ports:
   #     - "4000:4000"
   #   links:

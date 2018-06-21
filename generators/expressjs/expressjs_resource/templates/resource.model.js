@@ -26,17 +26,20 @@ const <%= schema.class_name %> = new Schema({
     type: Schema.Types.ObjectId,
     ref: '<%= attr.datatypeOptions.schema_label %>'
   }],
-  <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { _%>
-  <%= attr.identifier %>: [{
-    type: Schema.Types.ObjectId,
-    ref: '<%= attr.datatypeOptions.schema_label %>'
-  }],
+  <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'OWNS_MANY') { _%>
+  <%_ continue _%>
+  <%_ } else if (attr.datatype === 'DATETIME') { _%>
+  <%= attr.identifier %>: {
+    type: Date,
+    required: <%= attr.required %>,
+    unique: <%= attr.unique %>
+  },
   <%_ } else { _%>
   <%= attr.identifier %>: {
     type: String,
     required: <%= attr.required %>,
     unique: <%= attr.unique %>
- },
+  },
   <%_ } _%>
   <%_ } _%>
   },

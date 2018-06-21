@@ -132,6 +132,7 @@ module.exports.show<%= attr.datatypeOptions.schema_label %> = (req, res, next) =
 * @apiSuccess {json} The related <%= attr.datatypeOptions.schema_label_plural %>
 * @apiError (Error) 500 Internal server error
 */
+// TODO - this must be refactored to do: RelatedModel.find({ _id: [1,2,3] })
 module.exports.show<%= attr.datatypeOptions.schema_label_plural %> = (req, res, next) => {
     return <%= attr.datatypeOptions.schema_class_name %>.find({ <%= schema.identifier %>_id: req.params.id })
     .then((<%= attr.datatypeOptions.schema_identifier_plural %>) => {
@@ -143,11 +144,26 @@ module.exports.show<%= attr.datatypeOptions.schema_label_plural %> = (req, res, 
     .catch(handleError(res));
 };
 
-<%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { _%>
-// GET /<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier %>
-// router.get('/:id/<%= attr.datatypeOptions.schema_identifier %>', controller.show<%= attr.datatypeOptions.schema_label %>);
-// TODO - INTEGRATE HAS_ONE IN CONTROLLER
-// // // //
+<%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'OWNS_MANY') { _%>
+
+/**
+* @api {GET} /api/<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier_plural %> show<%= attr.datatypeOptions.schema_label_plural %>
+* @APIname show<%= attr.datatypeOptions.schema_label_plural %>
+* @APIgroup <%= schema.class_name %> Controller
+* @apidescription Gets related <%= attr.datatypeOptions.schema_label_plural %>
+* @apiSuccess {json} The related <%= attr.datatypeOptions.schema_label_plural %>
+* @apiError (Error) 500 Internal server error
+*/
+module.exports.show<%= attr.datatypeOptions.schema_label_plural %> = (req, res, next) => {
+    return <%= attr.datatypeOptions.schema_class_name %>.find({ <%= schema.identifier %>_id: req.params.id })
+    .then((<%= attr.datatypeOptions.schema_identifier_plural %>) => {
+        return res
+        .status(200)
+        .send(<%= attr.datatypeOptions.schema_identifier_plural %>)
+        .end();
+    })
+    .catch(handleError(res));
+};
 <%_ } _%>
 <%_ } _%>
 
