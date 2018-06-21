@@ -4,14 +4,18 @@
 
     <!-- Table Header -->
     <thead>
-    <% for (index in schema.attributes) { %>
+    <%_ for (index in schema.attributes) { _%>
+    <%_ let attr = schema.attributes[index] _%>
+    <%_ if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'OWNS_MANY') continue _%>
+      <%_ if (attr.help) { _%>
       <th>
-        <%= schema.attributes[index].label %>
-        <% if (schema.attributes[index].help) { %>
-        <i class="fa fa-fw fa-question-circle-o" v-b-tooltip.hover.bottom title="<%= schema.attributes[index].help %>" ></i>
-        <% } %>
+        <%= attr.label %>
+        <i class="fa fa-fw fa-question-circle-o" v-b-tooltip.hover.bottom title="<%= attr.help %>" ></i>
       </th>
-    <% } %>
+      <%_ } else { _%>
+      <th><%= attr.label %></th>
+      <%_ } _%>
+    <%_ } _%>
       <th></th>
     </thead>
 
@@ -20,40 +24,40 @@
 
       <!-- Empty Table Row -->
       <tr class='tr-warning' v-if="!collection[0]">
-        <% for (index in schema.attributes) { %>
-        <% if (index === '0') { %>
+        <%_ for (index in schema.attributes) { _%>
+        <%_ if (index === '0') { _%>
         <td>Empty</td>
-        <% } else { %>
+        <%_ } else { _%>
         <td></td>
-        <% } %>
-        <% } %>
+        <%_ } _%>
+        <%_ } _%>
         <td></td>
       </tr>
 
       <tr v-for="m in collection" :key="m._id">
-      <% for (index in schema.attributes) { %>
-      <% let attr = schema.attributes[index] %>
-        <% if (attr.unique) { %>
+      <%_ for (index in schema.attributes) { _%>
+      <%_ let attr = schema.attributes[index] _%>
+        <%_ if (attr.unique) { _%>
         <td>
           <a :href=" '#/<%= schema.identifier_plural %>/' + m._id ">
             {{ m.<%=attr.identifier%> }}
           </a>
         </td>
-        <% } else if (attr.datatype === 'BOOL') { %>
+        <%_ } else if (attr.datatype === 'BOOL') { _%>
         <td>
           <span>
             <i class="fa fa-fw fa-check-square-o" v-if="m.<%=attr.identifier%>"></i>
             <i class="fa fa-fw fa-square-o" v-if="!m.<%=attr.identifier%>"></i>
           </span>
         </td>
-        <% } else if (attr.datatype === 'HAS_MANY') { %>
+        <%_ } else if (attr.datatype === 'HAS_MANY') { _%>
         <td>
           {{ m.<%=attr.identifier%>.length }}
         </td>
-        <% } else { %>
+        <%_ } else { _%>
         <td>{{m.<%= schema.attributes[index].identifier %>}}</td>
-        <% } %>
-      <% } %>
+        <%_ } _%>
+      <%_ } _%>
         <!-- Edit <%= schema.label %>-->
         <td class='text-right'>
           <a class="btn btn-sm btn-outline-primary" :href=" '#/<%= schema.identifier_plural %>/' + m._id">

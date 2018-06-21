@@ -20,6 +20,11 @@ export default {
     Notification
   },
 
+  created () {
+    // Authenticates current user on application start
+    this.$store.dispatch('user/fetchUserProfile')
+  },
+
   // Top-Level page Meta
   metaInfo: {
     title: 'Loading...', // set a title

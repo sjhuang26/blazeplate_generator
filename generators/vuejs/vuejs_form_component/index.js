@@ -16,11 +16,15 @@ module.exports = class VueJsFormComponent extends Generator {
       // Isolates the individual schema
       let schema = this.options.build.app.schemas[i]
 
+      // Isolates relevant options for template
+      let { ui_framework } = this.options.build.app.stack
+      let options = { ui_framework }
+
       // client/src/components/resource_form.vue
       await this.copyTemplate(
         this.templatePath(__dirname, 'form_component.vue'),
         this.destinationPath(vueSrc + 'components/' + schema.label + 'Form.vue'),
-        { schema: schema }
+        { schema, options }
       )
 
     } // END LOOP

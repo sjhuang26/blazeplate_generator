@@ -20,23 +20,23 @@ module.exports = class DockerCompose extends Generator {
     // generated/docker-compose-dev.yml
     await this.copyTemplate(
       this.templatePath(__dirname, 'docker-compose-dev.yml'),
-      this.options.build.dest.root + 'docker-compose-dev.yml',
+      this.options.build.dest.root + 'docker-compose.yml',
       { container_name_prefix: this.options.build.app.identifier, seedData: hasSeedData(this.options.build) }
     )
 
     // generated/docker-compose-demo.yml
-    await this.copyTemplate(
-      this.templatePath(__dirname, 'docker-compose-demo.yml'),
-      this.options.build.dest.root + 'docker-compose-demo.yml',
-      { container_name_prefix: this.options.build.app.identifier, seedData: hasSeedData(this.options.build) }
-    )
+    // await this.copyTemplate(
+    //   this.templatePath(__dirname, 'docker-compose-demo.yml'),
+    //   this.options.build.dest.root + 'docker-compose-demo.yml',
+    //   { container_name_prefix: this.options.build.app.identifier, seedData: hasSeedData(this.options.build) }
+    // )
 
     // generated/demo.sh
-    await this.copyTemplate(
-      this.templatePath(__dirname, 'demo.sh'),
-      this.options.build.dest.root + 'demo.sh',
-      {}
-    )
+    // await this.copyTemplate(
+    //   this.templatePath(__dirname, 'demo.sh'),
+    //   this.options.build.dest.root + 'demo.sh',
+    //   {}
+    // )
 
   }
 }

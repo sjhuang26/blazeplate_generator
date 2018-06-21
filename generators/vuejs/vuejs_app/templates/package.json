@@ -1,7 +1,6 @@
 {
-  "name": "observatory_demo",
+  "name": "web_client",
   "version": "1.0.0",
-  "description": "A Vue.js project",
   "author": "Alexander Schwartzberg <aeksco@gmail.com>",
   "private": true,
   "scripts": {
@@ -15,19 +14,13 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
-    "axios": "^0.17.0",
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "^1.0.2",
     "lodash": "^4.17.4",
-    "pug": "^2.0.0-rc.4",
     "vue": "^2.5.2",
-    "vue-good-table": "^1.18.2",
-    "vue-mc": "^0.1.1",
     "vue-meta": "^1.2.0",
     "vue-router": "^3.0.1",
-    "vuedraggable": "^2.15.0",
-    "vuex": "^3.0.0",
-    "vuex-persistedstate": "^2.4.2"
+    "vuex": "^3.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

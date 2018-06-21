@@ -14,8 +14,11 @@ module.exports = class ExpressJsResources extends Generator {
       // Isolates the individual schema
       let schema = this.options.build.app.schemas[i]
 
+      // Defines the schema-specific destination
+      let resourceDest = dest + 'server/api/' + schema.identifier
+
       // Ensures the presence of the directory
-      await this.ensureDir(dest + 'server/api/' + schema.identifier)
+      await this.ensureDir(resourceDest)
 
       // server/api/resource/resource.model.js
       // TODO - find related schemas BEFORE rendering this template
@@ -23,13 +26,13 @@ module.exports = class ExpressJsResources extends Generator {
       if (schema.identifier === 'user') {
         await this.copyTemplate(
           this.templatePath(__dirname, 'user.resource.model.js'),
-          dest + 'server/api/' + schema.identifier + '/' + schema.identifier + '.model.js',
+          resourceDest + '/' + schema.identifier + '.model.js',
           { schema: schema }
         );
       } else {
         await this.copyTemplate(
           this.templatePath(__dirname, 'resource.model.js'),
-          dest + 'server/api/' + schema.identifier + '/' + schema.identifier + '.model.js',
+          resourceDest + '/' + schema.identifier + '.model.js',
           { schema: schema }
         );
       }
@@ -37,14 +40,14 @@ module.exports = class ExpressJsResources extends Generator {
       // server/api/resource/resource.controller.js
       await this.copyTemplate(
         this.templatePath(__dirname, 'resource.controller.js'),
-        dest + 'server/api/' + schema.identifier + '/' + schema.identifier + '.controller.js',
+        resourceDest + '/' + schema.identifier + '.controller.js',
         { schema: schema }
       );
 
       // server/api/resource/index.js
       await this.copyTemplate(
         this.templatePath(__dirname, 'index.js'),
-        dest + 'server/api/' + schema.identifier + '/index.js',
+        resourceDest + '/index.js',
         { schema: schema }
       );
 
