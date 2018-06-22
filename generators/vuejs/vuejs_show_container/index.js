@@ -18,11 +18,26 @@ module.exports = class VueJsShowContainer extends Generator {
 
       await this.ensureDir(vueSrc + 'containers/' + schema.identifier + '_show')
 
+      // Isolates RelationlalViews for show container
+      let relationalViews = []
+      for (index in schema.attributes) {
+        let attr = schema.attributes[index]
+        if (attr.datatype === 'RELATION') {
+          if (attr.datatypeOptions.relationType === 'HAS_MANY') {
+            relationalViews.push(`${attr.datatypeOptions.schema_class_name}ListWidget`)
+          } else if (attr.datatypeOptions.relationType === 'OWNS_MANY') {
+            relationalViews.push(`${attr.datatypeOptions.schema_class_name}ListWidget`)
+          } else {
+            relationalViews.push(`${attr.datatypeOptions.schema_class_name}ShowWidget`)
+          }
+        }
+      }
+
       // client/src/containers/resource_show/index.vue
       await this.copyTemplate(
         this.templatePath(__dirname, 'index.vue'),
         this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_show/index.vue'),
-        { schema: schema  }
+        { schema, relationalViews }
       );
 
     } // END LOOP
