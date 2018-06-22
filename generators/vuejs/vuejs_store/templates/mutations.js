@@ -4,6 +4,12 @@ import { COLLECTION_MUTATIONS, MODEL_MUTATIONS } from '@/store/lib/mixins'
 
 // <%= schema.label %> Module Mutations
 export default {
+  <%_ for (index in schema.relations) { _%>
+  <%_ let rel = schema.relations[index] _%>
+  <%= rel.state %> (state, <%= rel.state %>) {
+    state.<%= rel.state %> = <%= rel.state %>
+  },
+  <%_ } _%>
   ...COLLECTION_MUTATIONS,
   ...MODEL_MUTATIONS,
   resetNewModel (state) {

@@ -11,6 +11,7 @@ const VueNewContainer = require('./vuejs_new_container')
 const VueEditContainer = require('./vuejs_edit_container')
 const VueListContainer = require('./vuejs_list_container')
 const VueShowContainer = require('./vuejs_show_container')
+const VueWidgetComponent = require('./vuejs_widget_component')
 
 module.exports = class VueJs extends Generator {
   async write () {
@@ -26,6 +27,6 @@ module.exports = class VueJs extends Generator {
     await this.composeWith(VueEditContainer)
     await this.composeWith(VueListContainer)
     await this.composeWith(VueShowContainer)
-
+    await this.composeWith(VueWidgetComponent)
   }
 }

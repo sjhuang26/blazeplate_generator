@@ -1,9 +1,8 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema
 
 // // // //
 
-const <%= schema.class_name %> = new Schema({
+const <%= schema.class_name %> = new mongoose.Schema({
   <%_ for (index in schema.attributes) { _%>
   <%_ let attr = schema.attributes[index] _%>
   <%_ if (attr.datatype === 'BOOL') { _%>
@@ -18,12 +17,12 @@ const <%= schema.class_name %> = new Schema({
   },
   <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { _%>
   <%= attr.identifier %>: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: '<%= attr.datatypeOptions.schema_label %>'
   },
   <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { _%>
   <%= attr.identifier %>: [{
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: '<%= attr.datatypeOptions.schema_label %>'
   }],
   <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'OWNS_MANY') { _%>
