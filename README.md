@@ -28,7 +28,7 @@ cd blazeplate_generator
 3. In the `blazeplate_generator` directory, use the following command to add the `upstream` remote to the repository:
 
 ```
-git remote add upstream git@github.com:rcos/observatory-server.git
+git remote add upstream git@github.com:blazeplate/blazeplate_generator.git
 ```
 
 You can ensure this worked correctly by running `git remote show`. You should see entries for both `origin` and `upstream`.
