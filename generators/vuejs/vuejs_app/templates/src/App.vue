@@ -22,7 +22,7 @@ export default {
 
   created () {
     // Authenticates current user on application start
-    this.$store.dispatch('user/fetchUserProfile')
+    this.$store.dispatch('auth/fetchUserProfile')
   },
 
   // Top-Level page Meta
