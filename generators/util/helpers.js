@@ -8,6 +8,9 @@ module.exports.formatBuild = (build) => {
     // Iterates over each schema
     build.app.schemas = _.map(build.app.schemas, (schema) => {
 
+        // Isolates relations
+        let relations = []
+
         // Iterates over all attributes, handles relations
         schema.attributes = _.map(schema.attributes, (attr) => {
             if (attr.datatype !== 'RELATION') return attr
@@ -26,8 +29,58 @@ module.exports.formatBuild = (build) => {
             attr.datatypeOptions.schema_identifier_plural = identifier_plural
             attr.datatypeOptions.schema_class_name = class_name
             attr.datatypeOptions.lead_attr = relatedSchema.attributes[0].identifier
+
+            let relation = {
+              name: '',
+              type: '',
+              action: '',
+              method: '',
+              getter: '',
+              computed: ''
+            }
+
+            if (attr.datatypeOptions.relationType === 'HAS_MANY') {
+                relation.name = `${attr.datatypeOptions.schema_class_name}ListWidget`
+                relation.type = 'LIST'
+                relation.url = attr.datatypeOptions.schema_identifier_plural
+                relation.module = `${schema.identifier}`
+                relation.action = `fetch${attr.datatypeOptions.schema_label_plural}`
+                relation.method = `fetch${attr.datatypeOptions.schema_label_plural}`
+                relation.getter = `${attr.datatypeOptions.schema_identifier_plural}`
+                relation.computed = `${attr.datatypeOptions.schema_identifier_plural}`
+                relation.state = `${attr.datatypeOptions.schema_identifier_plural}`
+                relation.state_value = "[]"
+            } else if (attr.datatypeOptions.relationType === 'OWNS_MANY') {
+                relation.name = `${attr.datatypeOptions.schema_class_name}ListWidget`
+                relation.type = 'LIST'
+                relation.url = attr.datatypeOptions.schema_identifier_plural
+                relation.module = `${schema.identifier}`
+                relation.action = `fetch${attr.datatypeOptions.schema_label_plural}`
+                relation.method = `fetch${attr.datatypeOptions.schema_label_plural}`
+                relation.getter = `${attr.datatypeOptions.schema_identifier_plural}`
+                relation.computed = `${attr.datatypeOptions.schema_identifier_plural}`
+                relation.state = `${attr.datatypeOptions.schema_identifier_plural}`
+                relation.state_value = "[]"
+            } else {
+                relation.name = `${attr.datatypeOptions.schema_class_name}ShowWidget`
+                relation.type = 'SHOW'
+                relation.url = attr.datatypeOptions.schema_identifier
+                relation.module = `${schema.identifier}`
+                relation.action = `fetch${attr.datatypeOptions.schema_label}`
+                relation.method = `fetch${attr.datatypeOptions.schema_label}`
+                relation.getter = `${attr.datatypeOptions.schema_identifier}`
+                relation.computed = `${attr.datatypeOptions.schema_identifier}`
+                relation.state = `${attr.datatypeOptions.schema_identifier}`
+                relation.state_value = "''"
+            }
+
+            relations.push(relation)
+            console.log(relation)
+
             return attr
         })
+
+        schema.relations = relations
 
         return schema
     })

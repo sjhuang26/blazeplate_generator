@@ -134,14 +134,20 @@ module.exports.show<%= attr.datatypeOptions.schema_label %> = (req, res, next) =
 */
 // TODO - this must be refactored to do: RelatedModel.find({ _id: [1,2,3] })
 module.exports.show<%= attr.datatypeOptions.schema_label_plural %> = (req, res, next) => {
-    return <%= attr.datatypeOptions.schema_class_name %>.find({ <%= schema.identifier %>_id: req.params.id })
-    .then((<%= attr.datatypeOptions.schema_identifier_plural %>) => {
-        return res
-        .status(200)
-        .send(<%= attr.datatypeOptions.schema_identifier_plural %>)
-        .end();
+
+    return <%= schema.class_name %>.findById(req.params.id)
+    .then((response) => {
+        return <%= attr.datatypeOptions.schema_class_name %>.find({ _id: response.<%= attr.identifier %> })
+        .then((<%= attr.datatypeOptions.schema_identifier_plural %>) => {
+            return res
+            .status(200)
+            .send(<%= attr.datatypeOptions.schema_identifier_plural %>)
+            .end();
+        })
+        .catch(handleError(res));
     })
     .catch(handleError(res));
+
 };
 
 <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'OWNS_MANY') { _%>
