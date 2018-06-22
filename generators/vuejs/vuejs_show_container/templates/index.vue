@@ -8,7 +8,7 @@
     <div class="row">
       <%_ for (index in relationalViews) { _%>
       <div class="col-lg-12">
-        <<%= relationalViews[index] %> :header="'<%= relationalViews[index] %>'" :fetching="true" :model="{}" :collection="[]" />
+        <<%= relationalViews[index].name %> :header="'<%= relationalViews[index].name %>'" :fetching="true" :model="{}" :collection="[]" />
       </div>
       <%_ } _%>
     </div>
@@ -23,7 +23,7 @@ import { mapGetters, mapActions } from 'vuex'
 import Loading from '@/components/Loading'
 import <%= schema.label %>ShowWidget from '@/components/<%= schema.label %>ShowWidget'
 <%_ for (index in relationalViews) { _%>
-import <%= relationalViews[index] %> from '@/components/<%= relationalViews[index] %>'
+import <%= relationalViews[index].name %> from '@/components/<%= relationalViews[index].name %>'
 <%_ } _%>
 
 export default {
@@ -41,9 +41,9 @@ export default {
     <%_ } _%>
     <%_ for (index in relationalViews) { _%>
     <%_ if (Number(index) === relationalViews.length - 1) { _%>
-    <%= relationalViews[index] %>
+    <%= relationalViews[index].name %>
     <%_ } else { _%>
-    <%= relationalViews[index] %>,
+    <%= relationalViews[index].name %>,
     <%_ } _%>
     <%_ } _%>
   },

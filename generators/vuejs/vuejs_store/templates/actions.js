@@ -6,6 +6,62 @@ const API_ROOT = '/api/<%= schema.identifier_plural %>'
 // // // //
 
 export default {
+  <%_ for (index in schema.attributes) { _%>
+  <%_ let attr = schema.attributes[index] _%>
+  <%_ if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'OWNS_MANY') { _%>
+  // GET /api/<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier_plural %> OWNS MANY
+  // fetch<%= attr.datatypeOptions.schema_label_plural %>
+  fetch<%= attr.datatypeOptions.schema_label_plural %> ({ state, commit, getters, dispatch }) {
+    commit('fetching', true)
+    const model = getters['model']
+    $GET(API_ROOT + '/' + model._id + '/<%= attr.datatypeOptions.schema_identifier_plural %>')
+    .then((<%= schema.identifier_plural %>) => {
+      commit('collection', <%= schema.identifier_plural %>)
+      commit('fetching', false)
+    })
+    .catch((err) => {
+      commit('fetching', false)
+      commit('notification/add', { message: 'Fetch error', context: 'danger', dismissible: true }, { root: true })
+      throw err // TODO - better error handling
+    })
+  },
+  <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { _%>
+  // GET /api/<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier_plural %> HAS MANY
+  // fetch<%= attr.datatypeOptions.schema_label_plural %>
+  fetch<%= attr.datatypeOptions.schema_label_plural %> ({ state, commit, getters, dispatch }) {
+    commit('fetching', true)
+    const model = getters['model']
+    $GET(API_ROOT + '/' + model._id + '/<%= attr.datatypeOptions.schema_identifier_plural %>')
+    .then((<%= schema.identifier_plural %>) => {
+      commit('collection', <%= schema.identifier_plural %>)
+      commit('fetching', false)
+    })
+    .catch((err) => {
+      commit('fetching', false)
+      commit('notification/add', { message: 'Fetch error', context: 'danger', dismissible: true }, { root: true })
+      throw err // TODO - better error handling
+    })
+  },
+  <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { _%>
+  // GET /api/<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier %>
+  // fetch<%= attr.datatypeOptions.schema_label %>
+  fetch<%= attr.datatypeOptions.schema_label %> ({ state, commit, getters, dispatch }) {
+    commit('fetching', true)
+    const model = getters['model']
+    $GET(API_ROOT + '/' + model._id + '/<%= attr.datatypeOptions.schema_identifier %>')
+    .then((<%= schema.identifier_plural %>) => {
+      commit('collection', <%= schema.identifier_plural %>)
+      commit('fetching', false)
+    })
+    .catch((err) => {
+      commit('fetching', false)
+      commit('notification/add', { message: 'Fetch error', context: 'danger', dismissible: true }, { root: true })
+      throw err // TODO - better error handling
+    })
+  },
+  <%_ } _%>
+  <%_ } _%>
+
   // GET /api/<%= schema.identifier_plural %>
   fetchCollection ({ state, commit, dispatch }) {
     commit('fetching', true)

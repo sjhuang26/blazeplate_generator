@@ -23,15 +23,28 @@ module.exports = class VueJsShowContainer extends Generator {
       for (index in schema.attributes) {
         let attr = schema.attributes[index]
         if (attr.datatype === 'RELATION') {
-          if (attr.datatypeOptions.relationType === 'HAS_MANY') {
-            relationalViews.push(`${attr.datatypeOptions.schema_class_name}ListWidget`)
-          } else if (attr.datatypeOptions.relationType === 'OWNS_MANY') {
-            relationalViews.push(`${attr.datatypeOptions.schema_class_name}ListWidget`)
-          } else {
-            relationalViews.push(`${attr.datatypeOptions.schema_class_name}ShowWidget`)
+
+          let relation = {
+            name: '',
+            type: 'LIST'
           }
+
+          if (attr.datatypeOptions.relationType === 'HAS_MANY') {
+            relation.name = `${attr.datatypeOptions.schema_class_name}ListWidget`
+            relation.type = 'LIST'
+          } else if (attr.datatypeOptions.relationType === 'OWNS_MANY') {
+            relation.name = `${attr.datatypeOptions.schema_class_name}ListWidget`
+            relation.type = 'LIST'
+          } else {
+            relation.name = `${attr.datatypeOptions.schema_class_name}ShowWidget`
+            relation.type = 'LIST'
+          }
+
+          relationalViews.push(relation)
         }
       }
+
+      console.log(relationalViews[0])
 
       // client/src/containers/resource_show/index.vue
       await this.copyTemplate(
