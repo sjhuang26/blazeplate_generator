@@ -109,7 +109,7 @@ module.exports.show<%= attr.datatypeOptions.schema_label %> = (req, res, next) =
     return <%= schema.class_name %>.findById(req.params.id)
     .then((<%= schema.identifier %>) => {
 
-        return <%= attr.datatypeOptions.schema_class_name %>.find({ _id: <%= schema.identifier %>.<%= attr.datatypeOptions.schema_identifier + '_id' %> })
+        return <%= attr.datatypeOptions.schema_class_name %>.findById(<%= schema.identifier %>.<%= attr.datatypeOptions.schema_identifier + '_id' %>)
         .then((<%= attr.datatypeOptions.schema_identifier %>) => {
             return res
             .status(200)

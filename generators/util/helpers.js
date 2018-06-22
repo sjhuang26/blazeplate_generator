@@ -71,11 +71,11 @@ module.exports.formatBuild = (build) => {
                 relation.getter = `${attr.datatypeOptions.schema_identifier}`
                 relation.computed = `${attr.datatypeOptions.schema_identifier}`
                 relation.state = `${attr.datatypeOptions.schema_identifier}`
-                relation.state_value = "''"
+                relation.state_value = "{}"
             }
 
             relations.push(relation)
-            console.log(relation)
+            // console.log(relation)
 
             return attr
         })
