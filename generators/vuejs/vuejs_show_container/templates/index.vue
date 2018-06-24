@@ -3,7 +3,7 @@
   <div class="container">
 
     <!-- ADD SHOW WIDGET BACK HERE -->
-    <<%= schema.label %>ShowWidget :model="model" :fetching="fetching" />
+    <<%= schema.class_name %>ShowWidget :model="model" :fetching="fetching" />
 
     <div class="row">
       <%_ for (index in schema.relations) { _%>
@@ -27,7 +27,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Loading from '@/components/Loading'
-import <%= schema.label %>ShowWidget from '@/components/<%= schema.label %>ShowWidget'
+import <%= schema.class_name %>ShowWidget from '@/components/<%= schema.class_name %>ShowWidget'
 <%_ for (index in schema.relations) { _%>
 import <%= schema.relations[index].name %> from '@/components/<%= schema.relations[index].name %>'
 <%_ } _%>
@@ -42,7 +42,7 @@ export default {
     <%_ for (index in schema.relations) { _%>
     <%= schema.relations[index].name %>,
     <%_ } _%>
-    <%= schema.label %>ShowWidget,
+    <%= schema.class_name %>ShowWidget,
     Loading
   },
   created () {

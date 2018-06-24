@@ -22,12 +22,13 @@ module.exports.formatBuild = (build) => {
             // console.log(relatedSchema)
 
             // Pulls metadata from relatedSchema
-            let { label, label_plural, identifier, identifier_plural, class_name } = relatedSchema
+            let { label, label_plural, identifier, identifier_plural, class_name, class_name_plural } = relatedSchema
             attr.datatypeOptions.schema_label = label
             attr.datatypeOptions.schema_label_plural = label_plural
             attr.datatypeOptions.schema_identifier = identifier
             attr.datatypeOptions.schema_identifier_plural = identifier_plural
             attr.datatypeOptions.schema_class_name = class_name
+            attr.datatypeOptions.schema_class_name_plural = class_name_plural
             attr.datatypeOptions.lead_attr = relatedSchema.attributes[0].identifier
 
             let relation = {
@@ -44,8 +45,8 @@ module.exports.formatBuild = (build) => {
                 relation.type = 'LIST'
                 relation.url = attr.datatypeOptions.schema_identifier_plural
                 relation.module = `${schema.identifier}`
-                relation.action = `fetch${attr.datatypeOptions.schema_label_plural}`
-                relation.method = `fetch${attr.datatypeOptions.schema_label_plural}`
+                relation.action = `fetch${attr.datatypeOptions.schema_class_name_plural}`
+                relation.method = `fetch${attr.datatypeOptions.schema_class_name_plural}`
                 relation.getter = `${attr.datatypeOptions.schema_identifier_plural}`
                 relation.computed = `${attr.datatypeOptions.schema_identifier_plural}`
                 relation.state = `${attr.datatypeOptions.schema_identifier_plural}`
@@ -55,8 +56,8 @@ module.exports.formatBuild = (build) => {
                 relation.type = 'LIST'
                 relation.url = attr.datatypeOptions.schema_identifier_plural
                 relation.module = `${schema.identifier}`
-                relation.action = `fetch${attr.datatypeOptions.schema_label_plural}`
-                relation.method = `fetch${attr.datatypeOptions.schema_label_plural}`
+                relation.action = `fetch${attr.datatypeOptions.schema_class_name_plural}`
+                relation.method = `fetch${attr.datatypeOptions.schema_class_name_plural}`
                 relation.getter = `${attr.datatypeOptions.schema_identifier_plural}`
                 relation.computed = `${attr.datatypeOptions.schema_identifier_plural}`
                 relation.state = `${attr.datatypeOptions.schema_identifier_plural}`
@@ -66,8 +67,8 @@ module.exports.formatBuild = (build) => {
                 relation.type = 'SHOW'
                 relation.url = attr.datatypeOptions.schema_identifier
                 relation.module = `${schema.identifier}`
-                relation.action = `fetch${attr.datatypeOptions.schema_label}`
-                relation.method = `fetch${attr.datatypeOptions.schema_label}`
+                relation.action = `fetch${attr.datatypeOptions.schema_class_name}`
+                relation.method = `fetch${attr.datatypeOptions.schema_class_name}`
                 relation.getter = `${attr.datatypeOptions.schema_identifier}`
                 relation.computed = `${attr.datatypeOptions.schema_identifier}`
                 relation.state = `${attr.datatypeOptions.schema_identifier}`

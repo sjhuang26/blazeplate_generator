@@ -17,18 +17,18 @@ module.exports = class VueJsAppRouter extends Generator {
     let routeModules = []
 
     function buildImport (s) {
-      routeImports.push(`import ${ s.label }Routes from './${ s.identifier }'`)
+      routeImports.push(`import ${ s.class_name }Routes from './${ s.identifier }'`)
     }
 
     function buildModule (s) {
-      routeModules.push(`...${ s.label }Routes`)
+      routeModules.push(`...${ s.class_name }Routes`)
     }
 
     // Defaults
     const defaultModules = [
-      { label: 'Main', identifier: 'main' },
-      { label: 'Auth', identifier: 'auth' },
-      { label: 'User', identifier: 'user' }
+      { class_name: 'Main', identifier: 'main' },
+      { class_name: 'Auth', identifier: 'auth' },
+      { class_name: 'User', identifier: 'user' }
     ]
 
     // TODO - these should all be opt-in

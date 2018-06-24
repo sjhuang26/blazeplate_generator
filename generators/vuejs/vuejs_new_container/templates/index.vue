@@ -10,7 +10,7 @@
 
     <hr>
 
-    <<%= schema.label %>Form :model="model" />
+    <<%= schema.class_name %>Form :model="model" />
     <div class="row">
       <div class="col-lg-12 text-right">
 
@@ -34,7 +34,7 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
-import <%= schema.label %>Form from '@/components/<%= schema.label %>Form'
+import <%= schema.class_name %>Form from '@/components/<%= schema.class_name %>Form'
 
 export default {
   name: '<%= schema.identifier %>_new',
@@ -42,7 +42,7 @@ export default {
     title: '<%= schema.label %> - New'
   },
   components: {
-    <%= schema.label %>Form
+    <%= schema.class_name %>Form
   },
   created () {
     this.resetNewModel()
