@@ -54,8 +54,8 @@ This command will generate a full-stack example application in the `blazeplate_g
 # Install Docker
 curl -sSL https://get.docker.com/ | sh
 
-# Add 'aeksco' user to docker group...
-sudo usermod -aG docker aeksco
+# Add your user to docker group...
+sudo usermod -aG docker <username>
 
 # Install docker-compose
 sudo curl -o /usr/local/bin/docker-compose -L https://github.com/docker/compose/releases/download/1.13.0/docker-compose-`uname -s`-`uname -m`
