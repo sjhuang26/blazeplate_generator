@@ -7,14 +7,11 @@ Codebase generators that power [blazeplate.io](http://blazeplate.io).
 - [Node.js](https://nodejs.org/en/)
 
 
-## Contributing
-
-If you're interested in developing blazeplate please consult the following instructions to get started.
-
-
-#### Local Development Setup
+## Local Development Setup
 
 The following instructions will guide you through the process of getting your local computer set up to make contributions to the `blazeplate_generator` codebase.
+
+### Generating an example app with Blazeplate
 
 1. Fork this repository (`blazeplate/blazeplate_generator`) so you have your own copy hosted on GitHub at `github.com/your-username/blazeplate_generator`.
 
@@ -47,10 +44,31 @@ npm install
 npm test
 ```
 
-This command will generate a full-stack example application in the `blazeplate_generator/build` directory. If this command completes without an error, your local setup of blazeplate is working.
+This command will generate a full-stack example application in the `blazeplate_generator/build/app_[...]/todo_list` directory. If this command completes without an error, your local setup of blazeplate is working.
 
+### Starting the generated app
 
-#### Submitting Changes
+6. Use the following commands to install docker and docker-compose:
+
+```
+# Install Docker
+curl -sSL https://get.docker.com/ | sh
+
+# Add 'aeksco' user to docker group...
+sudo usermod -aG docker aeksco
+
+# Install docker-compose
+sudo curl -o /usr/local/bin/docker-compose -L https://github.com/docker/compose/releases/download/1.13.0/docker-compose-`uname -s`-`uname -m`
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+7. Run `docker-compose up` in the `todo_list` directory to start the Docker containers.
+
+8. Run `npm install && npm start` in the `web_api` directory to start the ExpressJS API server. If you get an error message when running `npm start`, try running `MONGO_DB_URI="0.0.0.0" PORT="4000" npm start` instead as a temporary fix.
+
+9. Run `npm install && npm start` in the `web_client` directory to start the VueJS app. This should automatically open the app in a browser window.
+
+## Submitting Changes
 
 The following instructions will guide you through the process of merging your local changes into the upstream `blazeplate/blazeplate_generator` repository.
 
