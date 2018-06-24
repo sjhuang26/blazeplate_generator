@@ -22,7 +22,7 @@ module.exports = class VueJsShowContainer extends Generator {
       await this.copyTemplate(
         this.templatePath(__dirname, 'index.vue'),
         this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_show/index.vue'),
-        { schema: schema  }
+        { schema }
       );
 
     } // END LOOP

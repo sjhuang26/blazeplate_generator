@@ -6,6 +6,24 @@ const API_ROOT = '/api/<%= schema.identifier_plural %>'
 // // // //
 
 export default {
+  <%_ for (index in schema.relations) { _%>
+  <%_ let relation = schema.relations[index] _%>
+  // GET /api/<%= schema.identifier_plural %>/:id/<%= relation.url %> OWNS MANY
+  <%= relation.action %> ({ state, commit, dispatch }, <%= schema.identifier %>Id) {
+    commit('fetching', true)
+    $GET(API_ROOT + '/' + <%= schema.identifier %>Id + '/<%= relation.url %>')
+    .then((<%= schema.identifier_plural %>) => {
+      commit('<%= relation.state %>', <%= schema.identifier_plural %>)
+      commit('fetching', false)
+    })
+    .catch((err) => {
+      commit('fetching', false)
+      commit('notification/add', { message: 'Fetch error', context: 'danger', dismissible: true }, { root: true })
+      throw err // TODO - better error handling
+    })
+  },
+  <%_ } _%>
+
   // GET /api/<%= schema.identifier_plural %>
   fetchCollection ({ state, commit, dispatch }) {
     commit('fetching', true)
