@@ -31,7 +31,7 @@
 
 <script>
 
-import ListView from './components/list'
+import ListView from '@/components/<%= schema.class_name %>ListWidget'
 import Loading from '@/components/Loading'
 import { mapGetters, mapActions } from 'vuex'
 

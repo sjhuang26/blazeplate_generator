@@ -25,13 +25,6 @@ module.exports = class VueJsListContainer extends Generator {
         { schema: schema }
       );
 
-      // client/src/containers/resource_list/components/list.vue
-      await this.copyTemplate(
-        this.templatePath(__dirname, 'components/list.vue'),
-        this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_list/components/list.vue'),
-        { schema: schema  }
-      );
-
     } // END LOOP
 
   }
