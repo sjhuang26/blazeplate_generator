@@ -20,7 +20,7 @@
     <!-- List View -->
     <div class="row" v-if="!fetching">
       <div class="col-lg-12">
-        <ListView :collection="collection"></ListView>
+        <ListView :collection="collection" />
       </div>
     </div>
     <Loading v-else />

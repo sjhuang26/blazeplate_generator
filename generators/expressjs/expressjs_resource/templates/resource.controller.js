@@ -1,4 +1,4 @@
-fconst <%= schema.class_name %> = require('./<%= schema.identifier %>.model')
+const <%= schema.class_name %> = require('./<%= schema.identifier %>.model')
 <%_ for (index in schema.attributes) { _%>
 <%_ let attr = schema.attributes[index] _%>
 <%_ if (attr.datatype === 'RELATION' && attr.class_name !== schema.class_name) { _%>

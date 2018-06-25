@@ -9,12 +9,14 @@
       <%_ for (index in schema.relations) { _%>
       <%_ let relation = schema.relations[index] _%>
       <div class="col-lg-12 mt-2">
-
-        <%_ if (relation.type === 'LIST') { _%>
-        <<%= relation.name %> :header="'<%= relation.name %>'" :fetching="false" :collection="<%= relation.getter %>" />
-        <%_ } else { _%>
-        <<%= relation.name %> :header="'<%= relation.name %>'" :fetching="false" :model="<%= relation.getter %>" />
-        <%_ } _%>
+        <div class="card card-body">
+          <%_ if (relation.type === 'LIST') { _%>
+          <h4 class="card-title"><%= relation.label %></h4>
+          <<%= relation.name %> :fetching="false" :collection="<%= relation.getter %>" />
+          <%_ } else { _%>
+          <<%= relation.name %> :header="'<%= relation.label %>'" :fetching="false" :model="<%= relation.getter %>" />
+          <%_ } _%>
+        </div>
       </div>
       <%_ } _%>
     </div>

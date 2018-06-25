@@ -42,6 +42,7 @@ module.exports.formatBuild = (build) => {
 
             if (attr.datatypeOptions.relationType === 'HAS_MANY') {
                 relation.name = `${attr.datatypeOptions.schema_class_name}ListWidget`
+                relation.label = `Related ${attr.datatypeOptions.schema_label_plural}`
                 relation.type = 'LIST'
                 relation.url = attr.datatypeOptions.schema_identifier_plural
                 relation.module = `${schema.identifier}`
@@ -53,6 +54,7 @@ module.exports.formatBuild = (build) => {
                 relation.state_value = "[]"
             } else if (attr.datatypeOptions.relationType === 'OWNS_MANY') {
                 relation.name = `${attr.datatypeOptions.schema_class_name}ListWidget`
+                relation.label = `Related ${attr.datatypeOptions.schema_label_plural}`
                 relation.type = 'LIST'
                 relation.url = attr.datatypeOptions.schema_identifier_plural
                 relation.module = `${schema.identifier}`
@@ -64,6 +66,7 @@ module.exports.formatBuild = (build) => {
                 relation.state_value = "[]"
             } else {
                 relation.name = `${attr.datatypeOptions.schema_class_name}ShowWidget`
+                relation.label = `Related ${attr.datatypeOptions.schema_label}`
                 relation.type = 'SHOW'
                 relation.url = attr.datatypeOptions.schema_identifier
                 relation.module = `${schema.identifier}`
