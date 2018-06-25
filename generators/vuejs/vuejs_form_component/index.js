@@ -23,7 +23,7 @@ module.exports = class VueJsFormComponent extends Generator {
       // client/src/components/resource_form.vue
       await this.copyTemplate(
         this.templatePath(__dirname, 'form_component.vue'),
-        this.destinationPath(vueSrc + 'components/' + schema.label + 'Form.vue'),
+        this.destinationPath(vueSrc + 'components/' + schema.class_name + 'Form.vue'),
         { schema, options }
       )
 
