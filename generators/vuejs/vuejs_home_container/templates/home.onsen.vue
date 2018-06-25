@@ -9,10 +9,6 @@
         Awesome framework
       </div>
       <div class="content">
-        <div>
-          <v-ons-button><v-ons-icon icon="ion-thumbsup"></v-ons-icon></v-ons-button>
-          <v-ons-button><v-ons-icon icon="ion-share"></v-ons-icon></v-ons-button>
-        </div>
         <v-ons-list>
           <v-ons-list-header>Bindings</v-ons-list-header>
           <v-ons-list-item>Vue</v-ons-list-item>
