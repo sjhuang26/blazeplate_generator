@@ -16,13 +16,17 @@ module.exports = class VueJsNewContainer extends Generator {
       // Isolates the individual schema
       let schema = this.options.build.app.schemas[i]
 
+      // Isolates relevant options for template
+      let { ui_framework } = this.options.build.app.stack
+      let options = { ui_framework }
+
       await this.ensureDir(vueSrc + 'containers/' + schema.identifier + '_new')
 
       // client/src/containers/resource_new/index.vue
       await this.copyTemplate(
-        this.templatePath(__dirname, 'index.vue'),
+        this.templatePath(__dirname, 'new_container.vue'),
         this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_new/index.vue'),
-        { schema: schema }
+        { schema, options }
       )
 
     } // END LOOP
