@@ -18,11 +18,14 @@ module.exports = class VueJsListContainer extends Generator {
 
       await this.ensureDir(vueSrc + 'containers/' + schema.identifier + '_list/components')
 
+      // Bootstrap or Onsen?
+      const ui_framework = this.options.build.app.stack.ui_framework
+
       // client/src/containers/resource_list/index.vue
       await this.copyTemplate(
         this.templatePath(__dirname, 'index.vue'),
         this.destinationPath(vueSrc + 'containers/' + schema.identifier + '_list/index.vue'),
-        { schema: schema }
+        { schema, ui_framework }
       );
 
     } // END LOOP
