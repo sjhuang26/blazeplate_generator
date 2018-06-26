@@ -23,12 +23,7 @@ module.exports = class VueJsCore extends Generator {
     );
 
     // Bootstrap or Onsen?
-    let appTemplate = ''
-    if (options.ui_framework.id === 'bootstrap') {
-      appTemplate = 'App.bootstrap.vue'
-    } else if (options.ui_framework.id === 'onsenui') {
-      appTemplate = 'App.onsen.vue'
-    }
+    let appTemplate = `App.${options.ui_framework.id}.vue`
 
     // web_client/src/App.vue
     await this.copyTemplate(
