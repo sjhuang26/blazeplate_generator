@@ -11,6 +11,9 @@ module.exports = class VueJsHomeContainer extends Generator {
     // Bootstrap / Onsen UI framework
     let appTemplate = `home.${options.ui_framework.id}.vue`
 
+    // Creates project build directories
+    await this.ensureDir(this.options.build.dest.vue.src + 'containers/main_home')
+
     // web_client/src/containers/main_home/index.vue
     await this.copyTemplate(
       this.templatePath(__dirname, appTemplate),

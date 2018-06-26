@@ -105,7 +105,7 @@ module.exports.show = (req, res, next) => {
 * @apiSuccess {json} The related <%= attr.datatypeOptions.schema_label %> model
 * @apiError (Error) 500 Internal server error
 */
-module.exports.show<%= attr.datatypeOptions.schema_label %> = (req, res, next) => {
+module.exports.show<%= attr.datatypeOptions.schema_class_name %> = (req, res, next) => {
     return <%= schema.class_name %>.findById(req.params.id)
     .then((<%= schema.identifier %>) => {
 

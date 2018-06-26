@@ -107,15 +107,15 @@ User.methods.assignAdmin = function () {
 <%_ for (index in schema.attributes) { _%>
 <%_ let attr = schema.attributes[index] _%>
 <%_ if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { _%>
-<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label %> = function () {
+<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_class_name %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').findById(this.<%= attr.identifier %>);
 }
 <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { _%>
-<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label_plural %> = function () {
+<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_class_name_plural %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').find({ <%= schema.identifier %>_id: this._id });
 }
 <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { _%>
-<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label %> = function () {
+<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_class_name %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').findById(this.<%= attr.identifier %> });
 }
 <%_ } _%>
