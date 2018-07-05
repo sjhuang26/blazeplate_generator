@@ -33,6 +33,12 @@ const <%= schema.class_name %> = new mongoose.Schema({
     required: <%= attr.required %>,
     unique: <%= attr.unique %>
   },
+  <%_ } else if (attr.datatype === 'JSON') { _%>
+  <%= attr.identifier %>: {
+    type: mongoose.Schema.Types.Mixed,
+    required: <%= attr.required %>,
+    default: {}
+  },
   <%_ } else { _%>
   <%= attr.identifier %>: {
     type: String,
