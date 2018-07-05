@@ -1,31 +1,3 @@
-
-<template>
-  <div class="container">
-
-    <!-- ADD SHOW WIDGET BACK HERE -->
-    <<%= schema.class_name %>ShowWidget :model="model" :fetching="fetching" />
-
-    <div class="row">
-      <%_ for (index in schema.relations) { _%>
-      <%_ let relation = schema.relations[index] _%>
-      <div class="col-lg-12 mt-2">
-        <div class="card card-body">
-          <%_ if (relation.type === 'LIST') { _%>
-          <h4 class="card-title"><%= relation.label %></h4>
-          <<%= relation.name %> :fetching="false" :collection="<%= relation.getter %>" />
-          <%_ } else { _%>
-          <<%= relation.name %> :header="'<%= relation.label %>'" :fetching="false" :model="<%= relation.getter %>" />
-          <%_ } _%>
-        </div>
-      </div>
-      <%_ } _%>
-    </div>
-
-  </div>
-</template>
-
-<!-- // // // //  -->
-
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Loading from '@/components/Loading'
