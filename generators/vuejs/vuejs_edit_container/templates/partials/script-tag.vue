@@ -1,7 +1,7 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import Loading from '@/components/Loading'
-import <%= schema.label %>Form from '@/components/<%= schema.label %>Form'
+import <%= schema.class_name %>Form from '@/components/<%= schema.class_name %>Form'
 
 export default {
   props: ['id'],
@@ -11,7 +11,7 @@ export default {
   },
   components: {
     Loading,
-    <%= schema.label %>Form
+    <%= schema.class_name %>Form
   },
   created () {
     this.fetch(this.id)
@@ -37,4 +37,3 @@ export default {
   }
 }
 </script>
-

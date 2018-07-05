@@ -9,7 +9,7 @@
 
     <hr>
 
-    <<%= schema.label %>Form :model="model" />
+    <<%= schema.class_name %>Form :model="model" />
     <div class="row">
       <div class="col-lg-12 text-right">
 

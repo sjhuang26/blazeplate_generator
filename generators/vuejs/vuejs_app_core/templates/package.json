@@ -1,7 +1,7 @@
 {
   "name": "web_client",
   "version": "1.0.0",
-  "author": "Alexander Schwartzberg <aeksco@gmail.com>",
+  "author": "blazeplate.io",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -14,8 +14,13 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    <%_ if (options.ui_framework.id === 'bootstrap') { _%>
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "^1.0.2",
+    <%_ } else if (options.ui_framework.id === 'onsenui') { _%>
+    "onsenui": "^2.8.1",
+    "vue-onsenui": "^2.4.2",
+    <%_ } _%>
     "lodash": "^4.17.4",
     "vue": "^2.5.2",
     "vue-meta": "^1.2.0",

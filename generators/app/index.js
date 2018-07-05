@@ -91,10 +91,16 @@ module.exports = class extends BlazeplateGenerator {
     await this.ensureDir(this.options.build.dest.root)
 
     // Client - VueJS
-    await this.composeWith(Generators.VueJS)
+    let { client } = this.options.build.app.stack
+    if (client.id === 'vuejs') {
+      await this.composeWith(Generators.VueJS)
+    }
 
     // Server - ExpressJS
-    await this.composeWith(Generators.ExpressJS)
+    let { server } = this.options.build.app.stack
+    if (server.id === 'expressjs') {
+      await this.composeWith(Generators.ExpressJS)
+    }
 
     // Infrastructure & Seed Data
     await this.composeWith(Generators.SeedData);

@@ -18,12 +18,12 @@ const <%= schema.class_name %> = new mongoose.Schema({
   <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { _%>
   <%= attr.identifier %>: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: '<%= attr.datatypeOptions.schema_label %>'
+    ref: '<%= attr.datatypeOptions.schema_class_name %>'
   },
   <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { _%>
   <%= attr.identifier %>: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: '<%= attr.datatypeOptions.schema_label %>'
+    ref: '<%= attr.datatypeOptions.schema_class_name %>'
   }],
   <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'OWNS_MANY') { _%>
   <%_ continue _%>
@@ -32,6 +32,12 @@ const <%= schema.class_name %> = new mongoose.Schema({
     type: Date,
     required: <%= attr.required %>,
     unique: <%= attr.unique %>
+  },
+  <%_ } else if (attr.datatype === 'JSON') { _%>
+  <%= attr.identifier %>: {
+    type: mongoose.Schema.Types.Mixed,
+    required: <%= attr.required %>,
+    default: {}
   },
   <%_ } else { _%>
   <%= attr.identifier %>: {
@@ -56,17 +62,17 @@ const <%= schema.class_name %> = new mongoose.Schema({
 <%_ for (index in schema.attributes) { _%>
 <%_ let attr = schema.attributes[index] _%>
 <%_ if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'BELONGS_TO') { _%>
-<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label %> = function () {
+<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_class_name %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').findById(this.<%= attr.identifier %>);
 }
 
 <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { _%>
-<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label_plural %> = function () {
+<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_class_name_plural %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').find({ <%= schema.identifier %>_id: this._id });
 }
 
 <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_ONE') { _%>
-<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_label %> = function () {
+<%= schema.class_name %>.methods.get<%= attr.datatypeOptions.schema_class_name %> = function () {
   return mongoose.model('<%= attr.datatypeOptions.schema_label %>').findById(this.<%= attr.identifier %> });
 }
 <%_ } _%>

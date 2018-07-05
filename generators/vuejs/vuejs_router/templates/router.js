@@ -1,34 +1,34 @@
-// <%= schema.label %> Containers
-import <%= schema.label %>List from '@/containers/<%= schema.identifier %>_list'
-import <%= schema.label %>New from '@/containers/<%= schema.identifier %>_new'
-import <%= schema.label %>Show from '@/containers/<%= schema.identifier %>_show'
-import <%= schema.label %>Edit from '@/containers/<%= schema.identifier %>_edit'
+// <%= schema.class_name %> Containers
+import <%= schema.class_name %>List from '@/containers/<%= schema.identifier %>_list'
+import <%= schema.class_name %>New from '@/containers/<%= schema.identifier %>_new'
+import <%= schema.class_name %>Show from '@/containers/<%= schema.identifier %>_show'
+import <%= schema.class_name %>Edit from '@/containers/<%= schema.identifier %>_edit'
 
-const <%= schema.label %>ListRoute = {
+const <%= schema.class_name %>ListRoute = {
   path: '/<%= schema.identifier_plural %>',
-  component: <%= schema.label %>List
+  component: <%= schema.class_name %>List
 }
 
-const <%= schema.label %>NewRoute = {
+const <%= schema.class_name %>NewRoute = {
   path: '/<%= schema.identifier_plural %>/new',
-  component: <%= schema.label %>New
+  component: <%= schema.class_name %>New
 }
 
-const <%= schema.label %>ShowRoute = {
+const <%= schema.class_name %>ShowRoute = {
   path: '/<%= schema.identifier_plural %>/:id',
-  component: <%= schema.label %>Show,
+  component: <%= schema.class_name %>Show,
   props: true
 }
 
-const <%= schema.label %>EditRoute = {
+const <%= schema.class_name %>EditRoute = {
   path: '/<%= schema.identifier_plural %>/:id/edit',
-  component: <%= schema.label %>Edit,
+  component: <%= schema.class_name %>Edit,
   props: true
 }
 
 export default [
-  <%= schema.label %>ListRoute,
-  <%= schema.label %>NewRoute,
-  <%= schema.label %>ShowRoute,
-  <%= schema.label %>EditRoute
+  <%= schema.class_name %>ListRoute,
+  <%= schema.class_name %>NewRoute,
+  <%= schema.class_name %>ShowRoute,
+  <%= schema.class_name %>EditRoute
 ]
