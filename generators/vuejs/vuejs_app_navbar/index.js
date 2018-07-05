@@ -12,6 +12,10 @@ module.exports = class VueJsNavbar extends Generator {
     let destinationRoot = this.options.build.dest.root
     let vueSrc = this.options.build.dest.vue.src
 
+    // Isolates relevant options for template
+    let { ui_framework } = this.options.build.app.stack
+    let options = { ui_framework }
+
     let headerLinks = []
 
     function buildHeaderLink (s) {
@@ -28,7 +32,7 @@ module.exports = class VueJsNavbar extends Generator {
     await this.copyTemplate(
       this.templatePath(__dirname, 'Navbar.vue'),
       this.destinationPath(vueSrc + 'components/Navbar.vue'),
-      { appSchema: app, headerLinks: headerLinks }
+      { appSchema: app, headerLinks: headerLinks, options }
     );
 
   }
