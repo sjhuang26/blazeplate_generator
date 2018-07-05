@@ -22,6 +22,8 @@
         <input type="time" class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
       <%_ } else if (attr.datatype === 'DATETIME') { _%>
         <input type="datetime-local" class="form-control" placeholder="<%= attr.label %>" v-model="model.<%=attr.identifier%>">
+      <%_ } else if (attr.datatype === 'JSON') { _%>
+        <textarea class="form-control" placeholder="<%= attr.label %>" @change="model.<%=attr.identifier%> = JSON.parse($event.target.value)">{{ JSON.stringify(model.<%=attr.identifier%>, null, 2) }}</textarea>
       <%_ } else if (attr.datatype === 'RELATION') { _%>
 
       <%_ } if (attr.datatypeOptions.relationType === 'BELONGS_TO') { _%>

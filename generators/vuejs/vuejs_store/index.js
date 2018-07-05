@@ -22,6 +22,8 @@ module.exports = class VueJsStore extends Generator {
           newModel[attr.identifier] = []
         } else if (attr.datatype === 'NUMBER') {
           newModel[attr.identifier] = 0
+        } else if (attr.datatype === 'JSON') {
+          newModel[attr.identifier] = {}
         } else {
           newModel[attr.identifier] = ''
         }
