@@ -23,7 +23,8 @@ module.exports = class extends BlazeplateGenerator {
         root: null,
         out: '',
         vue: {},
-        expressjs: {}
+        expressjs: {},
+        client: {} // TODO - this is the pattern used going forward...
       }
     }
 
@@ -41,7 +42,7 @@ module.exports = class extends BlazeplateGenerator {
     build.dest.root = build.dest.out + build.app.identifier + '/'
 
     // VueJS
-    // TODO - move into the Vue generator
+    // TODO - move into the Vue generator and phase out `build.dest.vue` in favor of `build.dest.client`
     build.dest.vue.root = build.dest.root + 'web_client/'
     build.dest.vue.src = build.dest.vue.root + 'src/'
 
@@ -92,9 +93,8 @@ module.exports = class extends BlazeplateGenerator {
 
     // Client - VueJS
     let { client } = this.options.build.app.stack
-    if (client.id === 'vuejs') {
-      await this.composeWith(Generators.VueJS)
-    }
+    if (client.id === 'vuejs') await this.composeWith(Generators.VueJS)
+    if (client.id === 'reactjs') await this.composeWith(Generators.ReactJS)
 
     // Server - ExpressJS
     let { server } = this.options.build.app.stack
@@ -103,6 +103,7 @@ module.exports = class extends BlazeplateGenerator {
     }
 
     // Infrastructure & Seed Data
+    // TODO - conditionally invoke these generators...
     await this.composeWith(Generators.SeedData);
     await this.composeWith(Generators.DockerCompose);
 
