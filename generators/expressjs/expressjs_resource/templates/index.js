@@ -36,7 +36,7 @@ router.get('/:id/<%= attr.datatypeOptions.schema_identifier %>', controller.show
 router.get('/:id/<%= attr.datatypeOptions.schema_identifier_plural %>', controller.show<%= attr.datatypeOptions.schema_class_name_plural %>);
 <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'OWNS_MANY') { _%>
 
-// GET /<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier %>
+// GET /<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier_plural %>
 router.get('/:id/<%= attr.datatypeOptions.schema_identifier_plural %>', controller.show<%= attr.datatypeOptions.schema_class_name_plural %>);
 <%_ } _%>
 <%_ } _%>
