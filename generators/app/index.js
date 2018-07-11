@@ -22,9 +22,10 @@ module.exports = class extends BlazeplateGenerator {
         id: '',
         root: null,
         out: '',
-        vue: {},
-        expressjs: {},
-        client: {} // TODO - this is the pattern used going forward...
+        vue: {}, // TODO - phase out 'build.dest.expressjs'
+        expressjs: {}, // TODO - phase out 'build.dest.expressjs'
+        client: {}, // TODO - this is the pattern used going forward...
+        server: {} // TODO - this is the pattern used going forward...
       }
     }
 
@@ -98,9 +99,8 @@ module.exports = class extends BlazeplateGenerator {
 
     // Server - ExpressJS
     let { server } = this.options.build.app.stack
-    if (server.id === 'expressjs') {
-      await this.composeWith(Generators.ExpressJS)
-    }
+    if (server.id === 'expressjs') await this.composeWith(Generators.ExpressJS)
+    if (server.id === 'falconpy') await this.composeWith(Generators.FalconPy)
 
     // Infrastructure & Seed Data
     // TODO - conditionally invoke these generators...
