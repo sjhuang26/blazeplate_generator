@@ -15,7 +15,19 @@ class App extends Component {
         <main>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/about" component={About} />
+            <Route exact path="/about" component={About} />
+            <Route exact path="/todos" component={({ match }) =>
+              <p>List</p>
+            } />
+            <Route exact path="/todos/new" component={() =>
+              <p>New</p>
+            } />
+            <Route exact path="/todos/:id" component={({ match }) =>
+              <p>Show id={match.params.id}</p>
+            } />
+            <Route exact path="/todos/:id/edit" component={({ match }) =>
+              <p>Edit id={match.params.id}</p>
+            } />
           </Switch>
         </main>
       </div>
