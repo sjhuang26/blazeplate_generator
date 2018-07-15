@@ -6,6 +6,7 @@ class TodoEditor extends Component {
       <div>
         <p>Todo Editor</p>
         <p>ID={this.props.id}</p>
+        <p>Content={this.props.content}</p>
       </div>
     )
   }
