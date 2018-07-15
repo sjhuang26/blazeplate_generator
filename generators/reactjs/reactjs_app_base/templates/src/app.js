@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import Home from './home';
-import About from './about';
+import TodoList from './todo-list';
+import TodoNew from './todo-new';
+import TodoShow from './todo-show';
+import TodoEdit from './todo-edit';
 
 class App extends Component {
   render() {
@@ -15,19 +18,10 @@ class App extends Component {
         <main>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/todos" component={({ match }) =>
-              <p>List</p>
-            } />
-            <Route exact path="/todos/new" component={() =>
-              <p>New</p>
-            } />
-            <Route exact path="/todos/:id" component={({ match }) =>
-              <p>Show id={match.params.id}</p>
-            } />
-            <Route exact path="/todos/:id/edit" component={({ match }) =>
-              <p>Edit id={match.params.id}</p>
-            } />
+            <Route exact path="/todos" component={TodoList} />
+            <Route exact path="/todos/new" component={TodoNew} />
+            <Route exact path="/todos/:id" component={TodoShow} />
+            <Route exact path="/todos/:id/edit" component={TodoEdit} />
           </Switch>
         </main>
       </div>
