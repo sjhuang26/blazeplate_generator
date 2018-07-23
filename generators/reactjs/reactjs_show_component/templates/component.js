@@ -5,24 +5,42 @@ class <%- schema.class_name %>Show extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      content: 'Loading...'
+      loading: false,
+      model: ''
     }
   }
 
   componentDidMount() {
-    axios.get('/api/<%- schema.identifier_plural %>/' + this.props.match.params.id).then((response) => {
+    this.setState({ loading: true })
+    axios.get('/api/<%- schema.identifier_plural %>/' + this.props.match.params.id)
+    .then((response) => {
       this.setState({
-        content: JSON.stringify(response)
+        loading: false,
+        model: JSON.stringify(response.data, null, 2)
       })
     })
   }
 
   render() {
+
+    let content
+
+    // Show loading view
+    if (this.state.loading) {
+      content = <i className='fa fa-3x fa-spin fa-spinner'></i>;
+    // Show collection
+    } else {
+      content = <pre className='bg-dark text-light'>{this.state.model}</pre>
+    }
     return (
-      <div>
-        <h2>Show component</h2>
-        <p>ID={this.props.match.params.id}</p>
-        <p>Content={this.state.content}</p>
+      <div className='container'>
+        <div className='row'>
+          <div className='col-lg-12'>
+            <h2>Show <%- schema.label %></h2>
+            <p>ID={this.props.match.params.id}</p>
+            {content}
+          </div>
+        </div>
       </div>
     )
   }
