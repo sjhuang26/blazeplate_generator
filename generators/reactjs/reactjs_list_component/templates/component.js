@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import TodoEditor from './todo-editor';
 import axios from 'axios';
 
-class TodoEdit extends Component {
+class <%- schema.class_name %>List extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -11,19 +10,21 @@ class TodoEdit extends Component {
   }
 
   componentDidMount() {
-    axios.put('/api/todos/' + this.props.match.params.id).then((response) => {
+    axios.get('/api/<%- schema.identifier_plural %>').then((response) => {
       this.setState({
         content: JSON.stringify(response)
       })
     })
   }
-
   render() {
     return (
-      <TodoEditor id={this.props.match.params.id} content={this.state.content} />
+      <div>
+        <h2>List component</h2>
+        <p>{this.state.content}</p>
+      </div>
     )
   }
 }
 
-export default TodoEdit;
+export default <%- schema.class_name %>List;
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-class TodoShow extends Component {
+class <%- schema.class_name %>Show extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -10,7 +10,7 @@ class TodoShow extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/todos/' + this.props.match.params.id).then((response) => {
+    axios.get('/api/<%- schema.identifier_plural %>/' + this.props.match.params.id).then((response) => {
       this.setState({
         content: JSON.stringify(response)
       })
@@ -20,7 +20,7 @@ class TodoShow extends Component {
   render() {
     return (
       <div>
-        <p>Show Todo</p>
+        <h2>Show component</h2>
         <p>ID={this.props.match.params.id}</p>
         <p>Content={this.state.content}</p>
       </div>
@@ -28,5 +28,5 @@ class TodoShow extends Component {
   }
 }
 
-export default TodoShow;
+export default <%- schema.class_name %>Show;
 
