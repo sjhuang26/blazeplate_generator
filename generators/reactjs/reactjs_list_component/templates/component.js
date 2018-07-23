@@ -52,7 +52,7 @@ class <%- schema.class_name %>List extends Component {
         <div className='row'>
           <div className='col-lg-12'>
             <h2><%- schema.label_plural %></h2>
-            <Link className="btn btn-primary" to="/<%- schema.label_plural %>/new">
+            <Link className="btn btn-primary" to="/<%- schema.identifier_plural %>/new">
               New <%- schema.label %>
             </Link>
             <hr/>
