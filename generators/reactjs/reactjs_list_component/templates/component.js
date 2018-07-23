@@ -25,10 +25,24 @@ class <%- schema.class_name %>List extends Component {
   render() {
 
     let content
+
+    // Show loading view
     if (this.state.loading) {
       content = <i className='fa fa-3x fa-spin fa-spinner'></i>;
+    // Show collection
+    } else if (this.state.collection.length) {
+
+      let rows = []
+      for (var i = 0; i < this.state.collection.length; i++) {
+          // note: we add a key prop here to allow react to uniquely identify each
+          // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
+          let model = this.state.collection[i]
+          rows.push(<li className='list-group-item'>{ model.label }</li>);
+      }
+      content = <ul className='list-group'>{rows}</ul>;
+    // Show empty message
     } else {
-      content = <pre className='bg-dark text-light'>{this.state.content}</pre>
+      content = <ul className='list-group'><li className='list-group-item list-group-item-warning'>No <%- schema.label_plural %> available</li></ul>;
     }
 
     return (
