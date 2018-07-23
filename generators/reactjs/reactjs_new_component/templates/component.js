@@ -10,6 +10,8 @@ class <%- schema.class_name %>New extends Component {
     }
   }
 
+  // TODO - move this out of componentDidMount and into
+  // a separate function that's invoked when the Editor component's submit button is clicked
   componentDidMount() {
     axios.post('/api/<%- schema.identifier_plural %>').then((response) => {
       this.setState({

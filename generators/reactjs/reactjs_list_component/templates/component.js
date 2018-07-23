@@ -37,7 +37,9 @@ class <%- schema.class_name %>List extends Component {
           // note: we add a key prop here to allow react to uniquely identify each
           // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
           let model = this.state.collection[i]
-          rows.push(<li className='list-group-item'>{ model.label }</li>);
+          let showUrl = "/<%= schema.identifier_plural %>/" + model._id
+          rows.push(
+            <Link key={model._id} className='list-group-item' to={showUrl}>{ model.label }</Link>);
       }
       content = <ul className='list-group'>{rows}</ul>;
     // Show empty message
