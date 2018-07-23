@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-class TodoEditor extends Component {
+class <%- schema.class_name %>Editor extends Component {
   render() {
     return (
       <div>
-        <p>Todo Editor</p>
+        <p>Item Editor</p>
         <p>ID={this.props.id}</p>
         <p>Content={this.props.content}</p>
       </div>
@@ -12,5 +12,5 @@ class TodoEditor extends Component {
   }
 }
 
-export default TodoEditor;
+export default <%- schema.class_name %>Editor;
 
