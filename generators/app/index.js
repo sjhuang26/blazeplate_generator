@@ -101,6 +101,7 @@ module.exports = class extends BlazeplateGenerator {
     let { server } = this.options.build.app.stack
     if (server.id === 'expressjs') await this.composeWith(Generators.ExpressJS)
     if (server.id === 'falconpy') await this.composeWith(Generators.FalconPy)
+    if (server.id === 'flaskpy') await this.composeWith(Generators.FlaskPy)
 
     // Infrastructure & Seed Data
     // TODO - conditionally invoke these generators...
