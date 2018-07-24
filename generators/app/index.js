@@ -92,15 +92,16 @@ module.exports = class extends BlazeplateGenerator {
     // Creates project build directories
     await this.ensureDir(this.options.build.dest.root)
 
-    // Client - VueJS
+    // Client
     let { client } = this.options.build.app.stack
     if (client.id === 'vuejs') await this.composeWith(Generators.VueJS)
     if (client.id === 'reactjs') await this.composeWith(Generators.ReactJS)
 
-    // Server - ExpressJS
+    // Server
     let { server } = this.options.build.app.stack
     if (server.id === 'expressjs') await this.composeWith(Generators.ExpressJS)
     if (server.id === 'falconpy') await this.composeWith(Generators.FalconPy)
+    if (server.id === 'flaskpy') await this.composeWith(Generators.FlaskPy)
 
     // Infrastructure & Seed Data
     // TODO - conditionally invoke these generators...
