@@ -24,3 +24,19 @@ class <%- schema.class_name %>ModelResource(object):
     def on_delete(self, req, resp, like_id):
       resp.status = falcon.HTTP_200  # This is the default status
       resp.body = json.dumps({ "message": "Hi, this is from DELETE /items/:id" })
+
+<% for (let attr of schema.attributes) { -%>
+<% if (attr.datatype === 'RELATION') { -%>
+<% if (attr.datatypeOptions.relationType === 'ONE_TO_ONE' || attr.datatypeOptions.relationType === 'MANY_TO_ONE') { -%>
+class <%- schema.class_name %>Related<%- attr.datatypeOptions.schema_class_name %>Resource(object):
+    def on_get(self, req, resp, like_id):
+        resp.status = falcon.HTTP_200  # This is the default status
+        resp.body = json.dumps({ "message": "Hi, this is from GET /items/:id/foo" })
+<% } else if (attr.datatypeOptions.relationType === 'ONE_TO_MANY' || attr.datatypeOptions.relationType === 'MANY_TO_MANY') { -%>
+class <%- schema.class_name %>Related<%- attr.datatypeOptions.schema_class_name_plural %>Resource(object):
+    def on_get(self, req, resp, like_id):
+        resp.status = falcon.HTTP_200  # This is the default status
+        resp.body = json.dumps({ "message": "Hi, this is from GET /items/:id/foo" })
+<% } -%>
+<% } -%>
+<% } -%>
