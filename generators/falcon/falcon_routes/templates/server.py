@@ -24,9 +24,9 @@ app = falcon.API()
 app.add_route('/<%- schema.identifier_plural %>', <%- schema.class_name %>CollectionResource())
 <% for (let attr of schema.attributes) { -%>
 <% if (attr.datatype === 'RELATION') { -%>
-<% if (attr.datatypeOptions.relationType === 'ONE_TO_ONE' || attr.datatypeOptions.relationType === 'MANY_TO_ONE') { -%>
+<% if (attr.datatypeOptions.relationType === 'BELONGS_TO') { -%>
 app.add_route('/<%- schema.identifier_plural %>/{<%- schema.identifier %>_id}/<%- attr.datatypeOptions.schema_identifier %>', <%- schema.class_name %>Related<%- attr.datatypeOptions.schema_class_name %>Resource())
-<% } else if (attr.datatypeOptions.relationType === 'ONE_TO_MANY' || attr.datatypeOptions.relationType === 'MANY_TO_MANY') { -%>
+<% } else if (attr.datatypeOptions.relationType === 'OWNS_MANY' || attr.datatypeOptions.relationType === 'HAS_MANY') { -%>
 app.add_route('/<%- schema.identifier_plural %>/{<%- schema.identifier %>_id}/<%- attr.datatypeOptions.schema_identifier_plural %>', <%- schema.class_name %>Related<%- attr.datatypeOptions.schema_class_name_plural %>Resource())
 <% } -%>
 <% } -%>
