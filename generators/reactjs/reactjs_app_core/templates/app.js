@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Switch, Link, Route } from 'react-router-dom';
 import Home from './home';
+import Login from './Login';
+import Register from './Register';
 <%_ for (let schema of appSchema.schemas) { _%>
 import <%- schema.class_name %>Routes from './<%- schema.class_name %>Routes';
 <%_ } _%>
@@ -25,12 +27,22 @@ class App extends Component {
               </li>
               <%_ } _%>
             </ul>
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <Link className="nav-link" to="/auth/register">Register</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/auth/login">Login</Link>
+              </li>
+            </ul>
           </div>
         </nav>
 
         <main>
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/auth/login" component={Login} />
+            <Route exact path="/auth/register" component={Register} />
             <%_ for (let schema of appSchema.schemas) { _%>
             <Route path="/<%- schema.identifier_plural %>" component={<%- schema.class_name %>Routes} />
             <%_ } _%>
