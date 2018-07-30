@@ -196,7 +196,7 @@
   "seeds": [],
   "stack": {
     "server": {
-      "id": "none"
+      "id": "flaskpy"
     },
     "client": {
       "id": "vuejs"
