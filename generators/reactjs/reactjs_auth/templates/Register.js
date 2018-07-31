@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import Loader from './Loader'
+import Loader from '../components/Loader'
 
 class Register extends Component {
   constructor(props) {

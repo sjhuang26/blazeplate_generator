@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Switch, Link, Route } from 'react-router-dom';
-import Home from './home';
-import Login from './Login';
-import Register from './Register';
+import Home from './home/home';
+import Login from './auth/Login';
+import Register from './auth/Register';
 <%_ for (let schema of appSchema.schemas) { _%>
-import <%- schema.class_name %>Routes from './<%- schema.class_name %>Routes';
+import <%- schema.class_name %>Routes from './<%- schema.identifier %>/<%- schema.class_name %>Routes';
 <%_ } _%>
 
 class App extends Component {
