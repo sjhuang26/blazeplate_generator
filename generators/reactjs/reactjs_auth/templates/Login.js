@@ -7,19 +7,38 @@ class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isLoaded: true
+      isLoaded: true,
+      email: '',
+      password: ''
     }
     this.handleLogin = this.handleLogin.bind(this)
+    this.updateEmailValue = this.updateEmailValue.bind(this)
+    this.updatePasswordValue = this.updatePasswordValue.bind(this)
   }
 
   handleLogin() {
     this.setState({
       isLoaded: false
     })
-    axios.post('/api/auth/login').then((response) => {
+    axios.post('/api/auth/login', {
+      email: this.state.email,
+      password: this.state.password
+    }).then((response) => {
       this.setState({
         isLoaded: true
       })
+    })
+  }
+
+  updateEmailValue(e) {
+    this.setState({
+      email: e.target.value
+    })
+  }
+
+  updatePasswordValue(e) {
+    this.setState({
+      password: e.target.value
     })
   }
 
@@ -34,11 +53,11 @@ class Login extends Component {
                 <fieldset>
 
                   <div className="form-group">
-                    <input className="form-control" placeholder="E-mail" type="text" />
+                    <input className="form-control" placeholder="E-mail" type="text" value={this.state.email} onChange={this.updateEmailValue} />
                   </div>
 
                   <div className="form-group">
-                    <input className="form-control" placeholder="Password" type="password" value="" />
+                    <input className="form-control" placeholder="Password" type="password" value={this.state.password} onChange={this.updatePasswordValue} />
                   </div>
 
                   <button className="btn btn-outline-success btn-block" onClick={this.handleLogin}>
