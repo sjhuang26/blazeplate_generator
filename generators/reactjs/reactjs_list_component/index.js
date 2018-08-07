@@ -12,6 +12,11 @@ module.exports = class ReactJSListComponent extends Generator {
         this.destinationPath(dest + schema.class_name + 'List.js'),
         { schema }
       )
+      await this.copyTemplate(
+        this.templatePath(__dirname, 'preview.js'),
+        this.destinationPath(dest + schema.class_name + 'Preview.js'),
+        { schema }
+      )
     }
   }
 }
