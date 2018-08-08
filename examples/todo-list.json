@@ -196,10 +196,10 @@
   "seeds": [],
   "stack": {
     "server": {
-      "id": "none"
+      "id": "flaskpy"
     },
     "client": {
-      "id": "vuejs"
+      "id": "reactjs"
     },
     "database": {
       "id": "mongo"
