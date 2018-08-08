@@ -1,9 +1,10 @@
 {
-  "name": "blazeplate_generator",
+  "name": "codotype-generator",
   "version": "0.1.0",
   "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "node blazeplate.js"
+    "test": "node codotype.js"
   },
   "dependencies": {
     "ejs": "^2.6.1",

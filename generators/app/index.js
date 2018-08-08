@@ -42,11 +42,6 @@ module.exports = class extends BlazeplateGenerator {
     build.dest.out = './build/' + buildId + '/'
     build.dest.root = build.dest.out + build.app.identifier + '/'
 
-    // VueJS
-    // TODO - move into the Vue generator and phase out `build.dest.vue` in favor of `build.dest.client`
-    build.dest.vue.root = build.dest.root + 'web_client/'
-    build.dest.vue.src = build.dest.vue.root + 'src/'
-
     // ExpressJS
     // TODO - move into the ExpressJs generator
     build.dest.expressjs.root = build.dest.root + 'web_api/'
@@ -94,7 +89,6 @@ module.exports = class extends BlazeplateGenerator {
 
     // Client
     let { client } = this.options.build.app.stack
-    if (client.id === 'vuejs') await this.composeWith(Generators.VueJS)
     if (client.id === 'reactjs') await this.composeWith(Generators.ReactJS)
 
     // Server
