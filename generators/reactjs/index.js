@@ -8,6 +8,7 @@ const ReactJsNewComponent = require('./reactjs_new_component')
 const ReactJsEditorComponent = require('./reactjs_editor_component')
 const ReactJsShowComponent = require('./reactjs_show_component')
 const ReactJsEditComponent = require('./reactjs_edit_component')
+const ReactJsWidgetComponent = require('./reactjs_widget_component')
 
 module.exports = class ReactJs extends Generator {
   async write () {
@@ -20,5 +21,6 @@ module.exports = class ReactJs extends Generator {
     await this.composeWith(ReactJsEditorComponent)
     await this.composeWith(ReactJsShowComponent)
     await this.composeWith(ReactJsEditComponent)
+    await this.composeWith(ReactJsWidgetComponent)
   }
 }
