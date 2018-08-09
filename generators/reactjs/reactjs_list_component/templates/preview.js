@@ -18,8 +18,8 @@ class <%- schema.class_name %>Preview extends Component {
     const m = this.props.model;
     return (
       <tr>
-        <%_ for (let attr of schema.attributes) { _%>
-        <%_ if (attr.unique) { _%>
+        <%_ schema.attributes.forEach((attr, index) => { _%>
+        <%_ if (index === 0) { _%>
         <td>
           <Link to={'/<%= schema.identifier_plural %>/' + m._id}>
             { m.<%=attr.identifier%> }
@@ -42,7 +42,7 @@ class <%- schema.class_name %>Preview extends Component {
         <%_ } else { _%>
         <td>{ m.<%= attr.identifier %> }</td>
         <%_ } _%>
-      <%_ } _%>
+      <%_ }) _%>
         <td className="text-right">
           <a className="btn btn-sm btn-outline-primary" href={'/<%= schema.identifier_plural %>/' + m._id}>
             <i className="fa fa-fw fa-eye"></i>
