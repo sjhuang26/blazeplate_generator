@@ -1,50 +1,61 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import <%- schema.class_name %>ShowWidget from './<%- schema.class_name %>ShowWidget';
+
 class <%- schema.class_name %>Show extends Component {
   constructor(props) {
     super(props)
+    this.deleteItem = this.deleteItem.bind(this)
     this.state = {
-      loading: false,
-      model: ''
+      loading: true,
+      model: {}
     }
   }
 
   componentDidMount() {
+    this.updateModel()
+  }
+
+  updateModel() {
     this.setState({ loading: true })
     axios.get('/api/<%- schema.identifier_plural %>/' + this.props.match.params.id)
     .then((response) => {
       this.setState({
         loading: false,
-        model: JSON.stringify(response.data, null, 2)
+        model: response.data
       })
     })
   }
 
-  render() {
-
-    let content
-
-    // Show loading view
-    if (this.state.loading) {
-      content = <i className='fa fa-3x fa-spin fa-spinner'></i>;
-    // Show collection
-    } else {
-      content = <pre className='bg-dark text-light'>{this.state.model}</pre>
+  deleteItem() {
+    const confirm = window['confirm'] // get around the linter
+    if (confirm('Delete?')) {
+      axios.delete('/api/<%- schema.identifier_plural %>/' + this.props.match.params.id)
+      .then((response) => {
+        this.updateModel()
+      })
     }
+  }
+
+  render() {
     return (
-      <div className='container'>
-        <div className='row'>
-          <div className='col-lg-12'>
-            <h2>Show <%- schema.label %></h2>
-            <p>ID={this.props.match.params.id}</p>
-            {content}
+      <div className="container">
+        <<%- schema.class_name %>ShowWidget model={this.state.model} isLoaded={!this.state.loaded} />
+        { /*<div className="row">
+          <%_ for (let relation of schema.relations) { _%>
+          <div className="col-lg-12 mt-2">
+            <%_ if (relation.type === 'LIST') { _%>
+            <<%- relation.name %> header="<%- relation.name %>" isLoaded={true} collection="<%= relation.getter %>" />
+            <%_ } else { _%>
+            <<%- relation.name %> header="<%- relation.name %>" isLoaded={true} model="<%= relation.getter %>" />
+            <%_ } _%>
           </div>
-        </div>
+          <%_ } _%>
+        </div> */ }
       </div>
     )
   }
 }
 
 export default <%- schema.class_name %>Show;
-

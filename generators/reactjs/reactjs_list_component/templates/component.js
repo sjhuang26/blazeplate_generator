@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-import Loader from '../components/Loader';
-import <%- schema.class_name %>Preview from './<%- schema.class_name %>Preview';
+import <%- schema.class_name %>ListWidget from './<%- schema.class_name %>ListWidget';
+
 
 class <%- schema.class_name %>List extends Component {
   constructor(props) {
     super(props)
     this.state = {
       collection: [],
-      loading: false
+      loaded: false
     }
     this.deleteItem = this.deleteItem.bind(this);
   }
@@ -20,12 +20,12 @@ class <%- schema.class_name %>List extends Component {
   }
 
   updateCollection() {
-    this.setState({ loading: true })
+    this.setState({ loaded: false })
     axios.get('/api/<%- schema.identifier_plural %>')
       .then((response) => {
         this.setState({
           collection: response.data,
-          loading: false
+          loaded: true
         })
       })
   }
@@ -56,47 +56,7 @@ class <%- schema.class_name %>List extends Component {
         </div>
         <div className="row">
           <div className="col-lg-12">
-            <Loader isLoaded={!this.state.loading}>
-              <table className="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <%_ for (let attr of schema.attributes) { _%>
-                    <%_ if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'OWNS_MANY') continue _%>
-                    <%_ if (attr.help) { _%>
-                    <th>
-                      <%= attr.label %>
-                      <i className="fa fa-fw fa-question-circle-o"></i>
-                      { /* TODO tooltip on bottom attr.help */ }
-                    </th>
-                    <%_ } else { _%>
-                    <th><%= attr.label %></th>
-                    <%_ } _%>
-                    <%_ } _%>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    (this.state.collection.length === 0) ? (
-                      <tr className="tr-warning">
-                        <%_ for (index in schema.attributes) { _%>
-                        <%_ if (index === '0') { _%>
-                        <td>Empty</td>
-                        <%_ } else { _%>
-                        <td></td>
-                        <%_ } _%>
-                        <%_ } _%>
-                        <td></td>
-                      </tr>
-                    ) : (
-                      this.state.collection.map((model) => {
-                        return <<%- schema.class_name %>Preview model={model} onDeleteItem={this.deleteItem} key={model._id} />
-                      })
-                    )
-                  }
-                </tbody>
-              </table>
-            </Loader>
+            <<%- schema.class_name %>ListWidget collection={this.state.collection} isLoaded={this.state.loaded} />
           </div>
         </div>
       </div>
