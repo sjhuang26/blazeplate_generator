@@ -22,8 +22,8 @@ class <%- schema.class_name %>New extends Component {
 
   render() {
     return (
-      <div>
-        <h2>New component</h2>
+      <div className="container">
+        <h2>New <%- schema.label %></h2>
         <<%- schema.class_name %>Editor id={999} content={this.state.content} />
       </div>
     )
