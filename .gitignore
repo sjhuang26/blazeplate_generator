@@ -9,6 +9,7 @@ test/e2e/reports
 selenium-debug.log
 
 # Generated Apps & Zips
+*.pyc
 build/**/*
 !build/.gitkeep
 

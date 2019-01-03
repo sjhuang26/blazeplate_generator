@@ -22,8 +22,10 @@ module.exports = class extends BlazeplateGenerator {
         id: '',
         root: null,
         out: '',
-        vue: {},
-        expressjs: {}
+        vue: {}, // TODO - phase out 'build.dest.expressjs'
+        expressjs: {}, // TODO - phase out 'build.dest.expressjs'
+        client: {}, // TODO - this is the pattern used going forward...
+        server: {} // TODO - this is the pattern used going forward...
       }
     }
 
@@ -39,11 +41,6 @@ module.exports = class extends BlazeplateGenerator {
     // TODO - use this.env.cwd & path library, instead of hardcoded relative path
     build.dest.out = './build/' + buildId + '/'
     build.dest.root = build.dest.out + build.app.identifier + '/'
-
-    // VueJS
-    // TODO - move into the Vue generator
-    build.dest.vue.root = build.dest.root + 'web_client/'
-    build.dest.vue.src = build.dest.vue.root + 'src/'
 
     // ExpressJS
     // TODO - move into the ExpressJs generator
@@ -90,13 +87,18 @@ module.exports = class extends BlazeplateGenerator {
     // Creates project build directories
     await this.ensureDir(this.options.build.dest.root)
 
-    // Client - VueJS
-    await this.composeWith(Generators.VueJS)
+    // Client
+    let { client } = this.options.build.app.stack
+    if (client.id === 'reactjs') await this.composeWith(Generators.ReactJS)
 
-    // Server - ExpressJS
-    await this.composeWith(Generators.ExpressJS)
+    // Server
+    let { server } = this.options.build.app.stack
+    if (server.id === 'expressjs') await this.composeWith(Generators.ExpressJS)
+    if (server.id === 'falconpy') await this.composeWith(Generators.FalconPy)
+    if (server.id === 'flaskpy') await this.composeWith(Generators.FlaskPy)
 
     // Infrastructure & Seed Data
+    // TODO - conditionally invoke these generators...
     await this.composeWith(Generators.SeedData);
     await this.composeWith(Generators.DockerCompose);
 

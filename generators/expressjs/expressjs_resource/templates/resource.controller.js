@@ -105,7 +105,7 @@ module.exports.show = (req, res, next) => {
 * @apiSuccess {json} The related <%= attr.datatypeOptions.schema_label %> model
 * @apiError (Error) 500 Internal server error
 */
-module.exports.show<%= attr.datatypeOptions.schema_label %> = (req, res, next) => {
+module.exports.show<%= attr.datatypeOptions.schema_class_name %> = (req, res, next) => {
     return <%= schema.class_name %>.findById(req.params.id)
     .then((<%= schema.identifier %>) => {
 
@@ -125,15 +125,15 @@ module.exports.show<%= attr.datatypeOptions.schema_label %> = (req, res, next) =
 <% } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'HAS_MANY') { %>
 
 /**
-* @api {GET} /api/<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier_plural %> show<%= attr.datatypeOptions.schema_label_plural %>
-* @APIname show<%= attr.datatypeOptions.schema_label_plural %>
+* @api {GET} /api/<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier_plural %> show<%= attr.datatypeOptions.schema_class_name_plural %>
+* @APIname show<%= attr.datatypeOptions.schema_class_name_plural %>
 * @APIgroup <%= schema.class_name %> Controller
-* @apidescription Gets related <%= attr.datatypeOptions.schema_label_plural %>
-* @apiSuccess {json} The related <%= attr.datatypeOptions.schema_label_plural %>
+* @apidescription Gets related <%= attr.datatypeOptions.schema_class_name_plural %>
+* @apiSuccess {json} The related <%= attr.datatypeOptions.schema_class_name_plural %>
 * @apiError (Error) 500 Internal server error
 */
 // TODO - this must be refactored to do: RelatedModel.find({ _id: [1,2,3] })
-module.exports.show<%= attr.datatypeOptions.schema_label_plural %> = (req, res, next) => {
+module.exports.show<%= attr.datatypeOptions.schema_class_name_plural %> = (req, res, next) => {
 
     return <%= schema.class_name %>.findById(req.params.id)
     .then((response) => {
@@ -153,14 +153,14 @@ module.exports.show<%= attr.datatypeOptions.schema_label_plural %> = (req, res, 
 <%_ } else if (attr.datatype === 'RELATION' && attr.datatypeOptions.relationType === 'OWNS_MANY') { _%>
 
 /**
-* @api {GET} /api/<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier_plural %> show<%= attr.datatypeOptions.schema_label_plural %>
-* @APIname show<%= attr.datatypeOptions.schema_label_plural %>
+* @api {GET} /api/<%= schema.identifier_plural %>/:id/<%= attr.datatypeOptions.schema_identifier_plural %> show<%= attr.datatypeOptions.schema_class_name_plural %>
+* @APIname show<%= attr.datatypeOptions.schema_class_name_plural %>
 * @APIgroup <%= schema.class_name %> Controller
-* @apidescription Gets related <%= attr.datatypeOptions.schema_label_plural %>
-* @apiSuccess {json} The related <%= attr.datatypeOptions.schema_label_plural %>
+* @apidescription Gets related <%= attr.datatypeOptions.schema_class_name_plural %>
+* @apiSuccess {json} The related <%= attr.datatypeOptions.schema_class_name_plural %>
 * @apiError (Error) 500 Internal server error
 */
-module.exports.show<%= attr.datatypeOptions.schema_label_plural %> = (req, res, next) => {
+module.exports.show<%= attr.datatypeOptions.schema_class_name_plural %> = (req, res, next) => {
     return <%= attr.datatypeOptions.schema_class_name %>.find({ <%= schema.identifier %>_id: req.params.id })
     .then((<%= attr.datatypeOptions.schema_identifier_plural %>) => {
         return res
